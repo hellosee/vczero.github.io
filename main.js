@@ -206,11 +206,11 @@ MyChart.prototype.drawBaseInfo = function(){
 	var baseinfo = [];
 	baseinfo.push('代号：vczero');
 	baseinfo.push('生日：1991-09-24');
-	baseinfo.push('公司：高德地图实习');
+	baseinfo.push('公司：高德地图');
 	baseinfo.push('毕业院校：CHZU');
 	baseinfo.push('专业：Geographic Information System');
 	baseinfo.push('爱好：打兵乓球');
-	baseinfo.push('实习安排：Node.js服务端&矢量地图');
+	baseinfo.push('从业：web app服务端&矢量地图');
 	baseinfo.push('E-amil：wlhmyit@126.com');
 
 	for(var i = 0; i < baseinfo.length; i++){
@@ -233,6 +233,7 @@ MyChart.prototype.drawBaseInfo = function(){
 	schoolShow.push('8. 2010年9月~2014年6月：担任学习委员、11级地信2班助理班主任');
 	schoolShow.push('9. 2012年6月~2013年6月：GIS首届会长、校技术创新团队MySpace组长');
 	schoolShow.push('10. 荣获2014年安徽省品学兼优毕业生');
+	schoolShow.push('11. 荣获校十佳大学生');
 
 	for(var n = 0; n < schoolShow.length; n++){
 		this.context.fillStyle ='#898788';
