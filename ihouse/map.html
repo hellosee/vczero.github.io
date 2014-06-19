@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>滁州市购房评价系统</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf8"/>
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no">
+    <link rel='stylesheet' href='public/stylesheets/style.css' />
+    <script type="text/javascript" src="public/javascripts/jquery2.1.1.js"></script>
+    <script type="text/javascript" src="public/javascripts/main.js"></script>
+
+    <script type="text/javascript" src="public/javascripts/hightcharts/highcharts.js"></script>
+	<script type="text/javascript" src="public/javascripts/hightcharts/modules/exporting.js"></script>
+	<script type="text/javascript" src="public/javascripts/hightcharts/highcharts-more.js"></script>
+
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.2&key=ae01d8a290470f163245f6fc2339b30a"></script>
+	<script type="text/javascript">
+		$(function(){
+			var position = new AMap.LngLat(118.321724,32.308608);//创建中心点坐标
+		  	var mapObj = new AMap.Map("container",{center:position,level:13});//创建地图实例
+
+		  	$('#search_poi').click(function(){
+		  		var text = $('#search_address').val();
+				var marker = []; 
+				var windowsArr = [];  
+				var MSearch; 
+			    mapObj.plugin(["AMap.PlaceSearch"], function() {         
+			        MSearch = new AMap.PlaceSearch({ //构造地点查询类 
+			            pageSize:10, 
+			            pageIndex:1, 
+			            city:"021" //城市 
+			        });  
+			        AMap.event.addListener(MSearch, "complete", keywordSearch_CallBack);//返回地点查询结果 
+			        MSearch.search( '滁州' + text); //关键字查询 
+			    }); 
+				
+				//添加marker&infowindow     
+				function addmarker(i, d) { 
+				    var lngX = d.location.getLng(); 
+				    var latY = d.location.getLat(); 
+				    var markerOption = { 
+				        map:mapObj, 
+				        icon:"http://webapi.amap.com/images/" + (i + 1) + ".png", 
+				        position:new AMap.LngLat(lngX, latY) 
+				    }; 
+				    var mar = new AMap.Marker(markerOption);           
+				    marker.push(new AMap.LngLat(lngX, latY)); 
+				   
+				    var infoWindow = new AMap.InfoWindow({ 
+				        content:"<h3><font color=\"#00a6ac\">  " + (i + 1) + ". " + d.name + "</font></h3>" + TipContents(d.type, d.address, d.tel), 
+				        size:new AMap.Size(300, 0),  
+				        autoMove:true,   
+				        offset:new AMap.Pixel(0,-30) 
+				    }); 
+				    windowsArr.push(infoWindow);  
+				    var aa = function (e) {infoWindow.open(mapObj, mar.getPosition());}; 
+				    AMap.event.addListener(mar, "click", aa); 
+				} 
+				//回调函数 
+				function keywordSearch_CallBack(data) { 
+				    var resultStr = ""; 
+				    var poiArr = data.poiList.pois; 
+				    var resultCount = poiArr.length > 4? 4:poiArr.length; 
+				    for (var i = 0; i < resultCount; i++) { 
+				    	poiArr[i].name = poiArr[i].name.length > 16? poiArr[i].name.substr(0,17):poiArr[i].name;
+				        resultStr += "<div id='divid" + (i + 1) + "' onmouseover='openMarkerTipById1(" + i + ",this)' onmouseout='onmouseout_MarkerStyle(" + (i + 1) + ",this)' style=\"font-size: 12px;cursor:pointer;padding:0px 0 4px 2px; border-bottom:1px solid #C1FFC1;\"><table><tr><td><img src=\"http://webapi.amap.com/images/" + (i + 1) + ".png\"></td>" + "<td><h3><font color=\"#00a6ac\">名称: " + poiArr[i].name + "</font></h3>"; 
+				            resultStr += TipContents(poiArr[i].type, poiArr[i].address, poiArr[i].tel) + "</td></tr></table></div>"; 
+				            addmarker(i, poiArr[i]); 
+				    } 
+				    mapObj.setFitView(); 
+				    document.getElementById("result").innerHTML = resultStr; 
+				} 
+				function TipContents(type, address, tel) {  //窗体内容 
+				    if (type == "" || type == "undefined" || type == null || type == " undefined" || typeof type == "undefined") { 
+				        type = "暂无"; 
+				    } 
+				    if (address == "" || address == "undefined" || address == null || address == " undefined" || typeof address == "undefined") { 
+				        address = "暂无"; 
+				    } 
+				    if (tel == "" || tel == "undefined" || tel == null || tel == " undefined" || typeof address == "tel") { 
+				        tel = "暂无"; 
+				    }
+				    var type = type.length > 24? type.substr(0,20):type;
+				    var str = "  地址：" + address + "<br />  电话：" + tel + " <br />  类型：" + type; 
+				    return str; 
+				} 
+				function openMarkerTipById1(pointid, thiss) {  //根据id 打开搜索结果点tip 
+				    thiss.style.background = '#CAE1FF'; 
+				    windowsArr[pointid].open(mapObj, marker[pointid]); 
+				} 
+				function onmouseout_MarkerStyle(pointid, thiss) { //鼠标移开后点样式恢复 
+				    thiss.style.background = ""; 
+				} 
+		    }); 
+
+			$('#fangjia_table').highcharts({
+	            title: {
+	                text: '滁州市房价走势',
+	                x: -20 //center
+	            },
+	            subtitle: {
+	                text: '时间：一年',
+	                x: -20
+	            },
+	            xAxis: {
+	                categories: ['7月', '8月', '9月', '10月','11月','12月','1月', '2月', '3月', '4月', '5月', '6月']
+	            },
+	            yAxis: {
+	                title: {
+	                    text: '房价(元)'
+	                },
+	                plotLines: [{
+	                    value: 0,
+	                    width: 1,
+	                    color: '#808080'
+	                }]
+	            },
+	            tooltip: {
+	                valueSuffix: '元'
+	            },
+	            legend: {
+	                layout: 'vertical',
+	                align: 'right',
+	                verticalAlign: 'middle',
+	                borderWidth: 0
+	            },
+	            credits:{
+				    enabled:false 
+				},
+				exporting:{
+					enabled:false 
+				},
+	            series: [{
+	                name: '天安世纪城',
+	                data: [4300, 4280, 4400, 4600, 4890, 4600, 4500, 4532, 4432, 4402,4400,4412]
+	            }, {
+	                name: '恒大名都',
+	                data: [4800, 4880, 4900, 4790, 4890, 4800, 4790, 4800, 4600, 4532,4500,4523]
+	            }, {
+	                name: '易景凯旋城',
+	                data: [4760, 4680, 4590, 4600, 4700, 4690, 4620, 4532, 4432, 4500,4520,4500]
+	            }, {
+	                name: '大成国际',
+	                data: [4200, 4280, 4500, 4640, 4790, 4780, 4600, 4532, 4432, 4410,4350,4000]
+	            }]
+	        });	
+
+			$('#mychaxun').click(function(){
+				$('#fangjia_table').highcharts({
+		            title: {
+		                text: '滁州市房价走势',
+		                x: -20 //center
+		            },
+		            subtitle: {
+		                text: '时间：一年',
+		                x: -20
+		            },
+		            xAxis: {
+		                categories: ['7月', '8月', '9月', '10月','11月','12月','1月', '2月', '3月', '4月', '5月', '6月']
+		            },
+		            yAxis: {
+		                title: {
+		                    text: '房价(元)'
+		                },
+		                plotLines: [{
+		                    value: 0,
+		                    width: 1,
+		                    color: '#808080'
+		                }]
+		            },
+		            tooltip: {
+		                valueSuffix: '元'
+		            },
+		            legend: {
+		                layout: 'vertical',
+		                align: 'right',
+		                verticalAlign: 'middle',
+		                borderWidth: 0
+		            },
+		            credits:{
+					    enabled:false 
+					},
+					exporting:{
+						enabled:false 
+					},
+		            series: [{
+		                name: '天安世纪城',
+		                data: [4300, 4280, 4400, 4600, 4890, 4600, 4500, 4532, 4432, 4402,4400,4412]
+		            }, {
+		                name: '恒大名都',
+		                data: [4800, 4880, 4900, 4790, 4890, 4800, 4790, 4800, 4600, 4532,4500,4523]
+		            }, {
+		                name: '易景凯旋城',
+		                data: [4760, 4680, 4590, 4600, 4700, 4690, 4620, 4532, 4432, 4500,4520,4500]
+		            }, {
+		                name: '大成国际',
+		                data: [4200, 4280, 4500, 4640, 4790, 4780, 4600, 4532, 4432, 4410,4350,4000]
+		            }]
+		        });	
+
+			});
+
+
+			$('#single_table').highcharts({
+	            chart: {
+	                type: 'column'
+	            },
+	            title: {
+	                text: '滁州市楼盘均价'
+	            },
+	            subtitle: {
+	                text: '单位：楼盘'
+	            },
+	            exporting:{
+					enabled:false 
+				},
+	            xAxis: {
+	                categories: [
+	                    '书香雅苑',
+	                    '恒大绿洲',
+	                    '天安世纪城',
+	                    '三盛伴山公馆',
+	                    '金域豪庭',
+	                    '恒大名都',
+	                    '易景凯旋城',
+	                    '大成国际'
+	                ]
+	            },
+	            yAxis: {
+	                min: 0,
+	                title: {
+	                    text: '房价(元)'
+	                }
+	            },
+	            credits:{
+				     enabled:false 
+				},
+	            tooltip: {
+	                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+	                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+	                footerFormat: '</table>',
+	                shared: true,
+	                useHTML: true
+	            },
+	            plotOptions: {
+	                column: {
+	                    pointPadding: 0.2,
+	                    borderWidth: 0
+	                }
+	            },
+	            series: [{
+	                name: '均价',
+	                data: [3500, 4300, 4600, 5200, 4300, 4900, 3600,4388]
+	    
+	            }, {
+	                name: '最低价',
+	                data: [3200, 4180, 4400, 4900, 4100, 4650, 3450,4000]
+	    
+	            }]
+	        });	
+	
+		$("#mychaxun_2").click(function(){
+			$('#single_table').highcharts({
+	            chart: {
+	                type: 'column'
+	            },
+	            title: {
+	                text: '滁州市楼盘均价'
+	            },
+	            subtitle: {
+	                text: '单位：楼盘'
+	            },
+	            exporting:{
+					enabled:false 
+				},
+	            xAxis: {
+	                categories: [
+	                    '书香雅苑',
+	                    '恒大绿洲',
+	                    '天安世纪城',
+	                    '三盛伴山公馆',
+	                    '金域豪庭',
+	                    '恒大名都',
+	                    '易景凯旋城',
+	                    '大成国际'
+	                ]
+	            },
+	            yAxis: {
+	                min: 0,
+	                title: {
+	                    text: '房价(元)'
+	                }
+	            },
+	            credits:{
+				     enabled:false 
+				},
+	            tooltip: {
+	                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+	                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+	                footerFormat: '</table>',
+	                shared: true,
+	                useHTML: true
+	            },
+	            plotOptions: {
+	                column: {
+	                    pointPadding: 0.2,
+	                    borderWidth: 0
+	                }
+	            },
+	            series: [{
+	                name: '均价',
+	                data: [3500, 4300, 4600, 5200, 4300, 4900, 3600,4388]
+	    
+	            }, {
+	                name: '最低价',
+	                data: [3200, 4180, 4400, 4900, 4100, 4650, 3450,4000]
+	    
+	            }]
+	        });	
+		});
+
+
+		$('#xingshipie_table').highcharts({
+	        chart: {
+	            type: 'pie',
+	            options3d: {
+					enabled: true,
+	                alpha: 45
+	            }
+	        },
+	        title: {
+	            text: '当前滁州购房形势总体概览'
+	        },
+	        subtitle: {
+	            text: '舆论-形势'
+	        },
+	        plotOptions: {
+	            pie: {
+	                innerSize: 100,
+	                depth: 45
+	            }
+	        },
+	        credits:{
+			     enabled:false 
+			},
+			exporting:{
+					enabled:false 
+			},
+	        series: [{
+	            name: '房价舆情',
+	            data: [
+	                ['局部地域偏高', 8],
+	                ['工资低', 3],
+	                ['不想在滁州', 1],
+	                ['相比其他城市还好', 6],
+	                ['可以购房', 8],
+	                ['修地铁房价会涨', 4], 
+	                ['学区房可以看看', 4],
+	                ['还是学生', 1],
+	                ['买不起', 1]
+	            ]
+	        }]
+	    });
+
+	    $('#jisuan_table').highcharts({
+		    chart: {
+		        polar: true,
+		        type: 'line'
+		    },
+		    
+		    title: {
+		        text: '买房 VS 不买房',
+		        x: -80
+		    },
+		    exporting:{
+					enabled:false 
+			},
+			exporting:{
+				enabled:false 
+			},
+		    pane: {
+		    	size: '80%'
+		    },
+		    
+		    xAxis: {
+		        categories: ['买', '可以考虑', '慎重考虑', '无压力', 
+		                '需要资金积累','建议买别墅'],
+		        tickmarkPlacement: 'on',
+		        lineWidth: 0
+		    },
+		        
+		    yAxis: {
+		        gridLineInterpolation: 'polygon',
+		        lineWidth: 0,
+		        min: 0
+		    },
+		    
+		    tooltip: {
+		    	shared: true,
+		        pointFormat: '<span style="color:{series.color}">{series.name}: <b>￥{point.y:,.0f}</b><br/>'
+		    },
+		    
+		    legend: {
+		        align: 'right',
+		        verticalAlign: 'top',
+		        y: 70,
+		        layout: 'vertical'
+		    },
+		    credits:{
+			     enabled:false 
+			},
+		    
+		    series: [{
+		        name: '最高承受',
+		        data: [4300, 3900, 6000, 3500, 4700,5000],
+		        pointPlacement: 'on'
+		    }, {
+		        name: '最低承受',
+		        data: [5000, 3900, 4200, 3100, 4600, 4400],
+		        pointPlacement: 'on'
+		    }]
+		
+		});
+
+		$('#jisuan_btn').click(function(){
+			var jisuan_sq = $('#jisuan_sq').val() || 3000;
+			var jisuan_rk = $('#jisuan_rk').val() || 3;
+			var jisuan_xf = $('#jisuan_xf').val() || 1000;
+
+			var data_max = [];
+			var data_min = [];
+
+			var renjun = jisuan_sq / jisuan_rk; //人均
+			var shengyu = jisuan_sq - jisuan_xf;
+			//['买', '可以考虑', '慎重考虑', '无压力', '需要资金积累','建议买别墅'],
+			if(renjun <= 1500){
+				data_max = [1,1,8,0,8,0];
+				data_min = [0,0,8,0,9,0];
+
+				$('#myjisuan_jy').text('需要慎重考虑和大量的资金积累');
+			
+			}
+			else if((shengyu/renjun) >=1000){
+				data_max = [3,4,4,3,6,0];
+				data_min = [2,3,5,3,5,0];
+				$('#myjisuan_jy').text('通过一段时间的资金积累，可以考虑购置一套房产');
+			}
+
+			else if(jisuan_sq > 35000 && renjun > 14000){
+				data_max = [10,10,0,10,0,8];
+				data_min = [10,10,0,9,1,8];
+				$('#myjisuan_jy').text('买房是没有问题的！如果追求高质量的物质生活，可以考虑别墅哦');
+			}
+
+			else if(renjun >=3000 & renjun <= 14000){
+				data_max = [7,8,2,2,3,1];
+				data_min = [7,7,3,3,3,0.6];
+				$('#myjisuan_jy').text('可以买一套地段较好的房产哦，一家人其乐融融');
+			}else{
+				data_max = [5,6,4,4,4,1];
+				data_min = [5,4,3,3,5,0];
+				$('#myjisuan_jy').text('建议购买经济适用房哦，现下可以买跌不买账');
+
+			}
+
+
+			$('#jisuan_table').highcharts({
+			    chart: {
+			        polar: true,
+			        type: 'line'
+			    },
+			    
+			    title: {
+			        text: '买房 VS 不买房',
+			        x: -80
+			    },
+			    exporting:{
+						enabled:false 
+				},
+				exporting:{
+					enabled:false 
+				},
+			    pane: {
+			    	size: '80%'
+			    },
+			    
+			    xAxis: {
+			        categories: ['买', '可以考虑', '慎重考虑', '无压力', 
+			                '需要资金积累','建议买别墅'],
+			        tickmarkPlacement: 'on',
+			        lineWidth: 0
+			    },
+			        
+			    yAxis: {
+			        gridLineInterpolation: 'polygon',
+			        lineWidth: 0,
+			        min: 0
+			    },
+			    
+			    tooltip: {
+			    	shared: true,
+			        pointFormat: '<span style="color:{series.color}">{series.name}: <b>系数{point.y:,.0f}</b><br/>'
+			    },
+			    
+			    legend: {
+			        align: 'right',
+			        verticalAlign: 'top',
+			        y: 70,
+			        layout: 'vertical'
+			    },
+			    credits:{
+				     enabled:false 
+				},
+			    
+			    series: [{
+			        name: '最高承受',
+			        data: data_max,
+			        pointPlacement: 'on'
+			    }, {
+			        name: '最低承受',
+			        data: data_min,
+			        pointPlacement: 'on'
+			    }]
+			
+			});
+
+		});
+		
+
+		});
+	</script>
+  </head>
+<body>
+	<div style="height:50px; width:100%; background-color:#3879D9;">
+		<div style="width:1000px; font-size:25px;color:#FFF;margin:0 auto;line-height:50px;">
+			ihome 指数
+		</div>
+	</div>
+	<div style="width:1000px; margin:0 auto; border:1px solid #CCCCCC; min-height:2000px;">
+		<div style="height:450px;">
+			<div style="width:350px;float:left; margin-left:5px;">
+				<div style="margin-top:10px;">
+					地点  <input id="search_address" type="text" style="" /> 
+					<input type="button"  style="border:0;background-color:#3879D9;color:#FFF;cursor:pointer;height:25px;width:45px;line-height:25px;border-radius:3px;" value="查询"  id="search_poi"/>
+				</div>
+				<div id="r_title"><b>关键字查询结果:</b></div> 
+	        	<div id="result">
+	        		<img src="public/images/charts_1.png">
+	        	</div> 
+			</div>
+			<div style="float:right;width:645px;">
+				<div id="container" style="width:645px;height:450px;"></div>
+			</div>
+		</div>
+		<!--房价走势-->
+		<div style="float:none;"></div>
+		<div style="width:1000px;margin-top:20px;">
+			<img src="public/images/hr_2.png">
+		</div>
+		<div style="width:1000px;height:300px;">
+			<div style="height:200px;margin-top:20px;float:left;width:700px;">
+				<div id="fangjia_table" style="width:700px;height:300px;"></div>
+			</div>
+			<div style="width:300px;height:200px;margin-top:20px;float:right;">
+				<div>楼盘名称
+					<input type="text" placeholder="请输入楼盘的全称" />
+					<input id="mychaxun" type="button" value="查询" style="background-color:#3879D9;border-radius:3px;color:#FFF;border:0;height:20px;cursor:pointer;" />
+				</div>
+				<div style="margin-top:20px;">
+					<div style="font-size:16px;font-weight:bold;">说明</div>
+					<div>房价整体呈下降趋势，总体上趋势不明显。大成国际的房价波动较大。</div>
+				</div>
+			</div>
+		</div>
+			
+		<div style="width:1000px;margin-top:40px;">
+			<img src="public/images/hr_2.png">
+		</div>
+		<div style="width:1000px;height:300px;margin-top:20px;">
+			<div style="height:200px;margin-top:20px;float:left;width:700px;">
+				<div id="single_table" style="width:700px;height:300px;"></div>
+			</div>
+			<div style="width:300px;height:200px;margin-top:20px;float:right;">
+				<div>楼盘名称
+					<input type="text" placeholder="请输入楼盘的全称" />
+					<input id="mychaxun_2" type="button" value="查询" style="background-color:#3879D9;border-radius:3px;color:#FFF;border:0;height:20px;cursor:pointer;" />
+				</div>
+				<div style="margin-top:20px;">
+					<div style="font-size:16px;font-weight:bold;">说明</div>
+					<div>房价整体在4300元左右，最高价位在5200，最低的在3200左右。</div>
+				</div>
+			</div>
+		</div>
+
+		<div style="width:1000px;margin-top:40px;">
+			<img src="public/images/hr_2.png">
+		</div>
+		<div style="width:1000px;height:300px;margin-top:20px;">
+			<div style="height:200px;margin-top:20px;float:left;width:700px;">
+				<div id="xingshipie_table" style="width:700px;height:300px;"></div>
+			</div>
+			<div style="width:300px;height:200px;margin-top:20px;float:right;">
+				<div style="margin-top:40px;">
+					<img src="public/images/guanggao.png" />
+				</div>
+			</div>
+		</div>
+
+		<div style="width:1000px;margin-top:40px;">
+			<img src="public/images/hr_2.png">
+		</div>
+		
+
+		<div style="width:1000px;height:300px;margin-top:20px;">
+			<div style="height:200px;margin-top:20px;float:left;width:700px;">
+				<div id="jisuan_table" style="width:700px;height:300px;"></div>
+			</div>
+			<div style="width:300px;height:200px;margin-top:20px;float:right;">
+				<div>计算你的购房需求</div>
+				<div style="margin-top:20px;">
+					<div style="font-size:16px;font-weight:bold;">测算</div>
+					<div>以下需要几个指数需要你填写，才能完成测试。</div>
+					<div style="margin-top:20px;">
+						您的税前工资 <input id="jisuan_sq" type="text" placeholder="每月/RMB"/> 
+					</div>
+					<div style="margin-top:5px;">
+						您的家庭人口数 <input id="jisuan_rk" type="text" placeholder="需要大量经济开支的"/> 
+					</div>
+					<div style="margin-top:5px;">
+						您个人月消费金额 <input id="jisuan_xf" type="text" placeholder="您个人，不含家属"/> 
+					</div>
+					<div>
+						<div id="jisuan_btn" style="float:right; margin-top:15px;margin-right:38px;">
+							<input type="button" value="计算" style="background-color:#3879D9;border-radius:3px;color:#FFF;border:0;height:20px;cursor:pointer;" />
+						</div>
+					</div>
+					<div style="margin-top:40px;">
+						<div style="font-size:16px;font-weight:bold;">建议:</div>
+						<div style="margin-top:10px;">
+							<div id="myjisuan_jy" style="width:300px;height:100px;">
+								拥有一个温馨的家...
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div style="margin-top:160px;width:1000px;"></div>
+		<div style="width:1000px;height:80px;">
+			<div style="width:330px;margin:0 auto;">Copyright 2013-2014 wlh, All Rights Reserved 版权所有</div>
+			<div style="width:150px;margin:0 auto;">open_GIS_vczero_王利华</div>
+		</div>
+		
+	</div>
+</body>
+ </html>
