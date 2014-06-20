@@ -545,25 +545,25 @@ body{
 	float: right;
 }
 
-#index_lou_bar{
+.index_lou_bar{
 	height:14px;
 	border-left:3px solid #9D9D9D;
 }
 
 .t_1{
-	width:100px;
+	width:120px;
 }
 
 .t_2{
-	width:80px;
+	width:60px;
 }
 
 .t_3{
-	width:70px;
+	width:80px;
 }
 
 .t_4{
-	width:60px;
+	width:50px;
 }
 
 #jingjiren{
@@ -608,7 +608,7 @@ body{
 }
 
 .grade{
-	margin-bottom:7px;
+	margin-bottom:1px;
 }
 
 .jingjiren_shou{

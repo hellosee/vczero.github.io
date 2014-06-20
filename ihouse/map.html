@@ -145,6 +145,46 @@
 	        });	
 
 			$('#mychaxun').click(function(){
+				var series =  [{
+		                name: '天安世纪城',
+		                data: [4300, 4280, 4400, 4600, 4890, 4600, 4500, 4532, 4432, 4402,4400,4412]
+		            }, {
+		                name: '恒大名都',
+		                data: [4800, 4880, 4900, 4790, 4890, 4800, 4790, 4800, 4600, 4532,4500,4523]
+		            }, {
+		                name: '易景凯旋城',
+		                data: [4760, 4680, 4590, 4600, 4700, 4690, 4620, 4532, 4432, 4500,4520,4500]
+		            }, {
+		                name: '大成国际',
+		                data: [4200, 4280, 4500, 4640, 4790, 4780, 4600, 4532, 4432, 4410,4350,4000]
+		            }];
+
+				if($(mychaxun_text).val() === '恒大名都'){
+					series.push({
+		                name: '恒大名都',
+		                data: [4700, 4580, 4400, 4600, 4890, 4600, 4500, 4532, 4532, 4402,4400,4412]
+		            });
+				}
+				if($(mychaxun_text).val() && $(mychaxun_text).val() !== '恒大名都'){
+					var v1 = 4700+Math.random()*200;
+					var v2 = 4580-Math.random()*100;
+					var v3 = 4400-Math.random()*200;
+					var v4 = 4600+Math.random()*100;
+					var v4 = 4890-Math.random()*150;
+					var v5 = 4600-Math.random()*90;
+					var v6 = 4500-Math.random()*20;
+					var v7 = 4532+Math.random()*200;
+					var v8 = 4532-Math.random()*200;
+					var v9 = 4402-Math.random()*100;
+					var v10 = 4400+Math.random()*100;
+					var v11 = 4412-Math.random()*90;
+					var v12 = 4412-Math.random()*90;
+					series.push({
+		                name: $(mychaxun_text).val(),
+		                data: [v1,v2 ,v3 ,v4 ,v5 ,v6 ,v7 ,v8 ,v9 ,v10 ,v11,v12]
+		            });
+				}
+
 				$('#fangjia_table').highcharts({
 		            title: {
 		                text: '滁州市房价走势',
@@ -182,19 +222,7 @@
 					exporting:{
 						enabled:false 
 					},
-		            series: [{
-		                name: '天安世纪城',
-		                data: [4300, 4280, 4400, 4600, 4890, 4600, 4500, 4532, 4432, 4402,4400,4412]
-		            }, {
-		                name: '恒大名都',
-		                data: [4800, 4880, 4900, 4790, 4890, 4800, 4790, 4800, 4600, 4532,4500,4523]
-		            }, {
-		                name: '易景凯旋城',
-		                data: [4760, 4680, 4590, 4600, 4700, 4690, 4620, 4532, 4432, 4500,4520,4500]
-		            }, {
-		                name: '大成国际',
-		                data: [4200, 4280, 4500, 4640, 4790, 4780, 4600, 4532, 4432, 4410,4350,4000]
-		            }]
+		            series:series
 		        });	
 
 			});
@@ -564,7 +592,7 @@
 			</div>
 			<div style="width:300px;height:200px;margin-top:20px;float:right;">
 				<div>楼盘名称
-					<input type="text" placeholder="请输入楼盘的全称" />
+					<input id="mychaxun_text" type="text" placeholder="请输入楼盘的全称" />
 					<input id="mychaxun" type="button" value="查询" style="background-color:#3879D9;border-radius:3px;color:#FFF;border:0;height:20px;cursor:pointer;" />
 				</div>
 				<div style="margin-top:20px;">
