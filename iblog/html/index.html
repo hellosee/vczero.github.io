@@ -7,9 +7,6 @@
     <script type="text/javascript" src="js/jquery2.1.1.js"></script>
     <script type="text/javascript" src="js/hightcharts/highcharts.js"></script>
     <script type="text/javascript" src="js/sea2.3.js"></script>
-    <script type="text/javascript" src="js/underscore.js"></script>
-    <script type="text/javascript" src="blog/2014-06-21.js"></script>
-    <script type="text/javascript" src="blog/blogs.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
   </head>
   <body>
@@ -22,6 +19,7 @@
     <!--菜单-->
     <section class="menu">
       <table class="menu_table">
+        <!--通过JS 模板创建-->
         <tr class="menu_table_tr">
           <td>Web前端</td>
           <td>Web后端</td>
@@ -46,50 +44,36 @@
     </section>
     <!--主体-->
     <section class="main_section">
-    <div id="showblog"></div>
-    <script type="text/template" id="tpl_blog">
-      <%
-        for(var i = 0; i < list.length; i++)
-          {
-            var item = list[i]
-      %>
       <!--一篇博客-->
       <section class="blog">
         <header class="blog_title">
-          <%=item.title%>
+          LBS在APP中的应用
         </header>
         <!--标签&时间-->
         <div class="blog_tags_time">
           <div class="blog_tags">
-            <%
-              for(var j = 0; j < item.blog_tags.length; j++){
-            %>
-            <div class="blog_tags_item"><%=item.blog_tags[j]%></div>
-            <%}%>
+            <div class="blog_tags_item">LBS开发</div>
+            <div class="blog_tags_item">GEO开发</div>
           </div>
           <div class="blog_time">
-            <%=item.blog_time%>
+            2014-06-21
           </div>
         </div>
         <!--正文-->
         <article class="blog_article">
-          <%
-            for(var k = 0; k < item.blog_p.length; k++){
-          %>
-          <div class="blog_lt"><%=item.blog_p[k].title%></div>
+          <div class="blog_lt">引言</div>
           <div class="blog_p">
-            <%=item.blog_p[k].content%>
+            2月21日，慈济菲律宾分会前往巴石市的社福发展部(Department of Social Welfare and Development (DSWD)）进行爱洒活动，发送大米、环保毛毯等结缘品，以感恩社福人员于凯莎娜台风赈灾期间为灾民的付出，及给予慈济人救灾的协助。
           </div>
-          <%}%>
+          <div class="blog_lt">引言</div>
+          <div class="blog_p">
+            2月21日，慈济菲律宾分会前往巴石市的社福发展部(Department of Social Welfare and Development (DSWD)）进行爱洒活动，发送大米、环保毛毯等结缘品，以感恩社福人员于凯莎娜台风赈灾期间为灾民的付出，及给予慈济人救灾的协助。
+          </div>
         </article>
       </section>
-      <%}%>
-    </script>
-    <!-- <div class="page">
-      <div class="page_item">上一页</div>
-      <div class="page_item">下一页</div>
-    </div> -->
+      
     </section>
+  
     <!--页脚-->
     <footer class = "footer">
       <div class="footer_info"></div>
