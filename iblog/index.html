@@ -75,9 +75,14 @@
             for(var k = 0; k < item.blog_p.length; k++){
           %>
           <div class="blog_lt"><%=item.blog_p[k].title%></div>
-          <div class="blog_p">
-            <%=item.blog_p[k].content%>
-          </div>
+          <%
+            for(var pp = 0; pp < item.blog_p[k].content.length; pp++){
+              var content_pp = item.blog_p[k].content[pp];
+          %>
+             <div class="blog_p">
+              <%=content_pp%>
+             </div>
+          <% }%>
           <%}%>
         </article>
       </section>
