@@ -1,12 +1,16 @@
-
+/*
+	tpl渲染博客内容
+*/
 
 $(function(){
-
-	createBlogs(blogs, 100);
+	seajs.use('./blog/blogs.js', function(exports){
+		var blogs = exports.blogs;
+		createBlogs(blogs, 100);
+	});
 
 	function createBlogs(blogs, n){
 		var blogs = blogs;
-		var num = n > blogs.length ? blogs.length : n;
+		var num = n > blogs.length ? blogs.length:n;
 		var element = $('#showblog'); 
 	    var tpl = $('#tpl_blog').html();
 	    var myBlogs = [];
