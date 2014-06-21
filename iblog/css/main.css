@@ -4,8 +4,8 @@
 */
 
 *{
-	font-size:14px;
-	font-family: 'Lucida Console', 'Monaco', 'monospace','consolas','宋体','微软雅黑' ,'Arial','Times New Roman', Times, serif;
+	font-size:13px;
+	font-family: 'Lucida Console','黑体', 'Monaco', 'monospace','consolas','宋体','微软雅黑' ,'Arial','Times New Roman', Times, serif;
 	text-decoration: none;
 }
 
@@ -66,7 +66,7 @@ body{
 
 .menu{
 	width:160px;
-	height: 300px;
+	height: 230px;
 	background-color: #D0D0D0;
 	position: fixed;
 	right: 0;
@@ -78,7 +78,7 @@ body{
 .main_section{
 	width: 950px;
 	margin: 0 auto;
-	height: 1000px;
+	min-height: 1000px;
 	background-color: #FFF;
 	box-shadow: 3px 0 5px #A5A6A4;
 	border: 1px solid #DDDDDD;
@@ -86,16 +86,93 @@ body{
 }
 
 .menu_table{
+	margin-top: 15px;
 	width: 130px;
-	height: 300px;
-	margin-left: 30px;
+	height: 200px;
+	margin-left: 20px;
 }
 
 .menu_table_tr{
 	height: 30px;
 	color: #0088D3;
+	text-align: center;
 }
 
 .menu_table_tr td:hover{
 	cursor: pointer;
+	background-color: blue;
+	color: #FFF;
+	border-radius: 3px;
+	font-weight: bold;
 }
+
+.blog{
+	width: 900px;
+	margin: 0 auto;
+	margin-top: 15px;
+}
+
+.blog_title{
+	color: #2F9BD7;
+	font-size: 23px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+
+.blog_tags{
+	display: inline;
+}
+
+.blog_time{
+	display: inline;
+	margin-left: 5px;
+}
+
+.blog_tags_item{
+	display: inline;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+.blog_tags_time{
+	color: #DDDDDD;
+}
+
+.blog_article{
+	margin-top: 20px;
+	color: #555555;
+}
+
+.blog_p{
+	margin-top: 3px;
+	margin-bottom:3px; 
+    font-size: 14px;
+    line-height: 23px;
+}
+
+.blog_lt{
+	font-size: 19px;
+	margin-top: 18px;
+	font-weight: bold;
+}
+
+.page{
+	margin:0 auto;
+	width: 130px;
+	height: 40px;
+}
+
+.page_item{
+	display: inline-block;
+	height: 22px;
+	line-height: 22px;
+	margin-left: 3px;
+	background-color: #3879D9;
+	border-radius: 3px;
+	color: #FFF;
+}
+
+.page_item:hover{
+	cursor: pointer;
+};
