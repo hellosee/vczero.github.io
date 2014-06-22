@@ -51,16 +51,29 @@ body{
 	width: 125px;
 	height: 20px;
 	line-height: 20px;
+	color: #D4D4D3;
+	text-align: center;
 }
 
-.footer div + div >div{
+
+.footer_text:first-child{
+	width: 125px;
+}
+
+.footer_text:nth-child(2){
+	width: 125px;
+}
+
+.footer_text:last-child{
 	width: 140px;
 }
 
 .footer_info{
-	height: 80px;
+	height: 60px;
 	width: 100%;
 }
+
+
 
 .footer_start{
 	height: 60px;
