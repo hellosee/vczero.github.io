@@ -1,6 +1,6 @@
 define(function(require, exports, module){
 	var blog_2014_06_21_am_1 = {
-		title: '大学这四年',
+		title: '<a href="http://vczero.github.io/iblog/article.html">大学这四年</a>',
 		blog_tags: ['大学四年', '总结' , '展望'],
 		blog_time: '2014-06-21 凌晨1点',
 		blog_p:[
