@@ -10,7 +10,7 @@ define(function(require, exports, module){
 	
 
 	blogs.push(blog_2.blog_2014_06_24);
-	blogs.push(blog_1.blog_2014_06_21_am_1);
+	blogs.push(blog_1.blog_2014_06_21);
 
 
 	

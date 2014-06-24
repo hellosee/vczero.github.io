@@ -1,5 +1,6 @@
 define(function(require, exports, module){
 	var blog_2014_06_24 = {
+		id:'blog_2014_06_24',
 		title: '关于git和svn',
 		blog_tags: ['git', 'svn' , '版本控制'],
 		blog_time: '2014-06-24 下午9:40',
