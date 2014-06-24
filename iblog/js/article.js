@@ -16,6 +16,7 @@ $(function(){
 	function createBlog(blogs, n){
 		var blogs = blogs;
 		var num = n > blogs.length ? blogs.length:n;
+		
 		var element = $('#showblog'); 
 	    var tpl = $('#tpl_blog').html();
 	    var myBlogs = [];

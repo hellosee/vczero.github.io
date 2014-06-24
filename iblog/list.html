@@ -45,26 +45,25 @@
 
     <!--list-->
     <section class="main_section">
-      <div id="showblog" >
-        <div class="list_show">
-          <div class="list_title">文章列表</div>
-
-          <div class="one_link">
-            <div class="link_display linklist_num">001</div>
-            <div class="link_display linklist_time">2014-06-23 09:42</div>
-            <div class="link_display linklist_title">建设创造性建设创造性</div>
-            <div class="link_display linklist_tag">建设</div>
-          </div>
-
-          <div class="one_link">
-            <div class="link_display linklist_num">001</div>
-            <div class="link_display linklist_time">2014-06-23 09:42</div>
-            <div class="link_display linklist_title">建设创造性建设创造性</div>
-            <div class="link_display linklist_tag">建设</div>
-          </div>
-
-
+      <div class="list_show">
+        <div class="list_title">文章列表</div>
+        <div id="showlinklist"></div>
+        <script type="text/template" id="tpl_links">
+        <%
+          for(var i = 0; i < list.length; i++){
+        %>
+        <div class="one_link">
+          <div class="link_display linklist_num"><%=i%></div>
+          <div class="link_display linklist_time"><%=list[i].blog_time%></div>
+          <div class="link_display linklist_title"><%=list[i].title%></div>
+          <%
+            for(var j = 0; j < list[i].blog_tags.length; j++){
+          %>
+          <div class="link_display linklist_tag"><%=list[i].blog_tags[j]%></div>
+          <%}%>
         </div>
+        <%}%>
+        </script>
       </div>
     </section>
     <!--页脚-->

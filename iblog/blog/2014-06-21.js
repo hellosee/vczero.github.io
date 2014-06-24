@@ -1,9 +1,12 @@
 define(function(require, exports, module){
+	var types = require('./type.js');
+
 	var blog_2014_06_21 = {
 		id:'blog_2014_06_21',
-		title: '<a class="title_a" href="article.html?id=blog_2014_06_21">大学这四年</a>',
+		title: '<a href="article.html?id=blog_2014_06_21">大学这四年</a>',
 		blog_tags: ['大学四年', '总结' , '展望'],
-		blog_time: '2014-06-21 1:10',
+		blog_time: '2014-06-21 01:10',
+		type: types.type.story,
 		blog_p:[
 			{
 				title: '四年前的事儿',
