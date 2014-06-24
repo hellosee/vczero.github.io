@@ -3,12 +3,17 @@
 */
 
 $(function(){
-	seajs.use('./blog/blogs.js', function(exports){
-		var blogs = exports.blogs;
-		createBlogs(blogs, 100);
+	seajs.use('./blog/blogs_details.js', function(exports){
+		var url = window.location.search; 
+		var id = url.split('id=')[1];
+		
+		var blog = exports.blogs[id];
+		var bs = [];
+		bs.push(blog);
+		createBlog(bs, 100);
 	});
 
-	function createBlogs(blogs, n){
+	function createBlog(blogs, n){
 		var blogs = blogs;
 		var num = n > blogs.length ? blogs.length:n;
 		var element = $('#showblog'); 

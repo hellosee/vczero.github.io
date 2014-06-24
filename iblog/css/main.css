@@ -35,6 +35,14 @@ body{
 	color: #EEEEEE;
 }
 
+.title_a{
+	color: #2F9BD7;
+	font-size: 23px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+
 .footer{
 	width: 950px;
 	margin: 0 auto;
