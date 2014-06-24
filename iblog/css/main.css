@@ -117,7 +117,8 @@ body{
 .main_section{
 	width: 950px;
 	margin: 0 auto;
-	min-height: 1000px;
+	/*min-height: 1000px;*/
+	min-height: 700px;
 	background-color: #FFF;
 	box-shadow: 3px 0 5px #A5A6A4;
 	border: 1px solid #DDDDDD;
@@ -214,5 +215,50 @@ body{
 
 .page_item:hover{
 	cursor: pointer;
-};
+}
 
+
+.list_show{
+	width:900px;
+	margin:0 auto;
+	margin-top: 20px;
+}
+
+.list_title{
+	color: #329CD7;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.one_link{
+	margin-top: 5px;
+}
+
+
+.link_display{
+	display: inline-block;
+}
+
+.linklist_num{
+	color: #DDDDDD;
+}
+
+.linklist_time{
+	color: #DDDDDD;
+}
+
+.linklist_title{
+	color: #329CD7;
+}
+
+.linklist_title:hover{
+	cursor: pointer;
+}
+
+.linklist_tag{
+	color: #329CD7;
+}
+
+.linklist_tag:hover{
+	cursor: pointer;
+};

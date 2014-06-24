@@ -3,7 +3,7 @@ define(function(require, exports, module){
 		id:'blog_2014_06_21',
 		title: '<a class="title_a" href="article.html?id=blog_2014_06_21">大学这四年</a>',
 		blog_tags: ['大学四年', '总结' , '展望'],
-		blog_time: '2014-06-21 凌晨1点',
+		blog_time: '2014-06-21 1:10',
 		blog_p:[
 			{
 				title: '四年前的事儿',
