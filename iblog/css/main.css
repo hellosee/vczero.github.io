@@ -249,14 +249,24 @@ body{
 
 .linklist_title{
 	color: #329CD7;
+	width: 300px;
 }
 
 .linklist_title:hover{
 	cursor: pointer;
 }
 
-.linklist_tag{
+.linklist_title:visited{
 	color: #329CD7;
+}
+
+.linklist_title:link{
+	color: #329CD7;
+}
+
+.linklist_tag{
+	color: #ABACAA;
+
 }
 
 .linklist_tag:hover{
