@@ -1,7 +1,7 @@
 define(function(require, exports, module){
 	var types = require('./type.js');
 
-	var blog_2014_06_24 = {
+	var blog_2014_06_30 = {
 		id:'blog_2014_06_30',
 		title: '<a class="title_a" href="article.html?id=blog_2014_06_30">关于git和svn</a>',
 		blog_tags: ['git', '习惯'],
