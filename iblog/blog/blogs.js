@@ -5,7 +5,8 @@ define(function(require, exports, module){
 	var blogs = [];
 	var blog_3 = require('./2014-06-30.js');
 	var blog_2 = require('./2014-06-24.js');
-	var blog_1 =  require('./2014-06-21.js'); //取得外界exs  -> 调用exs的blog
+	var blog_1 =  require('./2014-06-21.js'); 
+
 	
 
 	blogs.push(blog_3.blog_2014_06_30);
