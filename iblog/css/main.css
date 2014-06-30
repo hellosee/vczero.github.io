@@ -20,7 +20,6 @@ body{
 	height: 50px;
 	background-color: #333333;
 	position: fixed;
-
 }
 
 .header_bar{
@@ -123,7 +122,7 @@ body{
 	background-color: #FFF;
 	box-shadow: 3px 0 5px #A5A6A4;
 	border: 1px solid #DDDDDD;
-	border-bottom: 0; 
+	border-bottom: 0;
 }
 
 .menu_table{
