@@ -3,7 +3,7 @@ define(function(require, exports, module){
 
 	var blog_2014_06_30 = {
 		id:'blog_2014_06_30',
-		title: '<a class="title_a" href="article.html?id=blog_2014_06_30">关于git和svn</a>',
+		title: '<a class="title_a" href="article.html?id=blog_2014_06_30">习惯是一种伟大的力量</a>',
 		blog_tags: ['git', '习惯'],
 		blog_time: '2014-06-30 12:53',
 		type: types.type.story,
