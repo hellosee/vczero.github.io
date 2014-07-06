@@ -3,7 +3,7 @@ define(function(require, exports, module){
 
 	var blog_2014_07_06 = {
 		id:'blog_2014_07_06',
-		title: '<a class="title_a" href="article.html?id=blog_2014_07_03">梦想支撑着现实</a>',
+		title: '<a class="title_a" href="article.html?id=blog_2014_07_06">梦想支撑着现实</a>',
 		blog_tags: ['北大宣传片'],
 		blog_time: '2014-07-06 21:52',
 		type: types.type.story,
