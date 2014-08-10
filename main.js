@@ -398,8 +398,6 @@ MyChart.prototype.projectInfo = function(){
 	var blog = [];
 	blog.push('微博：vczero（地址http://weibo.com/u/2762275212）');
 	blog.push('GitHub：vczero（地址：https://github.com/vczero）');
-	blog.push('博客：Vczero（地址：http://vczero.iteye.com/）');
-	blog.push('当然可以通过google(建议)搜索引擎搜索，关键字:vczero,第一页就是');
 
 	for(var blog_i = 0; blog_i < blog.length; blog_i++){
 		this.context.fillStyle ='#66CE39';
