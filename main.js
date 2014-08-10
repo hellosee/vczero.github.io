@@ -206,9 +206,7 @@ MyChart.prototype.drawBaseInfo = function(){
 	var baseinfo = [];
 	baseinfo.push('代号：vczero');
 	baseinfo.push('生日：1991-09-24');
-	baseinfo.push('公司：高德地图');
-	baseinfo.push('毕业院校：CHZU');
-	baseinfo.push('专业：Geographic Information System');
+	baseinfo.push('公司：阿里-高德地图');
 	baseinfo.push('爱好：打兵乓球');
 	baseinfo.push('从业：web app服务端&矢量地图');
 	baseinfo.push('E-amil：wlhmyit@126.com');
@@ -232,8 +230,8 @@ MyChart.prototype.drawBaseInfo = function(){
 	schoolShow.push('7. 2010年9月~2013年9月：主持校级大学生科研项目2项，主持');
 	schoolShow.push('8. 2010年9月~2014年6月：担任学习委员、11级地信2班助理班主任');
 	schoolShow.push('9. 2012年6月~2013年6月：GIS首届会长、校技术创新团队MySpace组长');
-	schoolShow.push('10. 荣获2014年安徽省品学兼优毕业生');
-	schoolShow.push('11. 荣获校十佳大学生');
+	schoolShow.push('10. 2014年12月：荣获2014年安徽省品学兼优毕业生');
+	schoolShow.push('11. 2014年5月：荣获校十佳大学生');
 
 	for(var n = 0; n < schoolShow.length; n++){
 		this.context.fillStyle ='#898788';
@@ -318,8 +316,8 @@ MyChart.prototype.projectInfo = function(){
 		_context.drawImage(image_amap,30,940,90,90);
 	}
 	var img_amap_detail = [];
-	img_amap_detail.push('项目：高德地图web app V2.0');
-	img_amap_detail.push('职责：Node.js服务端、部分前端开发(实习生)');
+	img_amap_detail.push('项目：高德地图web app & JS API');
+	img_amap_detail.push('职责：Node.js服务端、JS API');
 	img_amap_detail.push('简介：移动设备访问http://mo.amap.com');
 	img_amap_detail.push('其他：高德地图服务接口代码编写及地图相关探索');
 	for(var amap_i = 0; amap_i < img_amap_detail.length; amap_i++){
