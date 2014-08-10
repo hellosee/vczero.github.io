@@ -206,7 +206,7 @@ MyChart.prototype.drawBaseInfo = function(){
 	var baseinfo = [];
 	baseinfo.push('代号：vczero');
 	baseinfo.push('生日：1991-09-24');
-	baseinfo.push('公司：阿里——高德地图');
+	baseinfo.push('公司：阿里—高德地图');
 	baseinfo.push('爱好：打兵乓球');
 	baseinfo.push('从业：web app服务端&矢量地图');
 	baseinfo.push('E-amil：wlhmyit@126.com');
