@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<script type="text/javascript" src="calendar.js"></script>
+		<script type="text/javascript">
+			function showCalendar(){
+				var c = new Calendar('calendar',new Date());
+				c.showUI(function(date){
+					alert(date);
+				});
+			}
+		</script>
+	</head>
+	<body onload="showCalendar()">
+		<div id="calendar" style="width:390px; height:270px;"></div>
+	</body>
+</html>
