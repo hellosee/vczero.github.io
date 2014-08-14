@@ -56,15 +56,15 @@ img {
 }
 /*--------footer--------*/
 .toolbar_img {
-  height: 50px;
-  width: 50px;
-  margin: -2.5px auto;
+  height: 30px;
+  width: 30px;
+  margin: 7.5px auto;
 }
 /*---------login---------*/
 .login {
   position: absolute;
   top: 45px;
-  bottom: 50px;
+  bottom: 30px;
   right: 0;
   left: 0;
   /*opacity: 0.8;*/

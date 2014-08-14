@@ -70,7 +70,7 @@ img{
 }
 
 /*--------footer--------*/
-@toolbar_img_height:50px;
+@toolbar_img_height:30px;
 .toolbar_img{
 	height: @toolbar_img_height;
 	width: @toolbar_img_height;
