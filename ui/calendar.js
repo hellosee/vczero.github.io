@@ -21,9 +21,8 @@ var Calendar = (function(){
 
 	Calendar.prototype['showUI'] = function(callback){
 		var exist = document.getElementById('vczero_celldom_0');
-		//如果存在节点：移除
 		if(!!exist){
-			for(var e = 0; e < 35; e++){
+			for(var e = 0; e < 42; e++){
 				var node = document.getElementById('vczero_celldom_' + e);
 				node.onclick = null; //移除事件处理程序
 				this.div.removeChild(node);
@@ -32,7 +31,7 @@ var Calendar = (function(){
 
 		var width = this.width,
 		    height = this.height,
-		    cell = {width: (parseInt(width) - 20)/7, height: (parseInt(height) -30 - 20)/5},
+		    cell = {width: (parseInt(width) - 20)/7, height: (parseInt(height) -30 - 20)/6},
 		    monthArr = this._monthPanel(this.date);
 		this.div.style.paddingLeft = '8px'; 
 		this.div.style.border = '2px solid #57ABFF';
@@ -41,7 +40,7 @@ var Calendar = (function(){
 		this._addHeader();
 		this._addWeekday();
 
-		for(var i = 0; i < 35; i++){
+		for(var i = 0; i < 42; i++){
 			var cellDOM = document.createElement('div');
 			cellDOM.style.width = cell.width + 'px';
 			cellDOM.style.height = cell.height + 'px';
@@ -54,7 +53,7 @@ var Calendar = (function(){
 			cellDOM.setAttribute('date',monthArr.date[i]); //设置日期对象到DOM属性date上
 			cellDOM.innerHTML = monthArr.date[i].getDate();
 			//去掉最后一行横线
-			if(i < 28){
+			if(i < 35){
 				cellDOM.style.borderBottom = '1px solid #C8CACC';
 			}
 
@@ -64,7 +63,6 @@ var Calendar = (function(){
 			this.div.appendChild(cellDOM);
 		}
 
-		var _that = this;
 		//使用父元素事件委托
 		this.div.addEventListener('click',function(e){
 			var node = e.target;
@@ -93,7 +91,7 @@ var Calendar = (function(){
 		dateDiv.style.margin = '0 auto';
 		dateDiv.style.textAlign = 'center';
 		dateDiv.style.fontWeight = 'bold';
-		dateDiv.id = 'vczero_datediv'
+		dateDiv.id = 'vczero_datediv';
 
 		//< DIV
 		var leftDiv = document.createElement('div');
@@ -147,7 +145,7 @@ var Calendar = (function(){
 		dateDiv.appendChild(timeDiv);
 		dateDiv.appendChild(rightDiv);
 		this.div.appendChild(dateDiv);
-	}
+	};
 
 	//增加星期
 	Calendar.prototype._addWeekday = function(){
@@ -161,7 +159,7 @@ var Calendar = (function(){
 			
 		}
 
-		for(var i = 0; i < 7; i++){
+		for(var n = 0; n < 7; n++){
 			var weekday = document.createElement('div');
 			weekday.style.width = (parseInt(this.width) - 20)/7 + 'px';
 			weekday.style.height = '20px';
@@ -170,25 +168,25 @@ var Calendar = (function(){
 			weekday.style.color = '#BFBFBF';
 			weekday.style.fontWeight = 'bold';
 			weekday.style.textAlign = 'center';
-			weekday.id = 'vczero_week_' + i;
-			weekday.innerHTML = Calendar.week[i];
+			weekday.id = 'vczero_week_' + n;
+			weekday.innerHTML = Calendar.week[n];
 			this.div.appendChild(weekday);
 		}
-	}
+	};
 
 	Calendar.prototype._monthPanel = function(date){
 		//如果传递了Date对象，则按Date对象进行计算月份面板
 		//否则，按照当前月份计算面板
-		var date = date || new Date(),
-		    year = date.getFullYear(),
-		    month = date.getMonth(),
-		    day = date.getDate(),
-		    week = date.getDay(),
+		var myDate = date || new Date(),
+		    year = myDate.getFullYear(),
+		    month = myDate.getMonth(),
+		    day = myDate.getDate(),
+		    week = myDate.getDay(),
 		    currentDays = new Date(year, month + 1, 0).getDate(),
 		    preDays = new Date(year, month, 0).getDate(),
 		    firstDay = new Date(year, month, 1),
 		    firstCell = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1,
-		    bottomCell =  35 - currentDays - firstCell;
+		    bottomCell =  42 - currentDays - firstCell;
 		//前一个月该显示多少天
 		var preMonth = [];
 		for(var p = firstCell; p > 0; p--){
