@@ -1,0 +1,369 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>推荐目的地</title>
+<link href="css/lo_style_base.css" rel="stylesheet" type="text/css" />
+<link href="css/lo_style_main.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+<span id="gotop" name="gotop"></span>
+<article>
+	<div class="banner_srdz">
+    	<div class="w_1002" id="srdz_box">
+        	<div class="scroll_srdz">
+            	<ul>
+                	<li><a href="#"><img src="images/22.png" /></a></li>
+                    <li><a href="#"><img src="images/222.png" /></a></li>
+                    <li><a href="#"><img src="images/2222.png" /></a></li>
+                </ul>
+                <div class="small-pic"></div>
+            </div>
+        </div>
+    </div>
+</article>
+<header>
+	<div class="img_text">
+	<div class="w_1002">
+        <div class="logo">
+            <a href="/"><img src="images/logo.png" /></a>
+            <h1>灵路旅游</h1>
+        </div>
+        <div class="nav">
+        	<ul>
+            	<li><a href="index.html">首页</a></li>
+                <li><a href="sirendingzhi_putong.html">私人定制</a></li>
+                <li><a href="tuijianmudidi.html" class="selected">推荐目的地</a></li>
+                <li><a href="/">大旅行家俱乐部</a></li>
+                <li><a href="/">关于领队</a></li>
+                <li><a href="/">关于我们</a></li>
+                <li><a href="/">品牌故事</a></li>
+            </ul>
+        </div>
+        <div class="login">
+        	<span class="login_on"><a href="#">登陆</a>|<a href="#">注册</a></span>
+        </div>
+        <div class="clear"></div>
+    </div>
+    </div>
+</header>
+<article>
+<div class="bread_nav">
+	<div class="w_1002">
+    	<span>当前位置：</span><a href="#">主页</a>&gt;&gt;<a href="#">推荐目的地</a>
+    </div>
+</div>
+</article>
+<article>
+<div class="search">
+	<div class="w_1002">
+    	<h2 class="cust_title">
+        	<span>找到适合你的旅游路线</span>
+        </h2>
+        <div class="search_senior">
+        	<div class="ss_delta">
+            	<div class="ss_delta_left">
+                	 <select name="dazhou" style="height:40px; width:194px;border:1px solid #FFFFFF; border-radius:3px;opacity:0.5;">
+                    	<option value="南美洲" style="background-color: #272822;color:#fff;">南美洲</option>
+					  	<option value="亚洲"  style="background-color: #272822;color:#fff;">亚洲</option>
+					  	<option value="大洋洲" style="background-color: #272822;color:#fff;">大洋洲</option>
+					  	<option value="北美洲" style="background-color: #272822;color:#fff;">北美洲</option>
+					  
+					 	<option value="欧洲" style="background-color: #272822;color:#fff;">欧洲</option>
+					  	<option value="南美洲" style="background-color: #272822;color:#fff;">南美洲</option>
+					  	<option value="南极洲" style="background-color: #272822;color:#fff;">南极洲</option>
+					</select>
+                </div>
+               
+            </div>
+            <div class="ss_delta">
+            	<div class="ss_delta_left">
+                	<input name="guojia" class="delta_text" style="width:180px;border-radius:3px;" placeholder= '请输入国家名称'/>
+                </div>     
+            </div>
+            <div class="ss_delta">
+            	<div class="ss_delta_left">
+                	<input name="time" type="text" value="" class="delta_text" style="width:182px;border-radius:3px;" placeholder="请输入出发日期">
+                </div>
+            </div>
+             <div class="ss_delta ss_button">
+            	<a id= 'putong_query' class="selected">查询</a>
+                <a href="tuijianmudi_advance.html" >高级搜索</a>
+            </div>
+        </div>
+    </div>
+</div>
+</article>
+<article>
+<div id="div_world_map"></div>
+<!--
+	作者：wlhmyit@126.com
+	时间：2014-10-25
+	描述：大洲TOP1
+-->
+<script type="text/template" id="tpl_world_map">
+<div class="map">
+	<div class="w_1002 map_list">
+    	<div class="world_map wmp_list">
+        	<ul id="world_map_event">
+            <li class="selected" id="item_1" data-dazhou="<%=data[0]['suozaiDazhou'] || ''%>">
+                <span class="fz_img"><%=data[0]['suozaiDazhou'] || ''%></span><div class="world_map_list map_left6">
+            	<img src="<%=data[0].fengmianUrl%>" height="230" width="300" />
+                <div class="wmb_box">
+                	 <h2 class="wmb_tltle"><span><%=data[0].xiangmuName%></span></h2>
+                     <p class="wmb_text"><%=data[0].luxianJianjie%></p>
+                     <p class="wmb_foot"><em>☆<%=data[0].xiangmuLeixing%></em><em>☆<%=data[0].zhichiCount%>人</em></p>
+                </div>
+            </div>
+            </li>
+            <li id="item_2" data-dazhou="<%=data[1]['suozaiDazhou'] || ''%>">
+                <span class="fz_img"><%=data[1].suozaiDazhou%></span><div class="world_map_list map_left6">
+            	<img src="<%=data[1].fengmianUrl%>" height="230" width="300" />
+                <div class="wmb_box">
+                	 <h2 class="wmb_tltle"><span><%=data[1].xiangmuName%></span></h2>
+                     <p class="wmb_text"><%=data[1].luxianJianjie%></p>
+                     <p class="wmb_foot"><em>☆<%=data[1].xiangmuLeixing%></em><em>☆<%=data[1].zhichiCount%>人</em></p>
+                </div>
+            </div>
+            </li>
+            <li id="item_3" data-dazhou="<%=data[2]['suozaiDazhou'] || ''%>">
+                <span class="fz_img"><%=data[2].suozaiDazhou%></span><div class="world_map_list map_left6">
+            	<img src="<%=data[2].fengmianUrl%>" height="230" width="300" />
+                <div class="wmb_box">
+                	 <h2 class="wmb_tltle"><span><%=data[2].xiangmuName%></span></h2>
+                     <p class="wmb_text"><%=data[2].luxianJianjie%></p>
+                     <p class="wmb_foot"><em>☆<%=data[2].xiangmuLeixing%></em><em>☆<%=data[2].zhichiCount%>人</em></p>
+                </div>
+            </div>
+            </li>
+            <li id="item_4" data-dazhou="<%=data[3]['suozaiDazhou'] || ''%>">
+                <span class="fz_img"><%=data[3].suozaiDazhou%></span><div class="world_map_list map_left6">
+            	<img src="<%=data[3].fengmianUrl%>" height="230" width="300" />
+                <div class="wmb_box">
+                	 <h2 class="wmb_tltle"><span><%=data[3].xiangmuName%></span></h2>
+                     <p class="wmb_text"><%=data[3].luxianJianjie%></p>
+                     <p class="wmb_foot"><em>☆<%=data[3].xiangmuLeixing%></em><em>☆<%=data[3].zhichiCount%>人</em></p>
+                </div>
+            </div>
+            </li>
+            <li id="item_5" data-dazhou="<%=data[4]['suozaiDazhou'] || ''%>">
+                <span class="fz_img"><%=data[4].suozaiDazhou%></span><div class="world_map_list map_left6">
+            	<img src="<%=data[4].fengmianUrl%>" height="230" width="300" />
+                <div class="wmb_box">
+                	 <h2 class="wmb_tltle"><span><%=data[4].xiangmuName%></span></h2>
+                     <p class="wmb_text"><%=data[4].luxianJianjie%></p>
+                     <p class="wmb_foot"><em>☆<%=data[4].xiangmuLeixing%></em><em>☆<%=data[4].zhichiCount%>人</em></p>
+                </div>
+            </div>
+            </li>
+            <li id="item_6" data-dazhou="<%=data[5]['suozaiDazhou'] || ''%>">
+                <span class="fz_img"><%=data[5].suozaiDazhou%></span><div class="world_map_list map_left6">
+            	<img src="<%=data[5].fengmianUrl%>" height="230" width="300" />
+                <div class="wmb_box">
+                	 <h2 class="wmb_tltle"><span><%=data[5].xiangmuName%></span></h2>
+                     <p class="wmb_text"><%=data[5].luxianJianjie%></p>
+                     <p class="wmb_foot"><em>☆<%=data[5].xiangmuLeixing%></em><em>☆<%=data[5].zhichiCount%>人</em></p>
+                </div>
+            </div>
+            </li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+</script>
+</article>
+<article>
+<div class="recommendation">
+	<div class="w_1002 column">
+    	<div id="main_recomm" class="recommendation_box">
+    		<!--
+            	作者：wlhmyit@126.com
+            	时间：2014-10-25
+            	描述：最多显示8条记录
+            -->
+    		<div id="div_title"></div>
+    		 <script type="text/template" id="tpl_title">
+	        	<h2 class="cust_title mar_bt60">
+	        		<span id="G_dazhou"><%=data.title%></span>        	
+	        	</h2>
+        	</script>
+        	<div id="list_div"></div>
+            <div class="recommendation_list">
+            	<div id="div_item1"></div>
+            	<script type="text/template" id="tpl_item1">
+	                <a class="rl_block fl" href="#">
+	                	<img class="rl_img" src="<%=data.fengmianUrl%>" />
+	                    <span class="rl_state"><%=data.xiangmuZhuangtaiStr%></span>
+	                    <h2><span class="rl_place"><%=data.xiangmuName%></span><em class="rl_support">支持人数：<%=data.zhichiCount%>人</em></h2>
+	                    <p class="rl_itroduction"><%=data.luxianJianjie%></p>
+	                    <h3 class="fund_time"><span><%=data.zhichiPercent%><br />已达到</span><span>￥<%=data.yichouJine%><br />已筹集资金</span><span class="bor_none"><%=data.zhongchouJieshuTime%>天<br />剩余时间</span></h3>
+	                </a>
+                </script>
+                <div id="div_item2"></div>
+                <script type="text/template" id="tpl_item2">
+	               <a class="rl_block fr" href="#">
+	                	<img class="rl_img" src="<%=data.fengmianUrl%>" />
+	                    <span class="rl_state"><%=data.xiangmuZhuangtaiStr%></span>
+	                    <h2><span class="rl_place"><%=data.xiangmuName%></span><em class="rl_support">支持人数：<%=data.zhichiCount%>人</em></h2>
+	                    <p class="rl_itroduction"><%=data.luxianJianjie%></p>
+	                    <h3 class="fund_time"><span><%=data.zhichiPercent%><br />已达到</span><span>￥<%=data.yichouJine%><br />已筹集资金</span><span class="bor_none"><%=data.zhongchouJieshuTime%>天<br />剩余时间</span></h3>
+	                </a>
+                </script>
+            </div>
+            <div class="poc_top"><img src="images/Position_icon.png" /></div>
+            
+            <div class="recommendation_list">
+            	<div id="div_item3"></div>
+                <script type="text/template" id="tpl_item3">
+	                <a class="rl_block fl" href="#">
+	                	<img class="rl_img" src="<%=data.fengmianUrl%>" />
+	                    <span class="rl_state"><%=data.xiangmuZhuangtaiStr%></span>
+	                    <h2><span class="rl_place"><%=data.xiangmuName%></span><em class="rl_support">支持人数：<%=data.zhichiCount%>人</em></h2>
+	                    <p class="rl_itroduction"><%=data.luxianJianjie%></p>
+	                    <h3 class="fund_time"><span><%=data.zhichiPercent%><br />已达到</span><span>￥<%=data.yichouJine%><br />已筹集资金</span><span class="bor_none"><%=data.zhongchouJieshuTime%>天<br />剩余时间</span></h3>
+	                </a>
+	            </script>
+	            
+	            <div id="div_item4"></div>
+                <script type="text/template" id="tpl_item4">
+	                <a class="rl_block fr" href="#">
+	                	<img class="rl_img" src="<%=data.fengmianUrl%>" />
+	                    <span class="rl_state"><%=data.xiangmuZhuangtaiStr%></span>
+	                    <h2><span class="rl_place"><%=data.xiangmuName%></span><em class="rl_support">支持人数：<%=data.zhichiCount%>人</em></h2>
+	                    <p class="rl_itroduction"><%=data.luxianJianjie%></p>
+	                    <h3 class="fund_time"><span><%=data.zhichiPercent%><br />已达到</span><span>￥<%=data.yichouJine%><br />已筹集资金</span><span class="bor_none"><%=data.zhongchouJieshuTime%>天<br />剩余时间</span></h3>
+	                </a>
+                 </script>
+            </div>
+            <div class="poc_top"><img src="images/Position_icon.png" /></div>
+            
+            <div class="recommendation_list">
+            	<div id="div_item5"></div>
+            	<script type="text/template" id="tpl_item5">
+	                <a class="rl_block fl" href="#">
+	                	<img class="rl_img" src="<%=data.fengmianUrl%>" />
+	                    <span class="rl_state"><%=data.xiangmuZhuangtaiStr%></span>
+	                    <h2><span class="rl_place"><%=data.xiangmuName%></span><em class="rl_support">支持人数：<%=data.zhichiCount%>人</em></h2>
+	                    <p class="rl_itroduction"><%=data.luxianJianjie%></p>
+	                    <h3 class="fund_time"><span><%=data.zhichiPercent%><br />已达到</span><span>￥<%=data.yichouJine%><br />已筹集资金</span><span class="bor_none"><%=data.zhongchouJieshuTime%>天<br />剩余时间</span></h3>
+	                </a>
+                </script>
+                <div id="div_item6"></div>
+                <script type="text/template" id="tpl_item6">
+	                <a class="rl_block fr" href="#">
+	                	<img class="rl_img" src="<%=data.fengmianUrl%>" />
+	                    <span class="rl_state"><%=data.xiangmuZhuangtaiStr%></span>
+	                    <h2><span class="rl_place"><%=data.xiangmuName%></span><em class="rl_support">支持人数：<%=data.zhichiCount%>人</em></h2>
+	                    <p class="rl_itroduction"><%=data.luxianJianjie%></p>
+	                    <h3 class="fund_time"><span><%=data.zhichiPercent%><br />已达到</span><span>￥<%=data.yichouJine%><br />已筹集资金</span><span class="bor_none"><%=data.zhongchouJieshuTime%>天<br />剩余时间</span></h3>
+	                </a>
+                </script>
+            </div>
+            <div class="poc_top"><img src="images/Position_icon.png" /></div>
+            
+            <div class="recommendation_list">
+            	<div id="div_item7"></div>
+                <script type="text/template" id="tpl_item7">
+	                <a class="rl_block fl" href="#">
+	                	<img class="rl_img" src="<%=data.fengmianUrl%>" />
+	                    <span class="rl_state"><%=data.xiangmuZhuangtaiStr%></span>
+	                    <h2><span class="rl_place"><%=data.xiangmuName%></span><em class="rl_support">支持人数：<%=data.zhichiCount%>人</em></h2>
+	                    <p class="rl_itroduction"><%=data.luxianJianjie%></p>
+	                    <h3 class="fund_time"><span><%=data.zhichiPercent%><br />已达到</span><span>￥<%=data.yichouJine%><br />已筹集资金</span><span class="bor_none"><%=data.zhongchouJieshuTime%>天<br />剩余时间</span></h3>
+	                </a>
+	            </script>
+	            
+	            <div id="div_item8"></div>
+                <script type="text/template" id="tpl_item8">
+	                <a class="rl_block fr" href="#">
+	                	<img class="rl_img" src="<%=data.fengmianUrl%>" />
+	                    <span class="rl_state"><%=data.xiangmuZhuangtaiStr%></span>
+	                    <h2><span class="rl_place"><%=data.xiangmuName%></span><em class="rl_support">支持人数：<%=data.zhichiCount%>人</em></h2>
+	                    <p class="rl_itroduction"><%=data.luxianJianjie%></p>
+	                    <h3 class="fund_time"><span><%=data.zhichiPercent%><br />已达到</span><span>￥<%=data.yichouJine%><br />已筹集资金</span><span class="bor_none"><%=data.zhongchouJieshuTime%>天<br />剩余时间</span></h3>
+	                </a>
+                 </script>
+            </div>            
+        </div>
+    	
+        <div class="page">
+        	<ul id="page_li">
+            	<li id="pre_li" class="selected">&lt;</li>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li id="next_li">&gt;</li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+</article>
+<article>
+<div class="gotop">
+	<ul>
+    	<li class="gt_top"><a href="#gotop">&nbsp;</a></li>
+        <li><a href="#">微信</a></li>
+        <li><a class="xlwb" href="#">新浪微博</a></li>
+        <li><a href="#">豆瓣</a></li>
+        <li><a href="#">人人</a></li>
+        <li class="gt_add">&nbsp;</li>
+    </ul>
+</div>
+</article>
+
+<footer>
+<div class="footer">
+	<div class="w_1002">
+    	<div class="foot_nav">
+        	<div class="fn_box fn_about">
+            	<h2>关于我们</h2>
+                <p>"灵路旅游"是中国首家上市民营5A旅行社---众信旅游的高端品牌，与知名旅游杂志《世界》联合打造。"灵路旅游"致力于构建高端旅行聚合平台，为追求高品质旅行生活的个人、家庭、企业、社会组织团体，提供高端旅行产品、目的地行程策划与执行及相应的配套服务。</p>
+            </div>
+            <div class="fn_box fn_contact">
+            	<h2>联系我们</h2>
+                <ul>
+                	<li class="tel_bnt">010-12345678</li>
+                    <li class="mobile_bnt">＋86 18501399654</li>
+                    <li class="email_bnt">caojiyin@gmail.com</li>
+                    <li class="address_bnt">地址：北京市东城区和平⾥东街星科技园3号楼308室</li>
+                </ul>
+            </div>
+            <div class="fn_box fn_attention">
+            	<h2>关注我们</h2>
+                <ul>
+                	<li class="txwb"><a href="#">腾讯微博</a></li>
+                    <li class="xlwb"><a href="#">新浪微博</a></li>
+                    <li><a href="#">豆瓣</a></li>
+                    <li class="bor_none"><a href="#">人人</a></li>
+                </ul>
+            </div>
+            <div class="fn_box fn_official">
+            	<h2>官方微信</h2>
+                <img src="images/2202424543.png" width="140" />
+            </div>
+        </div>
+        <div class="copyright">
+        <p>根据中国法律的要求，对于本⺴站所有出境组团旅游，组团事宜均由我们的中国合作伙伴，具备合法出境</p>
+		<p>资质的国际旅⾏社办理，地接事宜由欧洲最⼤户外旅游集团法国Huwans Company公司办理。</p>
+        <p>Copyright © 2013 www.huwans.cn. 跃世（上海）旅⾏社有限公司版权所有</p>
+        </div>
+    </div><div class="clear"></div>
+</div>
+</footer>
+<script type="text/javascript" src="lib/util/config.js"></script>
+<script type="text/javascript">
+$(function(){
+	seajs.config({
+	  	base: './lib'
+	});
+	seajs.use('sirendingzhi/tuijianmudidi.js');
+	
+});
+</script>
+</body>
+</html>
