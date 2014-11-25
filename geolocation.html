@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>浏览器定位分析</title>
+    <style type="text/css">
+        body{
+            margin:0;
+            font-family: '微软雅黑';
+            font-size: 14px;
+            background-color: #000;
+        }
+        .fl{
+            float:left;
+        }
+
+        .w50{
+            width:50%;
+        }
+
+        .w100{
+            width:100%;
+        }
+
+        .h400{
+            height:400px;
+        }
+
+        .fr{
+            float:right;
+        }
+
+        .color_green{
+            color: #00FF01;
+        }
+
+        #amap{
+            background-color: #fff;
+            height:400px;
+        }
+
+        #bmap{
+            background-color: #fff;
+        }
+
+    </style>
+    <script type="text/javascript">
+        window.onload = function(){
+            //高德地图
+            var amap = new AMap.Map('amap');
+            amap.setCenter(new AMap.LngLat(116.404, 39.915));
+            amap.setZoom(11);
+
+            //高德定位分析
+           amap.plugin('AMap.Geolocation', function(){
+               var geolocation = new AMap.Geolocation({
+                   enableHighAccuracy: true,
+                   convert: true,
+                   panToLocation: true,
+                   showMarker: true,
+                   timeout: 60000
+               });
+               geolocation.getCurrentPosition();
+               amap.addControl(geolocation);
+               var amapStart = document.getElementById('amap_start');
+               AMap.event.addListener(geolocation, 'complete', function(data){
+                   amapStart.innerHTML = '高德地图浏览器定位开始....................................................1';
+               });
+
+               AMap.event.addListener(geolocation, 'error', function(data){
+                   amapStart.innerHTML = '高德地图浏览器定位失败';
+               });
+           });
+
+
+        };
+    </script>
+</head>
+<body>
+    <div class="h40 w100">
+        <div id="bmap" class="w50 h400 fl"></div>
+        <div id="amap" class="w50 h400 fr"></div>
+    </div>
+    <!--分析结果-->
+    <div>
+        <div class="w50 fl color_green">
+            <div id="bmap_start"></div>
+            <div id="bmap_des"></div>
+        </div>
+        <div class="w50 fr color_green">
+            <div id="amap_start"></div>
+            <div id="amap_des"></div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=d442da7fa595d7f3466ab0d1bca0f645"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=iUFoFW5Lll4pACGiMbgpLPdA"></script>
+</html>
