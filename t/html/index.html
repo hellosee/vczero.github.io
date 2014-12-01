@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, minimal-ui" />
+		<title>天天爱搜索</title>
+		<link rel="stylesheet" type="text/css" href="../css/main.css">
+	</head>
+	<body>
+		<header>
+			<div>
+				<input id="search_input" type="text" placeholder="请输入关键字"/>
+			</div>
+			<div>
+				<input id="search_btn" type="button" value="搜索">
+			</div>
+		</header>
+		
+		<section ng-controller="BookListController">
+			
+			<div class="list_item" ng-repeat="data in list">
+				<div class="list_img overflow fl">
+					<img class="list_img" ng-src="{{data.image}}"/>
+				</div>
+				<div class="list_content overflow fl">
+					<div class="list_bookname overflow">
+						{{data.origin_title}}
+					</div>
+					<div class="list_author overflow">
+						{{data.author}} {{data.publisher}}
+					</div>
+					<div class="list_bookprice">
+						<span class="list_price_num">
+							{{data.price}}
+						</span>
+						<span>元</span>
+					</div>
+				</div>
+				<div class="list_other overflow fr">
+					<span>
+						{{data.pages}}页
+					</span>
+				</div>
+			</div>
+		
+			<div style="height: 55px;"></div>
+		</section>
+		
+		<footer>
+			<div>图书</div>
+			<div>音乐</div>
+			<div>电影</div>
+		</footer>
+		
+		<script type="text/javascript" src="../js/angular.js"></script>
+		<script type="text/javascript" src="../js/angular-route.js" ></script>
+		<script type="text/javascript" src="../lib/index.js"></script>
+	</body>
+</html>
