@@ -6,7 +6,7 @@ body{
 }
 
 
-input[type=button]{
+input{
 	-webkit-appearance:none;
 	outline:none
 }
