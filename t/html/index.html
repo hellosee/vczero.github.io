@@ -16,40 +16,12 @@
 			</div>
 		</header>
 		
-		<section ng-controller="BookListController">
-			
-			<div class="list_item" ng-repeat="data in list">
-				<div class="list_img overflow fl">
-					<img class="list_img" ng-src="{{data.image}}"/>
-				</div>
-				<div class="list_content overflow fl">
-					<div class="list_bookname overflow">
-						{{data.origin_title}}
-					</div>
-					<div class="list_author overflow">
-						{{data.author}} {{data.publisher}}
-					</div>
-					<div class="list_bookprice">
-						<span class="list_price_num">
-							{{data.price}}
-						</span>
-						<span>元</span>
-					</div>
-				</div>
-				<div class="list_other overflow fr">
-					<span>
-						{{data.pages}}页
-					</span>
-				</div>
-			</div>
-		
-			<div style="height: 55px;"></div>
-		</section>
+		<div ng-view></div>
 		
 		<footer>
-			<div>图书</div>
-			<div>音乐</div>
-			<div>电影</div>
+			<a >图书</a>
+			<a>音乐</a>
+			<a>电影</a>
 		</footer>
 		
 		<script type="text/javascript" src="../js/angular.js"></script>
