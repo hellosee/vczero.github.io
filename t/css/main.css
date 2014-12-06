@@ -30,6 +30,7 @@ header div:nth-child(1){
 	width: 100%;
 	border:1px solid #DDDDDD;
 	outline:none;
+	outline-style: none;
 	font-size:15px;
 	font-family:'georgia',  "微软雅黑";
 }
