@@ -32,7 +32,7 @@ header div:nth-child(1){
 	position: absolute;
 	top:10px;
 	left:3px;
-	right: 60px;
+	right: 50px;
 	height:40px;
 }
 
@@ -45,7 +45,7 @@ header div:nth-child(1){
 	outline-style: none;
 	font-size:15px;
 	font-family:'georgia',  "微软雅黑";
-	-webkit-tap-highlight-color: #FFF;
+	-webkit-tap-highlight-color: #000;
 	box-sizing:border-box;
 	-moz-box-sizing:border-box; /* Firefox */
 	-webkit-box-sizing:border-box; /* Safari */

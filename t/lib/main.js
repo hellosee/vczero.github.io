@@ -1,4 +1,5 @@
 var app = angular.module('app', ['ngRoute']);
+window.scrollTo(0, 0);
 
 app.run(function($rootScope){
     $rootScope.version = '0.1';
