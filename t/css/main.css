@@ -45,6 +45,10 @@ header div:nth-child(1){
 	outline-style: none;
 	font-size:15px;
 	font-family:'georgia',  "微软雅黑";
+	-webkit-tap-highlight-color: #FFF;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+	-webkit-box-sizing:border-box; /* Safari */
 }
 
 header div:nth-child(2){
