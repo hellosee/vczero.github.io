@@ -19,7 +19,7 @@ app.controller('SearchController', function($scope, $rootScope, $location, bookL
 			if(keywords){
 				$rootScope.keywordsObj.movie = keywords;
 			}
-			movieList.getData($rootScope.keywordsObj.music);
+			movieList.getData($rootScope.keywordsObj.movie);
 		}
 	};
 });
