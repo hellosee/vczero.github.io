@@ -1,5 +1,5 @@
 var app = angular.module('app', ['ui.router']);
-
+ setTimeout(function(){ window.scrollTo(0, 1); }, 100);
 /*$rootScope的相关配置*/
 app.run(function($rootScope){
     $rootScope.version = '0.1';
