@@ -3,7 +3,7 @@
 		<img ng-src="{{user.avatar}}" />
 	</div>
 	
-	<form name="imgForm" action="http://127.0.0.1:3000/upload/img/" enctype="multipart/form-data" method="post">
+	<form name="imgForm" action="http://123.57.39.116:6547/upload/img/" enctype="multipart/form-data" method="post">
 		<input id="uploadImg" name="upload" type="file" style="width:0;height:0;"multiple="multiple" onchange="document.forms['imgForm'].submit();"/>
 		<input id="selfToken" name="token" style="width:0;height:0;border:0;"/>
 		<div class="contacts_upload center" ng-click="upload()" value="上传头像">上传头像</div>
