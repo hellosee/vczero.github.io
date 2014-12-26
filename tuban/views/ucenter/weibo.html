@@ -1,0 +1,32 @@
+<div ng-repeat="item in items" style="margin-bottom:10px;">
+	<div class="uc_wei_div">
+		<div class="uc_content">
+			{{item.content}}
+		</div>
+		<div class="fl uc_count">
+			<span>{{item.time}}</span>
+			<span>评论：{{item.comments.length}}</span>
+			<span>赞：{{item.zans.length}}</span>
+			<span>{{item.tag}}</span>
+		</div>
+		<div class="fr uc_del" ng-click="deleteWeibo($index)">删除</div>
+	</div>
+	<!--评论-->
+	<div class="uc_allc_div">
+		<div class="uc_comment_div" ng-repeat="comment in item.comments">
+	   		<div class="fl">
+	   			<img ng-src="{{comment.avatar}}"/>
+	   		</div>
+	   		<div class="fl uc_comment_div_text">
+	   			<div ng-bind="comment.realname || comment.nickname || comment.email"></div>
+	    		<div ng-bind="comment.comment"></div>
+	    		<div ng-bind="comment.time"></div>
+	   		</div>
+	   	</div>
+	</div>
+</div>
+<div class="uc_page">
+	<span ng-click="prePage()">上一页</span>
+	<span ng-click="nextPage()">下一页</span>
+</div>
+<div style="height:100px;"></div>

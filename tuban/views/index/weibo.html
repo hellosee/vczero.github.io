@@ -1,0 +1,63 @@
+<!--左边-->
+<div class="fl index_container_left" ng-controller="WeiboController">
+	<div class="index_wei_item" ng-repeat="item in items">
+		<!--描述：头像和微博-->
+		<div class="index_wei_item_picH">
+			<div class="index_wei_item_picH index_wei_item_picW fl">
+				<img ng-src="{{item.avatar}}" class="index_wei_item_picH index_wei_item_picW ml3"/>
+			</div>
+			<div class="index_wei_item_picH fl">
+				<span ng-bind="item.content"></span>
+			</div>
+		</div>
+		<!--描述：作者 时间 标签-->
+		<div class="index_wei_item_time_tag ml3">
+			<span ng-bind="item.realname || item.nickname || item.email"></span>
+			<span ng-bind="item.time"></span>
+			<span>
+				<img src="img/lable.png"/>
+				<span ng-bind="item.tag"></span>
+			</span>
+		</div>
+		<!--描述：评论 点赞按钮-->
+        <div class="index_wei_item_count ml3">
+        	<div class="fl">
+        		<span>评论：<span ng-bind="item.comments.length"></span></span>
+        		<span>赞：<span ng-bind="item.zans.length"></span></span>
+        	</div>
+        	<div class="fr">
+        		<span ng-click="zan(item)">
+        			<img src="img/zan.png"/>
+        		</span>
+        		<span ng-click="comment(item)">
+        			<img src="img/pinglun2.png"/>
+        		</span>
+        	</div>
+        </div>
+        <!--描述：评论输入框-->
+        <div class="index_wei_item_edit ml3" ng-if="item.isShowComDiv">
+        	<div><textarea id="_commentContent" ng-model="commentContent"></textarea></div>
+        	<div ng-click="addComment(item, commentContent)">评论</div>
+        </div>
+        
+        <!--描述：评论内容-->
+        <div class="index_wei_item_comment">
+        	<div class="index_wei_item_user_c" ng-repeat="comment in item.comments">
+        		<div class="fl">
+        			<img ng-src="{{comment.avatar}}"/>
+        		</div>
+        		<div class="fl">
+        			<div ng-bind="comment.realname || comment.nickname || comment.email"></div>
+        			<div ng-bind="comment.comment"></div>
+        			<div ng-bind="comment.time"></div>
+        		</div>
+        	</div>
+        </div>
+	</div>
+	<div class="weibo_paging">
+		<span ng-click="prePage()">上一页</span>
+		<span ng-bind="currentPage + 1"></span>
+		<span ng-click="nextPage()">下一页</span>
+	</div>
+</div>
+		
