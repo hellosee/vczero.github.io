@@ -1,5 +1,6 @@
 
 var app = angular.module('app', ['ui.router', 'ngCookies', 'ngGrid']);
+var SERVER_BASE_URL = 'http://123.57.39.116:6547/';
 //初始化配置
 app.run(['$rootScope', function($rootScope) {
     $rootScope.appName = '图班网';
@@ -10,15 +11,15 @@ app.run(['$rootScope', function($rootScope) {
 
 //服务列表
 app.constant('ServiceConfig', {
-    user_login: 'http://127.0.0.1:3000/user/login',
-    user_getAll: 'http://127.0.0.1:3000/user/getAll',
-    user_updateTag: 'http://127.0.0.1:3000/user/updateTag',
-    user_getUserByCondition: 'http://127.0.0.1:3000/user/getByCondition',
-    user_delete: 'http://127.0.0.1:3000/user/delete',
-    article_create: 'http://127.0.0.1:3000/article/create',
-    weibo_getByCondition: 'http://127.0.0.1:3000/wei/getByCondition',
-    weibo_set2null: 'http://127.0.0.1:3000/wei/set2null',
-    email_findPassword: 'http://127.0.0.1:3000/email/findPassword'
+    user_login: SERVER_BASE_URL + 'user/login',
+    user_getAll: SERVER_BASE_URL + 'user/getAll',
+    user_updateTag: SERVER_BASE_URL + 'user/updateTag',
+    user_getUserByCondition: SERVER_BASE_URL + 'user/getByCondition',
+    user_delete: SERVER_BASE_URL + 'user/delete',
+    article_create: SERVER_BASE_URL + 'article/create',
+    weibo_getByCondition: SERVER_BASE_URL + 'wei/getByCondition',
+    weibo_set2null: SERVER_BASE_URL + 'wei/set2null',
+    email_findPassword: SERVER_BASE_URL + 'email/findPassword'
 });
 
 
@@ -333,7 +334,7 @@ function($scope, $rootScope, $timeout, $http, $cookieStore, ServiceConfig, MenuS
     
     //搜索
     $scope.Search = function($event, choose, keywords){
-    	if($event.keyCode === 13 || event.which === 32){
+    	if($event.keyCode === 13 || $event.which === 32){
     		var condition = '?token=' + user.token + '&';
     		var choose = choose || 'default';
     		switch(choose){
