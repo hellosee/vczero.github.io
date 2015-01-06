@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>动手写JS组件</title>
+		<link type="text/css" rel="stylesheet" href="css/main.css"/>
+	</head>
+	<body>
+		<header>
+			<ul>
+				<li>首页</li>
+				<li>GitHub</li>
+				<li>About</li>
+			</ul>
+		</header>
+		
+		<section class="item_list">
+			<div id="calendar_menu">canlendar</div>
+			<div id="guid">guid</div>
+			<div id="cookie">cookie</div>
+			<div id="tip">tip</div>
+			<div id="mask">mask</div>
+		</section>
+		
+		<section class="codeshow">
+			<div id="code_calendar" class="code fl">
+				<img src="img/calendar.png"/>
+			</div>
+			<div id="show_calendar" class="show fl">
+				<div id="calendar" style="width:390px; height:300px;"></div>
+				<div style="margin-top:15px;background-color:#FFF;border-radius:3px;height:80px;border:1px solid #959695;">
+					<br/>
+					<span id="calendar_time" style="margin-left:10px;">点击日历上的日期试试</span>
+				</div>
+			</div>
+		</section>
+		<script type="text/javascript" src="js/calendar.js" ></script>
+		<script type="text/javascript" src="js/main.js"></script>
+	</body>
+</html>
