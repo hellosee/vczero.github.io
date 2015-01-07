@@ -12,6 +12,26 @@ header ul li{float:left;margin-right:25px;}
 .item_list div:nth-child(4){background-color:#3498DB;}
 .item_list div:nth-child(5){background-color:#0A64A4;}
 .codeshow{position:absolute;top:70px;left:240px;/*border:1px solid red;*/min-height:400px;min-width:850px;}
-.code{background-color:#272822;min-height:400px;width:570px;border:1px dashed #FFF;font-size:14px;}
+.code{background-color:#272822;min-height:400px;min-width:570px;border:1px dashed #FFF;font-size:14px;}
 .show{margin-left:10px;}
+.hide{display:none;}
+
+/*-----------------------------------------------------*/
+#calendar{width:390px; height:300px;}
+#calendar_info{margin-top:15px;background-color:#FFF;border-radius:3px;height:80px;border:1px solid #959695;}
+#calendar_info span{margin-left:10px;}
+
+#guid_textarea{width:350px;height:80px;resize:none;border-radius:3px;outline:none;padding-left:4px;border:1px solid #8FE4F5;}
+#guid_genrator{height:24px;width:80px;border-radius:2px;line-height:24px;text-align:center;color:#fff;background-color:#2AA198;margin-top:5px;cursor:pointer;}
+
+.cookie_text>div:first-child input{height:25px;border:1px solid #ccc;border-radius:3px;outline:none;padding-left:3px;}
+.cookie_text>div:nth-child(2){height:24px;background-color: #2AA198;width:80px;color:#FFF;margin-top:5px;border-radius:3px;margin-left:45px;cursor:pointer;}
+.cookie_text>div:nth-child(3){margin-top:10px;}
+.cookie_text>div:nth-child(3)>textarea{height:190px;width:380px;margin-left:45px;border:1px solid #CCCCCC;resize:none;outline:none;border-radius:3px;}
+
+#tip_avatar{margin-top:120px;margin-left:20px;}
+
+.mask_div img{height:400px;}
+
+
 

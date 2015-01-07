@@ -2,13 +2,13 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>动手写JS组件</title>
+		<title>JavaScript组件</title>
 		<link type="text/css" rel="stylesheet" href="css/main.css"/>
 	</head>
 	<body>
 		<header>
 			<ul>
-				<li>首页</li>
+				<li>写个工具自己玩</li>
 				<li>GitHub</li>
 				<li>About</li>
 			</ul>
@@ -22,19 +22,76 @@
 			<div id="mask">mask</div>
 		</section>
 		
-		<section class="codeshow">
-			<div id="code_calendar" class="code fl">
+		<section class="codeshow hide" id="calendar_codeshow">
+			<div class="code fl">
 				<img src="img/calendar.png"/>
 			</div>
-			<div id="show_calendar" class="show fl">
-				<div id="calendar" style="width:390px; height:300px;"></div>
-				<div style="margin-top:15px;background-color:#FFF;border-radius:3px;height:80px;border:1px solid #959695;">
+			<div class="show fl">
+				<div id="calendar"></div>
+				<div id="calendar_info">
 					<br/>
-					<span id="calendar_time" style="margin-left:10px;">点击日历上的日期试试</span>
+					<span id="calendar_time">点击日历上的日期试试</span>
 				</div>
 			</div>
 		</section>
+		
+		<section class="codeshow hide" id="guid_codeshow">
+			<div class="code fl">
+				<img src="img/guid.png"/>
+			</div>
+			<div class="show fl">
+				<div>
+					<textarea id="guid_textarea"></textarea>
+				</div>
+				<div id="guid_genrator">创建GUID</div>
+			</div>
+		</section>
+		
+		<section class="codeshow hide" id="cookie_codeshow">
+			<div class="code fl">
+				<img src="img/cookie.png"/>
+			</div>
+			<div class="show fl cookie_text">
+				<div>
+					name <input id="cookie_name" type="text" />
+					value <input id="cookie_value" type="text" />
+				</div>
+				<div id="setCookie">设置cookie</div>
+				<div>
+					<textarea id="allCookie"></textarea>
+				</div>
+			</div>
+		</section>
+		
+		<section class="codeshow hide" id="tip_codeshow">
+			<div class="code fl">
+				<img src="img/tip.png"/>
+			</div>
+			<div class="show fl tip_div">
+				<div>
+					<div id="tip_avatar">
+						鼠标移动到这，将会显示头像
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<section id="mask_codeshow" class="codeshow hide">
+			<div id="mask_container">
+				<div class="code fl">
+					<img src="img/mask.png"/>
+				</div>
+				<div class="show fl mask_div">
+					<img src="img/guxiang.png"/>
+				</div>
+			</div>
+		</section>
+		
 		<script type="text/javascript" src="js/calendar.js" ></script>
+		<script type="text/javascript" src="js/guid.js" ></script>
+		<script type="text/javascript" src="js/cookie.js" ></script>
+		<script type="text/javascript" src="js/tip.js"></script>
+		<script type="text/javascript" src="js/mask.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 	</body>
 </html>
