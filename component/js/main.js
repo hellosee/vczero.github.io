@@ -3,7 +3,7 @@
 	var guid_codeshow = document.getElementById('guid_codeshow');
 	var cookie_codeshow = document.getElementById('cookie_codeshow');
 	var tip_codeshow = document.getElementById('tip_codeshow');
-	var mask_codeshow = document.getElementById('mask_codeshow');
+	var mask_container = document.getElementById('mask_container');
 	
 	//日历
 	var canlendar = new Calendar('calendar',new Date('2015-1'));
@@ -42,7 +42,7 @@
 				setShow('tip_codeshow');
 				break;
 			case '#mask':
-				setShow('mask_codeshow');
+				setShow('mask_container');
 				break;
 		    default:
 		    	setShow('calendar_codeshow');
@@ -86,7 +86,7 @@
 	
 	document.getElementById('mask').onclick = function(){
 		window.location.hash = 'mask';
-		setShow('mask_codeshow');
+		setShow('mask_container');
 	};
 	
 	
@@ -97,7 +97,7 @@
 		guid_codeshow.style.display = 'none';
 		cookie_codeshow.style.display = 'none';
 		tip_codeshow.style.display = 'none';
-		mask_codeshow.style.display = 'none';
+		mask_container.style.display = 'none';
 		
 		switch(name){
 			case 'calendar_codeshow':
@@ -112,8 +112,8 @@
 		   case 'tip_codeshow':
 		   	    tip_codeshow.style.display = 'block';
 			    break;
-		    case 'mask_codeshow':
-		   	    mask_codeshow.style.display = 'block';
+		    case 'mask_container':
+		   	    mask_container.style.display = 'block';
 			    break;
 		    default:
 		    	break;

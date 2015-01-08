@@ -15,6 +15,7 @@ header ul li{float:left;margin-right:25px;}
 .code{background-color:#272822;min-height:400px;min-width:570px;border:1px dashed #FFF;font-size:14px;}
 .show{margin-left:10px;}
 .hide{display:none;}
+a{color:#FFF;text-decoration:none;}
 
 /*-----------------------------------------------------*/
 #calendar{width:390px; height:300px;}

@@ -1,9 +1,4 @@
-/*
- * tip: when mouse over a element, will be show a tip(detail div)
- * For example:
- * 		when mouse over a user's avatar, will be show some user's infomation in tip.
- * 		Later, I will apply it to the project of OurTimes.
- * */
+
 (function(exports){
 	/* id: target element id  
 	 * opts: json obj, is optional
@@ -28,8 +23,9 @@
 		var left = (opts && opts.offsetLeft) ? (tipContainer.offsetLeft - opts.offsetLeft): tipContainer.offsetLeft;
 		var top = (opts && opts.offsetTop) ? (tipContainer.offsetTop - opts.offsetTop): tipContainer.offsetTop;
 		//modify?
-		tip.style.left = left + 'px';
-		tip.style.top = (top + tipContainer.offsetHeight)  + 'px';
+		// 当时float div时，删除下面两句代码
+		//tip.style.left = left + 'px';
+		//tip.style.top = (top + tipContainer.offsetHeight)  + 'px';
 		//default css property
 		tip.style.zIndex = 100;
 		tip.style.position = 'absolute';
