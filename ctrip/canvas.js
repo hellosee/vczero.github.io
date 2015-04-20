@@ -6,7 +6,7 @@
 	var ajax = require.ajax;
 	var addEvent = require.addEvent;
 	var data = require.data;
-	
+
 	//缩放比例
 	var SCALE_BIG = 1;
 	var SCALE_SML = 0.25;
@@ -28,50 +28,65 @@
 	if(!context){
 		return;
 	}
-
-	context.scale(0.25, 0.25);
 	
+	if(!window.requestAnimationFrame){
+		return window.requestAnimationFrame = (function(){
+			window.webkitRequestAnimationFrame 
+			|| window.mozRequestAnimationFrame
+			|| window.oRequestAnimationFrame
+			|| window.msRequestAnimationFrame
+			|| function(callback, el){
+				window.setTimeout(callback, 1000/ 60);
+			};
+		})();
+	}
+   	
 	
-	//simple package design pattern
-	function addDrawFunc(data, part, color, fun){
+	context.scale(SCALE_SML, SCALE_SML);
+	//draw polygon
+	function drawPolygon(data, part, color){	
 		var xys = data[part];
 		context.beginPath();
-		context.strokeStyle = color; 
-		context.lineWidth = 1;
 		context.fillStyle = color;
-		fun(xys);
-		context.stroke();
+		
+		context.moveTo(xys[0], xys[1]);
+		for(var i = 2; i < xys.length; i++){
+			if(i % 2 !== 0){
+				context.lineTo(xys[i-1], xys[i]);
+			}
+		}
+		
 		context.fill();
 		context.closePath();
-	}
-	//draw polygon
-	function drawPolygon(data, part, color){		
-		addDrawFunc(data, part, color, function(xys){
-			context.moveTo(xys[0], xys[1]);
-			for(var i = 2; i < xys.length; i++){
-				if(i % 2 !== 0){
-					context.lineTo(xys[i-1], xys[i]);
-				}
-			}
-		});
 	}
 	
 	//draw eye
 	function drawEye(data, part, color){
-		 addDrawFunc(data, part, color, function(xys){
-		 	//变形
-		 	context.save();
-			context.scale(1.5, 2);
-			context.arc(xys[0]/1.5, xys[1]/2, 6, 0, Math.PI * 2, false);
-			context.restore();
-		 });
+		var xys = data[part];
+		context.beginPath();
+		context.fillStyle = color;
+		
+		//变形
+	 	context.save();
+		context.scale(1.5, 2);
+		context.arc(xys[0]/1.5, xys[1]/2, 6, 0, Math.PI * 2, false);
+		context.restore();
+		
+		context.fill();
+		context.closePath(); 
+		
 	}
 	
 	//drawCircle
 	function drawCircle(data, part, color, radius){
-		 addDrawFunc(data, part, color, function(xys){
-			context.arc(xys[0], xys[1], radius, 0, Math.PI * 2, false);
-		 });
+		var xys = data[part];
+		context.beginPath();
+		context.fillStyle = color;
+		
+		context.arc(xys[0], xys[1], radius, 0, Math.PI * 2, false);
+		
+		context.fill();
+		context.closePath();
 	}
 	
 	
@@ -104,7 +119,7 @@
 	
 	
 	//绘制
-	function draw(data){
+	function draw(fileName){
 		drawPolygon(data, 'polygon_body', COLOR_LIST.BODY);
 		drawPolygon(data, 'polygon_dupi', COLOR_LIST.DUPI);
 		drawPolygon(data, 'polygon_touquan', COLOR_LIST.TOUQUAN);
@@ -114,7 +129,7 @@
 		
 		drawEye(data, 'circle_eye1', COLOR_LIST.EYE);
 		drawEye(data, 'circle_eye2', COLOR_LIST.EYE);
-		
+
 		drawLine(data, 'line_zui', COLOR_LIST.ZUIBA, 4);
 		drawLine(data, 'line_bishang', COLOR_LIST.BISHANG, 8);
 		drawLine(data, 'line_bixia', COLOR_LIST.BIXIA, 5);
@@ -130,8 +145,9 @@
 		drawText(320, 69);
 	}
 	
-	draw(data);
-	
+	//执行流程
+	draw('dist_3');
+
 	
 	
 })(window, window);
