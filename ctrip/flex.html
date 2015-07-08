@@ -16,16 +16,16 @@
       -webkit-flex: 1;
   }
   .flexbox div{color:#ffffff;text-align:center;}
-  .flexbox .item1,.flexbox .item6{-webkit-flex:1;background:#ff6600;}
-  .flexbox .item2,.flexbox .item8{-webkit-flex:2;background:#0099ff;}
-  .flexbox .item3{-webkit-flex:3;background:#ff9900;}
-  .flexbox .item4{-webkit-flex:4;background:#ff0000;}
-  .flexbox .item5{-webkit-flex:5;background:#339966;}
+  .flexbox .item1,.flexbox .item6{-webkit-flex:1;background:#ff6600;flex:1;}
+  .flexbox .item2,.flexbox .item8{-webkit-flex:2;background:#0099ff;flex:2;}
+  .flexbox .item3{-webkit-flex:3;background:#ff9900;flex:3;}
+  .flexbox .item4{-webkit-flex:4;background:#ff0000;flex:4;}
+  .flexbox .item5{-webkit-flex:5;background:#339966;flex:5;}
   .flexbox .item7{width:50%;background:#ff9900;}
 </style>
 
 </head>
-<body style="height:100%;display:flex;">
+<body style="height:100%;display:flex;display:-webkit-flex;">
   <div class="flexbox">
     <div class="item1"></div>
     <div class="item2"></div>
