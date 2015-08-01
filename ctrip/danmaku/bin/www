@@ -88,7 +88,24 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
-
+var voteData = [
+        {
+            "title":"晚饭选择",
+            "choose":[
+                {key:"农家乐",value:10},
+                {key:"酒店晚饭",value:20},
+                {key:"自行解决",value:5}
+            ]
+        },
+        {
+            "title":"一起去唱歌",
+            "choose":[
+                {key:"参加",value:10},
+                {key:"考虑",value:3},
+                {key:"不参加",value:6}
+            ]
+        }
+    ]
 
 // Create socket.io
 var io = require('socket.io')(server);
@@ -102,4 +119,12 @@ io.on('connection', function(socket){
         console.log('message: ' + msg);
         io.emit('danmaku show', msg);
     });
+    socket.on('vote send', function(msg){
+        console.log('message: ' + msg);
+        voteData.push(JSON.parse(msg))
+        io.emit('vote show', msg);
+    });
+
+    io.emit('vote showAll', JSON.stringify(voteData));
+
 });
