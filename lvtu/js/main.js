@@ -388,13 +388,39 @@
 		return arTime;
 	}
 	
+	//获取random值时间
+	function getRandomTime(time, addmin){
+		var strs = time.split(':');
+		var min = parseInt(strs[1]);
+		var hour = parseInt(strs[0]);
+		
+		min = min + addmin;
+		if(min >=60){
+			hour += 1; 
+			min = min - addmin
+		}
+		
+		if(min < 10){
+			min = '0' + min.toString();
+		}
+		
+		if(hour >= 24){
+			hour = '次日' + hour - 24;
+		}
+		return hour + ':' + min;
+	}
+	
 	//获取路上所花时间
 	function getHour(index){
 		var endTime = 0;
 		for(var n = index; n >= 0; n--){
 			endTime += disTime[n].time;
 		}
-		return Math.floor(endTime/60) + '小时' + Math.ceil(endTime%60) + '分钟';
+		var rmin = Math.ceil(Math.random() * 10);
+		var str =  Math.floor(endTime/60) + ':' + Math.ceil(endTime%60);
+		var realTime = getRandomTime(str, rmin);
+		var strs = realTime.split(':');
+		return strs[0] + '小时' + strs[1] + '分钟';
 	}
 	
 	//获取所有距离
@@ -460,10 +486,12 @@
 		realSpeedHandle = setInterval(function(){
 			if(disTime[realCarIndex]){
 				var speed = (disTime[realCarIndex].speed  - Math.random()*5).toFixed(2);
+				var rmin = Math.ceil(Math.random() * 10);
 				option.series[0].data[0].value = speed;
     				myChart.setOption(option, true);	
     				$('#real_speed').text(speed + 'km/h');
-    				
+    				$('#real_time').text(getRandomTime(getTime(disTime.length - 1), rmin));
+    				$('#real_distime').text(getHour(disTime.length - 1));
 			}
 			
 		}, 1000);		
