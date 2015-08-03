@@ -46,6 +46,9 @@
 		if(timelineIn){
 			clearInterval(timelineIn);
 		}
+		if(ipadTimelineIn){
+			clearInterval(ipadTimelineIn);
+		}
 		if(disTime){
 			disTime = [];
 		}
@@ -58,7 +61,9 @@
 		}
 		
 		$('.timeline_pannel').css('visibility', 'visible');
-		doTimeline();
+	
+		uaAdapter();
+		
 		hasRoutes = true;
 		AMap.service(['AMap.Driving'], function(){
 			origin = new AMap.LngLat(routes[0].x, routes[0].y);
@@ -246,15 +251,12 @@
 	var tag = 0;
 	$('.danmu').on('click', function(){
 		if(tag % 2 === 0){
-			$('#tanmu_div').css('height', '194px');
-			$('#tanmu_div').css('left', '0');
-			$('#tanmu_div').css('top', '');
+			$('#tanmu_div').fadeIn();
+			$('#tanmu_div').css('right', '79px');
+			$('#tanmu_div').css('top', '70px');
 			$('#tanmu_div').css('visibility', 'visible');
 		}else{
-			$('#tanmu_div').css('height', '0');
-			$('#tanmu_div').css('left', '-999px');
-			$('#tanmu_div').css('top', '-999px');
-			$('#tanmu_div').css('visibility', 'hidden');
+			$('#tanmu_div').fadeOut();
 		}
 		tag ++;
 	});
@@ -506,11 +508,11 @@
 	//时间轴
 	var timelineIn = null;
 	function doTimeline(){
+		$('#timeline_pc').show();
 		for(var i in routes){
 	    		var item = '<div id=timeline_' + i + ' class="timeline_item">' + routes[i].content + '</div>';
 	    		$('.timeline').append(item);
 	    }
-		
 		
 		timelineIn = setInterval(function(){
 			if(disTime[timelineIndex]){
@@ -532,5 +534,77 @@
 		tou_tag ++;
 	});
 	
+	
+	//万能iframe
+	function iframeAll(url, width, height, color, fw, fh){
+		$('.iframe_all').css('width', width + 'px');
+		$('.iframe_all').css('width', height + 'px');
+		$('.iframe_all').css('border', '1px solid ' + color);
+		
+		$('.iframe_all_iframe').attr('src', url);
+		$('.iframe_all_iframe').css('border', 0);
+		$('.iframe_all_iframe').css('width', fw || '100%');
+		$('.iframe_all_iframe').css('height', fh);
+		
+		$('.iframe_all_arrow').css('border', '1px solid ' + color);
+		$('.iframe_all_arrow').css('borderLeft', '0');
+		$('.iframe_all_arrow').css('borderBottom', '0');
+	}
+	
+	//iframeAll('http://123.57.39.116:9797/', 200, 200, '#ddd', '100%', '40px');
+	
+	//iPad、mobile、 pc版本适配
+	function uaAdapter(){
+		var ua = window.navigator.userAgent.toLocaleLowerCase();
+        var bIsIpad = ua.match(/ipad/i) == 'ipad';
+        var bIsIphoneOs = ua.match(/iphone os/i) == "iphone os";
+        var bIsMidp = ua.match(/midp/i) == "midp";
+        var bIsUc7 = ua.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+        var bIsUc = ua.match(/ucweb/i) == "ucweb";
+        var bIsAndroid = ua.match(/android/i) == "android";
+        var bIsCE = ua.match(/windows ce/i) == "windows ce";
+        var bIsWM = ua.match(/windows mobile/i) == "windows mobile";
+        //iPad优先
+        if(bIsIpad){
+        		iPadRouter(routes);
+        		console.log('pad');
+        		return;
+        }
+    		//mobile
+        if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+        		//道路弯曲，且向右
+        		iPadRouter(routes);
+        		console.log('mobile');
+        } else {//pc
+            //道路不弯曲
+           doTimeline()
+           console.log('pc');
+        }
+	}
+	
+	//iPad适配
+	var ipadTimelineIn = null;
+	function iPadRouter(data){
+		$('#timeline_ipad').show();
+		$('#timeline_ipad').css('opacity', '0.8');
+		$('#timeline_item_1').empty();
+		for(var i in data){
+			var str = '<div style="position:absolute;top:11px;margin-left:' + parseInt(i)*50 + 'px;text-align:center;min-width:40px;">';
+			str += '<div style="font-size:13px;">' + data[i].content + '</div>';
+			str += '<div id="ipad_timeline_' + i;
+			str += '" style="background-color:#fff;margin-top:5px;width:10px;height:10px;border:2px solid #CC0000;border-radius:5px;margin-left:auto;margin-right:auto;box-sizing:border-box;"></div>';
+			str += '</div>';
+			$('#timeline_item_1').append(str);	
+		}
+		
+		ipadTimelineIn = setInterval(function(){
+			if(disTime[timelineIndex]){
+				$('#ipad_timeline_' + timelineIndex).removeClass('firebug_flash');
+				$('#ipad_timeline_' + timelineIndex).css('backgroundColor', '#ACAAA6');
+				$('#ipad_timeline_' + timelineIndex).css('border', '1px solid #ACAAA6');
+				$('#ipad_timeline_' + (timelineIndex + 1)).addClass('firebug_flash').css('backgroundColor', '#DE007D');
+			}
+		}, 1000);
+	}
 	
 })(window, $);
