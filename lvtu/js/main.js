@@ -24,9 +24,13 @@
 		routes = window['routes' + index];
 		$('#search_router').val(el.text());
 		$('.search_list').fadeOut();
+		//自动开启路线
+		doSearch();
+		doCarRun();
 	});
 	
-	$('.search_btn').on('click', function(e){
+	//搜索
+	function doSearch(){
 		//天气
 	    AMap.service(['AMap.Weather'], function(){
 	    		var we = new AMap.Weather();
@@ -89,7 +93,7 @@
 			}
 			
 		});
-	});
+	}
 	
 	//绘制起终点ICON
 	function addSEIcon(origin, destination){
@@ -195,7 +199,8 @@
 		$('.add_mask').fadeOut();
 	});
 	
-	$('.car_run_show').on('click', function(){
+	//汽车运动
+	function doCarRun(){
 		if(!hasRoutes){
 			$('.add_mask').fadeIn();
 			$('#_alert').fadeIn();
@@ -245,7 +250,7 @@
 		});
 		//开启小车监控
 		runCar();
-	});
+	}
 	
 	//开启、关闭弹幕
 	var tag = 0;
@@ -567,6 +572,7 @@
         //iPad优先
         if(bIsIpad){
         		iPadRouter(routes);
+        		$('.ipad_timeline_quan').css('marginTop', '-1px');
         		console.log('pad');
         		return;
         }
@@ -591,7 +597,7 @@
 		for(var i in data){
 			var str = '<div style="position:absolute;top:11px;margin-left:' + parseInt(i)*50 + 'px;text-align:center;min-width:40px;">';
 			str += '<div style="font-size:13px;">' + data[i].content + '</div>';
-			str += '<div id="ipad_timeline_' + i;
+			str += '<div class="ipad_timeline_quan" id="ipad_timeline_' + i;
 			str += '" style="background-color:#fff;margin-top:5px;width:10px;height:10px;border:2px solid #CC0000;border-radius:5px;margin-left:auto;margin-right:auto;box-sizing:border-box;"></div>';
 			str += '</div>';
 			$('#timeline_item_1').append(str);	

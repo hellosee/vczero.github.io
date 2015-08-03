@@ -114,7 +114,7 @@ body{
 .input_div{
 	position: absolute;
 	left: 100px;
-	right:60px;
+	right:10px;
 }
 
 .toolbar{
@@ -264,7 +264,6 @@ body{
 	min-height:160px;
 	background-color:#F9F9F9;
 	border:1px solid #ddd;
-	right:-999px;
 	top:-999px;
 }
 
