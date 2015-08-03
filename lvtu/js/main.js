@@ -246,8 +246,10 @@
 	var tag = 0;
 	$('.danmu').on('click', function(){
 		if(tag % 2 === 0){
+			$('#tanmu_div').css('height', '194px');
 			$('#tanmu_div').css('visibility', 'visible');
 		}else{
+			$('#tanmu_div').css('height', '0');
 			$('#tanmu_div').css('visibility', 'hidden');
 		}
 		tag ++;
@@ -515,7 +517,7 @@
 		}, 1000);
 	}
     
-    //开启、关闭弹幕
+    //开启、关闭投票
 	var tou_tag = 0;
 	$('.toupiao').on('click', function(){
 		if(tou_tag % 2 === 0){
