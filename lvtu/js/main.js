@@ -247,9 +247,13 @@
 	$('.danmu').on('click', function(){
 		if(tag % 2 === 0){
 			$('#tanmu_div').css('height', '194px');
+			$('#tanmu_div').css('left', '0');
+			$('#tanmu_div').css('top', '');
 			$('#tanmu_div').css('visibility', 'visible');
 		}else{
 			$('#tanmu_div').css('height', '0');
+			$('#tanmu_div').css('left', '-999px');
+			$('#tanmu_div').css('top', '-999px');
 			$('#tanmu_div').css('visibility', 'hidden');
 		}
 		tag ++;
