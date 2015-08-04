@@ -219,7 +219,7 @@
 			position: origin, 
 			icon: Car, 
 			autoRotation: true, 
-			offset:new AMap.Pixel(-26,-13),
+			offset:new AMap.Pixel(-26,-10),
 			zIndex: 10000,
 		});
 	
@@ -280,7 +280,10 @@
 			var carPos = carMarker.getPosition();
 			//设置地图级别和跟踪
 			map.setZoom(12);
-			map.panTo(carPos);
+			var _x = parseFloat(carPos.lat) + 0.05;
+			var justifyCenter = new AMap.LngLat(carPos.lng, _x);
+			map.panTo(justifyCenter);
+			
 			for(var i in routes){
 				if(i < (routes.length) && i > 0 && Math.abs(carPos.lng - routes[i].x) < 0.001 && Math.abs(carPos.lat - routes[i].y) < 0.001){
 					var index = parseInt(i-1);
@@ -370,7 +373,7 @@
 		contentHTML += '</div><div style="float:right;" class="_in_city_story">';
 		contentHTML += '<img src="' + pics[picIndex] + '"/></div></div>';
 		contentHTML += '<div class="_in_story">';
-		contentHTML += '<div><a target="_blank" href="' + urls[0] +'">那座城市，那个人， 特价¥899</a></div>';
+		contentHTML += '<div><a target="_blank" href="' + urls[0] +'">那座城市，那个人， 特价<span style="color:red;font-size:14px;margin">¥899</span></a></div>';
 		contentHTML += '<div><a target="_blank" href="' + urls[1] +'">再美不如苏州园林， 门票：¥40</a></div>';
 		contentHTML += '<div><a target="_blank" href="' + urls[2] +'">苏州好吃一窝，特价团购：¥30</a></div>';
 		contentHTML += '<div><a target="_blank" href="' + urls[3] +'">苏州必须去的5个景点，去了才知道</a></div>';
@@ -455,6 +458,7 @@
             		max:80,
 		        name:'业务指标',
 		        type:'gauge',
+		        splitNumber: 5,
 		        detail : {
 		        		textStyle:{
 		        			fontSize:18,
@@ -495,7 +499,6 @@
 	function doSpeed(){
 		$('#real_time').text(getTime(disTime.length - 1));
 		$('#real_distime').text(getHour(disTime.length - 1));
-		$('#real_distance').text(getAllDistance() + 'km');
 		realSpeedHandle = setInterval(function(){
 			if(disTime[realCarIndex]){
 				var speed = (disTime[realCarIndex].speed  - Math.random()*5).toFixed(2);
@@ -505,6 +508,7 @@
     				$('#real_speed').text(speed + 'km/h');
     				$('#real_time').text(getRandomTime(getTime(disTime.length - 1), rmin));
     				$('#real_distime').text(getHour(disTime.length - 1));
+    				$('#real_distance').text(getAllDistance() + 'km');
 			}
 			
 		}, 1000);		

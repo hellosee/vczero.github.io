@@ -260,7 +260,7 @@ body{
 /*万能iframe*/
 .iframe_all{
 	position:absolute;
-	min-width:230px;
+	width:350px;
 	min-height:160px;
 	background-color:#F9F9F9;
 	border:1px solid #ddd;
