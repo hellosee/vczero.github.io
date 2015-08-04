@@ -254,17 +254,17 @@
 	}
 	
 	//开启、关闭弹幕
-	var tag = 0;
 	$('.danmu').on('click', function(){
-		if(tag % 2 === 0){
+		$('#toupiao_frame').hide();
+		if($('#tanmu_div').css('display') === 'none' || parseInt($('#tanmu_div').css('top')) < 0){
 			$('#tanmu_div').fadeIn();
 			$('#tanmu_div').css('right', '79px');
 			$('#tanmu_div').css('top', '70px');
 			$('#tanmu_div').css('visibility', 'visible');
 		}else{
+			
 			$('#tanmu_div').fadeOut();
 		}
-		tag ++;
 	});
 	
 	//获取小车的位置
@@ -549,14 +549,13 @@
 	}
     
     //开启、关闭投票
-	var tou_tag = 0;
 	$('.toupiao').on('click', function(){
-		if(tou_tag % 2 === 0){
-			$('#toupiao_frame').fadeIn();
-		}else{
+		$('#tanmu_div').hide();
+		if($('#toupiao_frame').css('display') !== 'none'){
 			$('#toupiao_frame').fadeOut();
+		}else{
+			$('#toupiao_frame').fadeIn();
 		}
-		tou_tag ++;
 	});
 	
 	
@@ -632,5 +631,6 @@
 			}
 		}, 1000);
 	}
+	
 	
 })(window, $);
