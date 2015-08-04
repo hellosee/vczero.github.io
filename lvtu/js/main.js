@@ -25,12 +25,14 @@
 		$('#search_router').val(el.text());
 		$('.search_list').fadeOut();
 		//自动开启路线
-		doSearch();
-		doCarRun();
+		doSearch(function(data){
+			doCarRun();
+		});
+		
 	});
 	
 	//搜索
-	function doSearch(){
+	function doSearch(callback){
 		//天气
 	    AMap.service(['AMap.Weather'], function(){
 	    		var we = new AMap.Weather();
@@ -90,7 +92,7 @@
 				
 				driving(sp, ep);
 			}
-			
+			callback('do car run');
 		});
 	}
 	
