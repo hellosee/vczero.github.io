@@ -156,7 +156,7 @@ body{
 	left:10px;
 	top:70px;
 	opacity: 0.9;
-	height:300px;
+	min-height:330px;
 	width:190px;
 	border:1px solid #ddd;
 }
@@ -175,6 +175,10 @@ body{
 
 .charts_info span{
 	color: #0091FF;
+}
+
+#charts_info_address{
+	font-size:14px;
 }
 
 .timeline_pannel{
@@ -278,8 +282,6 @@ body{
     border-left: 15px solid #F9F9F9;
     border-bottom: 7px solid transparent;
 }
-
-
 
 
 

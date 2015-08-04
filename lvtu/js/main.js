@@ -35,7 +35,6 @@
 	    AMap.service(['AMap.Weather'], function(){
 	    		var we = new AMap.Weather();
 	    		we.getLive(routes[routes.length - 1].content, function(err, status){
-	    			console.log(status);
 	    			$('#tem_yin').text(status.weather);
 	    			$('#tem_du').text(status.temperature + '℃');
 	    			$('#tem_feng').text(status.windDirection + '风');
@@ -347,7 +346,7 @@
 		styles += ' ._in_story{font-size:13px;margin-left:5px;line-height:16px;margin-top:5px;}';
 		styles += ' ._in_arrow_down{border:1px solid #ddd;width:12px;height:12px;background-color:#fff;margin-left:auto;margin-right:auto;';
 		styles += 'transform:rotate(45deg);-ms-transform:rotate(45deg);-moz-transform:rotate(45deg);';
-		styles += '-webkit-transform:rotate(45deg);-o-transform:rotate(45deg);border-left:0;border-top:0;margin-top:3px;}';
+		styles += '-webkit-transform:rotate(45deg);-o-transform:rotate(45deg);border-left:0;border-top:0;margin-top:0px;}';
 		styles += ' a{text-decoration:none;color:#484848;} a:hover{color:#484848;}';
 		styles += '</style>';
 		
@@ -373,11 +372,11 @@
 		contentHTML += '</div><div style="float:right;" class="_in_city_story">';
 		contentHTML += '<img src="' + pics[picIndex] + '"/></div></div>';
 		contentHTML += '<div class="_in_story">';
-		contentHTML += '<div><a target="_blank" href="' + urls[0] +'">那座城市，那个人， 特价<span style="color:red;font-size:14px;margin">¥899</span></a></div>';
-		contentHTML += '<div><a target="_blank" href="' + urls[1] +'">再美不如苏州园林， 门票：¥40</a></div>';
-		contentHTML += '<div><a target="_blank" href="' + urls[2] +'">苏州好吃一窝，特价团购：¥30</a></div>';
-		contentHTML += '<div><a target="_blank" href="' + urls[3] +'">苏州必须去的5个景点，去了才知道</a></div>';
-		contentHTML += '<div><a target="_blank" href="' + urls[4] +'">假日酒店，全家人旅行特选，机场接送</a></div></div>';
+		contentHTML += '<div><a target="_blank" href="' + urls[0] +'"><i style="color:#00C348;" class="fa fa-star"></i> 那座城市，那个人， 特价 <span style="color:red;font-size:14px;margin"><i class="fa fa-jpy"></i> 899</span></a></div>';
+		contentHTML += '<div><a target="_blank" href="' + urls[1] +'"><i style="color:#00C348;" class="fa fa-star"></i> 再美不如苏州园林， 门票：<span style="color:red;font-size:14px;margin"><i class="fa fa-jpy"></i> 40</span></a></div>';
+		contentHTML += '<div><a target="_blank" href="' + urls[2] +'"><i style="color:#00C348;" class="fa fa-star"></i> 苏州好吃一窝，特价团购：<span style="color:red;font-size:14px;margin"><i class="fa fa-jpy"></i> 50</span></a></div>';
+		contentHTML += '<div><a target="_blank" href="' + urls[3] +'"><i style="color:#00C348;" class="fa fa-star"></i> 苏州必须去的5个景点，去了才知道</a></div>';
+		contentHTML += '<div><a target="_blank" href="' + urls[4] +'"><i style="color:#00C348;" class="fa fa-star"></i> 假日酒店，全家人旅行特选，机场接送</a></div></div>';
 		contentHTML += '<div class="_in_arrow_down"></div></div>';
 		return contentHTML;
 	}
@@ -509,6 +508,21 @@
     				$('#real_time').text(getRandomTime(getTime(disTime.length - 1), rmin));
     				$('#real_distime').text(getHour(disTime.length - 1));
     				$('#real_distance').text(getAllDistance() + 'km');
+			}
+			
+			if(carMarker){
+				var pos = carMarker.getPosition();
+				AMap.service(["AMap.Geocoder"], function(){
+					var geocoder = new AMap.Geocoder();
+					geocoder.getAddress(pos, function(status, result){
+						if(status === 'error' || status === 'no_data') {
+			                console.log("geocoder error");
+			            }else {
+			            		var address = result.regeocode.formattedAddress;
+			            		$('#charts_info_address').text(address);			            
+			            }
+					});
+				});
 			}
 			
 		}, 1000);		

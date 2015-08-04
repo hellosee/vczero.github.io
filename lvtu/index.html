@@ -10,7 +10,7 @@
 	<meta name="misapplication-tap-highlight" content="no"/>
 	<title>美途</title> 
 	<link type="text/css" rel="stylesheet"  href="css/main.css"/>
-	
+	<link type="text/css" rel="stylesheet"  href="css/font-awesome.css"/>
 </head>
 <body>
 	<div id="map" ></div>
@@ -47,6 +47,10 @@
 	    		<div>距离：<span id="real_distance" style="font-size:15px;color:#E6007C;font-weight:bold;">计算中</span></div>
 	    		<div>时长：<span id="real_distime" style="font-size:15px;color:#E6007C;font-weight:bold;">计算中</span></div>
     		</div>
+    		<div>
+    			<span class="fa fa-map-marker" style="color:red;margin-left:5px;margin-top:5px;"></span>
+    			<span id="charts_info_address" style="color:#EA0085;margin-right:3px;font-weight:bold;">计算中</span>
+    		</div>
     		<div style="width:100%;">
     			<div id="tem_yin" class="fl tempe" style="color:#FF5718;">阴</div>
     			<div id="tem_du" class="fl tempe" style="color: #4C4C4C;">23</div>
@@ -68,14 +72,17 @@
     		<div id="timeline_item_1"></div>
     </div>
 	<div class="toolbar">
-		<div class="car_run car_run_show">
+		<!--<div class="car_run car_run_show">
 			行
+		</div>-->
+		<div class="car_run toupiao" style="background-color:#00C348;">
+			投
 		</div>
 		<div class="car_run danmu" style="background-color:#E82D00;">
 			弹
 		</div>
-		<div class="car_run toupiao" style="background-color:#00C348;">
-			投
+		<div class="car_run car_run_show">
+			<i class="fa fa-info" style="font-size:17px;"></i>
 		</div>
 	</div>
 	<!--	描述：iframe万能框-->
