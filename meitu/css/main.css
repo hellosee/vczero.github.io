@@ -201,12 +201,14 @@ html body {
 	min-height:220px;
 	background-color:#fff;
 	opacity:0.8;
-	
+}
+
+#router_canvas{
 	-webkit-transform: translateZ(0);
-   -moz-transform: translateZ(0);
-   -ms-transform: translateZ(0);
-   -o-transform: translateZ(0);
-   transform: translateZ(0);
+   	-moz-transform: translateZ(0);
+   	-ms-transform: translateZ(0);
+   	-o-transform: translateZ(0);
+   	transform: translateZ(0);
 }
 
 

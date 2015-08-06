@@ -32,7 +32,7 @@ define('home/router', function(require, exports, module) {
         ctx.fill();
         
         ctx.beginPath();
-        ctx.fillStyle = '#4C4C4C';
+        ctx.fillStyle = '#000';
         ctx.fillText(router[i].content, 2, 25 + 3 + i * 25);
         ctx.closePath();
         ctx.fill();
