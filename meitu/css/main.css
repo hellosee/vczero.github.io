@@ -178,7 +178,7 @@ html body {
 	left:-10px;
 	top:-11px;
 	color:#E60079;
-	width: 18px;
+	width: 22px;
 	background-color:#FFFFFF;
 }
 
@@ -192,6 +192,16 @@ html body {
 	text-align:right;
 }
 
+/*-----------------router----------------------------**/
+.router{
+	position:absolute;
+	left:10px;
+	top:120px;
+	width:40px;
+	min-height:200px;
+	background-color:#fff;
+	opacity:0.8;
+}
 
 
 
