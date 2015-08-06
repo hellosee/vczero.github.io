@@ -8,6 +8,8 @@ define('home/router', function(require, exports, module) {
 	
 	canvas.width = 45;
 	canvas.height = 220;
+	canvas.style.width = 45;
+	canvas.style.height = 220;
 	
 	//line
 	ctx.beginPath();
@@ -31,7 +33,7 @@ define('home/router', function(require, exports, module) {
         
         ctx.beginPath();
         ctx.fillStyle = '#4C4C4C';
-        ctx.fillText(router[i].content, 2, 25 + 5 + i * 25);
+        ctx.fillText(router[i].content, 2, 25 + 3 + i * 25);
         ctx.closePath();
         ctx.fill();
 	}
