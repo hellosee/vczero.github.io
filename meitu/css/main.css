@@ -137,7 +137,7 @@ html body {
 	margin-right: auto;
 }
 .tools_items>div:last-child {
-	margin-top: -4px;
+	margin-top: -2px;
 }
 .tools_items i {
 	font-size: 18px;
@@ -201,6 +201,12 @@ html body {
 	min-height:200px;
 	background-color:#fff;
 	opacity:0.8;
+	
+	-webkit-transform: translateZ(0);
+   -moz-transform: translateZ(0);
+   -ms-transform: translateZ(0);
+   -o-transform: translateZ(0);
+   transform: translateZ(0);
 }
 
 
