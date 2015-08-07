@@ -116,6 +116,7 @@ html body {
 	top: 60px;
 	width: 50px;
 	min-height: 50px;
+	z-index:10001;
 }
 .tools>div {
 	width: 40px;
@@ -198,7 +199,7 @@ html body {
 .router{
 	position:absolute;
 	left:10px;
-	top:120px;
+	top:105px;
 	width:45px;
 	min-height:220px;
 	background-color:#fff;

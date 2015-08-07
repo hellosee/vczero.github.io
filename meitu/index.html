@@ -43,7 +43,7 @@
 				<input placeholder="请输入产品路线"/>
 			</div>
 			<button class="fl search_btn">
-				<i class="fa fa-microphone" style="font-size:20px;color:#FFFFFF;"></i>
+				<i class="fa fa-search" style="font-size:20px;color:#FFFFFF;"></i>
 			</button>
         </div>
         <!--描述：其他功能-->
@@ -102,7 +102,7 @@
 				<% for(var i = 0; i < list.length; i++) { %>
 			   <div style="width:<%=width%>px; height:130px;float:left;">
 				 <h1><%=i%></h1>
-				 <h1>我们哈哈哈</h1>
+				 <h1><%=list[i].name%></h1>
 			   </div>
 			<% } %>
 			</script>
