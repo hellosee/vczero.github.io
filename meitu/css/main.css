@@ -113,7 +113,7 @@ html body {
 	right: 5px;
 	top: 60px;
 	width: 50px;
-	min-height: 100px;
+	min-height: 50px;
 }
 .tools>div {
 	width: 40px;
@@ -225,9 +225,13 @@ html body {
 }
 
 .SN_info_wrapper{
+	height:130px;
 	-webkit-transform: translate3d(0px, 0px, 0px);
 	transform: translate3d(0px, 0px, 0px);
+	opacity: 0.8;
+	-webkit-opacity:0.8;
 }
+
 
 
 

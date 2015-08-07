@@ -26,7 +26,7 @@ define('home/router', function(require, exports, module) {
 	//circle
 	for(var i = 0; i < router.length; i++){
 		ctx.beginPath();
-		ctx.fillStyle = '#0091FF';
+		ctx.fillStyle = '#159AFE';
         ctx.arc(35, 25 + i * 25, 5, 0, Math.PI*2, true);
         ctx.closePath();
         ctx.fill();
