@@ -198,7 +198,7 @@ html body {
 	position: absolute;
 	top: 60px;
 	left: 60px;
-	width: 200px;
+	right: 55px;
 	height: 240px;
 	z-index: 10012;
 	background-color: #FFF;
@@ -228,23 +228,26 @@ html body {
 
 .speed_data{
 	clear: both;
-	width:200px;
+	width:100%;
 	height:70px;
 	color:#999999;
-	padding:5px;
 }
 .speed_data>div{
 	height:20px;
 }
 
 .speed_data>div>div{
-	width: 80px;
+	width: 50%;
 }
 
 .speed_title_strong{
 	color:#0091FF;
 	font-size:13px;
 	font-style: italic;
+}
+
+.speed_center{
+	width:100px;margin-left:auto;margin-right:auto;
 }
 
 
