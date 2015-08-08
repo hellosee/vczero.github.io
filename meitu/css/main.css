@@ -242,11 +242,13 @@ html body {
 	font-style: italic;
 }
 
-.speed_center{
-	width:100px;
+.speed_l{
 	margin-left: 10px;
 }
 
+.speed_r{
+	width: 100px;
+}
 
 /*-----------------router----------------------------**/
 
