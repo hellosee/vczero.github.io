@@ -90,12 +90,17 @@ define('home/info', function (require, exports, module) {
   //隐藏和显示
   var SN_info_btn = $('#SN_info_btn');
   var SN_info = $('.SN_info');
+  var SN_info_item = $('.SN_info_item');
 
   SN_info_btn.on('click', function(){
       if(parseInt(SN_info.css('height')) > 100){
-        SN_info.css('height', '20px');
+        SN_info.css('height', '25px');
+        $('.SN_info_btn_icon').css('fontSize', '20px');
+        SN_info_item.hide();
       }else{
         SN_info.css('height', '130px');
+        SN_info_item.show();
+        $('.SN_info_btn_icon').css('fontSize', '17px');
       }
   });
 
