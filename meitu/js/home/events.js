@@ -138,7 +138,7 @@ define('home/events', function(require, exports, module) {
 		        			}
 		        		}
 		        		
-		        		carMarker.moveAlong(paths, 500 * 1000);
+		        		carMarker.moveAlong(paths, 50 * 1000);
 		        		events.trigger('carWatch');
 				}
 			});
@@ -154,12 +154,14 @@ define('home/events', function(require, exports, module) {
 				return;
 			}
 			var carPos = carMarker.getPosition();
-			map.setZoom(12);
-			var _x = parseFloat(carPos.lat) + 0.05;
-			var justifyCenter = new AMap.LngLat(carPos.lng, _x);
-			map.panTo(justifyCenter);
+			//为了更好的演示
 			
-		}, 200);
+			var _x = parseFloat(carPos.lat) - 0.005;
+			var justifyCenter = new AMap.LngLat(carPos.lng, _x);
+			var pan = new AMap.LngLat(carPos.lng, parseFloat(carPos.lat));
+			map.setZoomAndCenter(12,justifyCenter);
+			
+		}, 500);
 	});
 
 
