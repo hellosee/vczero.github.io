@@ -139,8 +139,8 @@
 						<span>模拟车速:</span><span>50,000 km/h</span>
 					</div>
 				</div>
-				<div>
-					<div style="margin-left:10px;width:100%;">
+				<div style="min-height:40px;">
+					<div style="margin-left:10px;width:100%;min-height:40px;">
 						<i class="fa fa-map-marker" style="color:#E82D00;"></i>
 						<span>
 	        					安徽省安庆市望江县长岭镇农信社1001号
@@ -148,8 +148,16 @@
 					</div>
 				</div>
 			</div>
-			<div>
-				
+			<div class="tianqi_div">
+				<div class="fl">
+					<img src="img/sun.png"/>
+				</div>
+				<div class="fl tianqi_div_du">
+					32°
+				</div>
+				<div class="fl tianqi_div_du" style="font-size:15px;">
+					西南风
+				</div>
 			</div>
 		</div>
 		
@@ -170,7 +178,7 @@
 			<script type="text/template" id="tpl_router">
 				<% for (var i in items){%>
 					<%
-						var top = 10 + parseInt(i) * 22;
+						var top = 5 + parseInt(i) * 22;
 					%>
 					<div class="router_span" style="top:<%=top%>px;">
 						<div class="fl"><%=items[i].content%></div>
