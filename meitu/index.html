@@ -125,13 +125,13 @@
 					<div class="fl">
 						<div class="speed_l">
 							<span>时速:</span>
-							<span class="speed_title_strong">50km/h</span>
+							<span id="speed_real" class="speed_title_strong">计算</span>
 						</div>
 					</div>
 					<div class="fr">
 						<div class="speed_r" >
 							<span>时长:</span>
-							<span class="speed_title_strong">50km/h</span>
+							<span id="total_time" class="speed_title_strong">计算</span>
 						</div>
 					</div>
 				</div>
@@ -139,38 +139,38 @@
 					<div class="fl">
 						<div class="speed_l">
 							<span>到达:</span>
-							<span class="speed_title_strong">18:56</span>
+							<span id="ar_time" class="speed_title_strong">计算</span>
 						</div>
 					</div>
 					<div class="fr">
 						<div class="speed_r">
 							<span>距离:</span>
-							<span class="speed_title_strong">245km</span>
+							<span id="total_dis" class="speed_title_strong">计算</span>
 						</div>
 					</div>
 				</div>
 				<div>
-					<div style="margin-left:10px;width:160px;">
+					<div style="margin-left:5px;width:160px;">
 						<span>模拟车速:</span><span>50,000 km/h</span>
 					</div>
 				</div>
 				<div style="min-height:40px;">
-					<div style="margin-left:10px;width:100%;min-height:40px;">
+					<div style="margin-left:5px;width:96%;min-height:40px;margin-left:2%;margin-right:2%;">
 						<i class="fa fa-map-marker" style="color:#E82D00;"></i>
-						<span>
-	        					安徽省安庆市望江县长岭镇农信社1001号
+						<span id="real_loc">
+	        					获取中
 	        				</span>
 					</div>
 				</div>
 			</div>
 			<div class="tianqi_div">
 				<div class="fl">
-					<img src="img/sun.png"/>
+					<img id="weather_png" src="img/sun.png"/>
 				</div>
-				<div class="fl tianqi_div_du">
+				<div id="weather_du" class="fl tianqi_div_du">
 					32°
 				</div>
-				<div class="fl tianqi_div_du" style="font-size:15px;">
+				<div id="weather_feng" class="fl tianqi_div_du" style="font-size:15px;">
 					西南风
 				</div>
 			</div>
@@ -186,7 +186,7 @@
 					%>
 					<div class="router_span" style="top:<%=top%>px;">
 						<div class="fl"><%=items[i].content%></div>
-						<div class="fl router_circle"></div>
+						<div class="fl router_circle" id="router_circle_<%=i%>"></div>
 					</div>
 				<%}%>
 			</script>

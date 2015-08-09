@@ -240,7 +240,7 @@ html body {
 	/*font-style: italic;*/
 }
 .speed_l {
-	margin-left: 10px;
+	margin-left:5px;
 }
 .speed_r {
 	width: 100px;
@@ -409,4 +409,24 @@ html body {
 }
 
 
+/*------------动画-----------------*/
+@-webkit-keyframes flash {
+	0%    { opacity:0; }
+	50%   { opacity:1; }
+	100%  { opacity:0; }
+}
+.firebug_flash{
+	-webkit-animation-name: flash;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-duration:1s;
+	background-color:#F7001D;
+}
+
+#total_time{
+	font-size:14px;
+}
+
+#real_loc{
+	margin-right:3px;
+}
 

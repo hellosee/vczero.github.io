@@ -15,5 +15,5 @@ requirejs([
 		'home/search'
 	], 
 	function(fastclick) {
-		fastclick(document.body);
+//		fastclick(document.body);
 });

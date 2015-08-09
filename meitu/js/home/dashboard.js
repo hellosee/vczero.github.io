@@ -1,7 +1,6 @@
 define('home/dashboard', function(require, exports, module) {
-
 	var zepto = require('lib/zepto_pj');
-	var mapInstance = require('home/map');
+	var events = require('home/events');
 	var charts = $('#charts');
 	var charts_dash = $('#charts_dash');
 
@@ -16,7 +15,7 @@ define('home/dashboard', function(require, exports, module) {
 				pointer: {
 					length: 0.9, 
 					strokeWidth: 0.061, 
-					color: '#3BC1FF' 
+					color: '#E82D00' 
 				},
 				limitMax: 'false', 
 				colorStart: '#00C348', 
@@ -31,8 +30,10 @@ define('home/dashboard', function(require, exports, module) {
 			gauge.set(50);
 			
 			setInterval(function(){
-				gauge.set(50 + Math.random() * (-40)); 
-			}, 500);
+				var val = parseInt(events.get('dashSpeed'));
+				val = val + parseInt(Math.random() * 2);
+				gauge.set(val); 
+			}, 1000);
 		}else{
 			charts_dash.fadeOut();
 		}

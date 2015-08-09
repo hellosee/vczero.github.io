@@ -1,5 +1,6 @@
 //全局事件
 define('home/events', function(require, exports, module) {
+	var $ = require('lib/zepto_pj');
 	var Events = require('lib/events');
 	//全局事件对象
 	var events = new Events();
@@ -23,6 +24,10 @@ define('home/events', function(require, exports, module) {
 	events.set('allPoints', []);
 	//汽车点
 	events.set('carMarker', null);
+	//实时车的位置
+	events.set('realCarIndex', 0);
+	//仪表盘车速
+	events.set('dashSpeed', 0);
 
 	//获取途经点
 	events.on('getWayPoints', function() {
@@ -102,66 +107,141 @@ define('home/events', function(require, exports, module) {
 		var origin = events.get('origin');
 		var destination = events.get('destination');
 		var wayPoints = events.get('wayPoints');
-		
+
 		var Car = new AMap.Icon({
 			image: "img/car.png",
-			size:new AMap.Size(100,100)
+			size: new AMap.Size(100, 100)
 		});
 		var carMarker = new AMap.Marker({
-			map: map, 
-			position: origin, 
-			icon: Car, 
-			autoRotation: true, 
-			offset:new AMap.Pixel(-26,-10),
+			map: map,
+			position: origin,
+			icon: Car,
+			autoRotation: true,
+			offset: new AMap.Pixel(-26, -10),
 			zIndex: 10000,
 		});
-		
+
 		events.set('carMarker', carMarker);
-		
-		AMap.service(['AMap.Driving'], function(){
+
+		AMap.service(['AMap.Driving'], function() {
 			var driving = new AMap.Driving({
 				extensions: 'base',
-				policy: AMap.DrivingPolicy.REAL_TRAFFIC 
+				policy: AMap.DrivingPolicy.REAL_TRAFFIC
 			});
-			driving.search(origin, destination, {waypoints: wayPoints.points},function(status, result){
-				if(status === 'complete' && result.info === 'OK'){
+			driving.search(origin, destination, {
+				waypoints: wayPoints.points
+			}, function(status, result) {
+				if (status === 'complete' && result.info === 'OK') {
 					//绘制驾车路线
-		        		var paths = [];
-		        		if(result.routes.length){
-		        			var route = result.routes[0];
-		        			var steps = route.steps;
-		        			for(var i = 0; i < steps.length; i++){
-		        				var path = steps[i].path;
-		        				for(var j in path){
-		        					paths.push(path[j]);
-		        				}
-		        			}
-		        		}
-		        		
-		        		carMarker.moveAlong(paths, 50 * 1000);
-		        		events.trigger('carWatch');
+					var paths = [];
+					if (result.routes.length) {
+						var route = result.routes[0];
+						var steps = route.steps;
+						for (var i = 0; i < steps.length; i++) {
+							var path = steps[i].path;
+							for (var j in path) {
+								paths.push(path[j]);
+							}
+						}
+					}
+
+					carMarker.moveAlong(paths, 50 * 1000);
+					events.trigger('carWatch');
 				}
 			});
 		});
 	});
-	
-	
+
+
 	//汽车追踪
-	events.on('carWatch', function(){
+	events.on('carWatch', function() {
 		var carMarker = events.get('carMarker');
-		var carWatch = setInterval(function(){
-			if(!carMarker){
+		var router = events.get('router');
+		$('#router_circle_0').css('background-color', '#ccc');
+		$('#router_circle_1').css('background-color', 'red');
+		$('#router_circle_1').addClass('firebug_flash');
+		var carWatch = setInterval(function() {
+			if (!carMarker) {
 				return;
 			}
 			var carPos = carMarker.getPosition();
 			//为了更好的演示
-			
 			var _x = parseFloat(carPos.lat) - 0.005;
 			var justifyCenter = new AMap.LngLat(carPos.lng, _x);
 			var pan = new AMap.LngLat(carPos.lng, parseFloat(carPos.lat));
-			map.setZoomAndCenter(12,justifyCenter);
-			
+			map.setZoomAndCenter(12, justifyCenter);
+
+			//设置路线的颜色
+			for (var i in router) {
+				if (i < (router.length) && i > 0 && Math.abs(carPos.lng - router[i].x) < 0.05 && Math.abs(carPos.lat - router[i].y) < 0.05) {
+					var index = parseInt(i - 1);
+					events.set('realCarIndex', index);
+					$('#router_circle_' + (parseInt(i) + 1)).css('background-color', 'red');
+					$('#router_circle_' + (parseInt(i) + 1)).addClass('firebug_flash');
+					$('#router_circle_' + i).css('background-color', '#ccc');
+					$('#router_circle_' + i).removeClass('firebug_flash');
+				}
+			}
+
+			if (Math.abs(carPos.lng - router[router.length - 1].x) < 0.01 && Math.abs(carPos.lat - router[router.length - 1].y) < 0.01) {
+				clearInterval(carWatch);
+			}
+
 		}, 500);
+	});
+	
+	events.on('getWeather', function(){
+		var router = events.get('router');
+		AMap.service(['AMap.Weather'], function(){
+	    		var we = new AMap.Weather();
+	    		we.getLive(router[router.length - 1].content, function(err, status){
+	    			if(status.weather.indexOf('雨') > -1){
+	    				$('#weather_png').attr('src', 'img/rain.png');
+	    			}
+	    			if(status.weather.indexOf('晴') > -1){
+	    				$('#weather_png').attr('src', 'img/sun.png');
+	    			}
+	    			if(status.weather.indexOf('云') > -1){
+	    				$('#weather_png').attr('src', 'img/cloud.png');
+	    			}
+	    			$('#weather_du').text(status.temperature + '°');
+	    			$('#weather_feng').text(status.windDirection + '风');
+	    		});
+	    });
+	});
+
+	//计算时速
+	events.on('calcuSpeed', function() {
+		var realCarIndex = events.get('realCarIndex');
+		var realSpeedHandle = setInterval(function() {
+			var disTime = events.get('disTime');
+			var carMarker = events.get('carMarker');
+			realCarIndex = events.get('realCarIndex');
+			if (disTime[realCarIndex]) {
+				var speed = (disTime[realCarIndex].speed - Math.random() * 5).toFixed(2);
+				var rmin = Math.ceil(Math.random() * 10);
+				$('#speed_real').text(speed + 'km');
+				events.set('dashSpeed', speed);
+				$('#ar_time').text(getRandomTime(getTime(disTime.length - 1), rmin));
+				$('#total_time').text(getHour(disTime.length - 1));
+				$('#total_dis').text(getAllDistance() + 'km');
+
+				if (carMarker) {
+					var pos = carMarker.getPosition();
+					AMap.service(['AMap.Geocoder'], function() {
+						var geocoder = new AMap.Geocoder();
+						geocoder.getAddress(pos, function(status, result) {
+							if (status === 'error' || status === 'no_data') {
+								console.log("geocoder error");
+							} else {
+								var address = result.regeocode.formattedAddress;
+								$('#real_loc').text(address);
+							}
+						});
+					});
+				}
+			}
+		}, 1000);
 	});
 
 
@@ -171,11 +251,9 @@ define('home/events', function(require, exports, module) {
 	events.trigger('getWayPoints');
 	events.trigger('drawRouter');
 	events.trigger('carRun');
-//	setTimeout(function(){
-//		
-//	}, 2000);
-	
-	
+	events.trigger('calcuSpeed');
+	events.trigger('getWeather');
+
 
 	//绘制两点间路线
 	function driving(origin, destination) {
@@ -221,5 +299,78 @@ define('home/events', function(require, exports, module) {
 			}
 		});
 	}
+
+
+	function getTime(index) {
+		var disTime = events.get('disTime');
+		var routes = events.get('router');
+		var endTime = 0;
+		var startTime = parseInt(routes[0].startTime.split(':')[1]);
+		for (var n = index; n >= 0; n--) {
+			endTime += disTime[n].time;
+		}
+		endTime += startTime;
+		//进行时间换算
+		var min = endTime % 60; //分钟
+		var hour = Math.floor(endTime / 60); //小时
+		var arTime = parseInt(routes[0].startTime.split(':')[0]) + hour;
+		if (arTime > 23) {
+			arTime = arTime - 24; //次日
+			arTime = '次日 ' + arTime;
+		}
+		if (min < 10) {
+			min = '0' + min;
+		}
+		arTime += ':' + min;
+		return arTime;
+	}
+
+	//获取random值时间
+	function getRandomTime(time, addmin) {
+		var strs = time.split(':');
+		var min = parseInt(strs[1]);
+		var hour = parseInt(strs[0]);
+
+		min = min + addmin;
+		if (min >= 60) {
+			hour += 1;
+			min = min - addmin
+		}
+
+		if (min < 10) {
+			min = '0' + min.toString();
+		}
+
+		if (hour >= 24) {
+			hour = '次日' + hour - 24;
+		}
+		return hour + ':' + min;
+	}
+
+	//获取路上所花时间
+	function getHour(index) {
+		var disTime = events.get('disTime');
+		var endTime = 0;
+		for (var n = index; n >= 0; n--) {
+			endTime += disTime[n].time;
+		}
+		var rmin = Math.ceil(Math.random() * 10);
+		var str = Math.floor(endTime / 60) + ':' + Math.ceil(endTime % 60);
+		var realTime = getRandomTime(str, rmin);
+		var strs = realTime.split(':');
+		return strs[0] + 'h' + strs[1] + 'min';
+	}
+
+	//获取所有距离
+	function getAllDistance() {
+		var disTime = events.get('disTime');
+		var dis = 0;
+		for (var i in disTime) {
+			dis += parseInt(disTime[i].distance);
+		}
+		return dis;
+	}
+	
+	return events;
 
 });
