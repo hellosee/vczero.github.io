@@ -139,6 +139,7 @@ define('home/events', function(require, exports, module) {
 		        		}
 		        		
 		        		carMarker.moveAlong(paths, 500 * 1000);
+		        		events.trigger('carWatch');
 				}
 			});
 		});
@@ -146,7 +147,20 @@ define('home/events', function(require, exports, module) {
 	
 	
 	//汽车追踪
-	
+	events.on('carWatch', function(){
+		var carMarker = events.get('carMarker');
+		var carWatch = setInterval(function(){
+			if(!carMarker){
+				return;
+			}
+			var carPos = carMarker.getPosition();
+			map.setZoom(12);
+			var _x = parseFloat(carPos.lat) + 0.05;
+			var justifyCenter = new AMap.LngLat(carPos.lng, _x);
+			map.panTo(justifyCenter);
+			
+		}, 200);
+	});
 
 
 
