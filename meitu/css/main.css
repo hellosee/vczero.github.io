@@ -203,6 +203,8 @@ html body {
 	z-index: 10012;
 	background-color: #FFF;
 	opacity: 0.9;
+	-webkit-opacity: 0.9;
+	-moz-opacity: 0.9;
 	display: none;
 }
 .speed_dash_container {
@@ -253,6 +255,9 @@ html body {
 	min-height: 190px;
 	background-color: #fff;
 	opacity: 0.8;
+	-webkit-opacity:0.8;
+	-moz-opacity: 0.8;
+	-moz-opacity: 0.8;
 }
 #router_canvas {
 	-webkit-transform: translateZ(0);
@@ -390,3 +395,19 @@ html body {
 	line-height: 50px;
 	/*font-family: "AvenirNextCondensed-Medium", "AvenirNextLTW01-MediumC 721311", "Arial Narrow", Verdana, sans-serif;*/
 }
+/*--------------------搜索自动补全---------------------------*/
+.auto_complete{
+	position:absolute;
+	top:45px;
+	left:40px;
+	right:55px;
+	/*height:100px;*/
+	background-color:#fff;
+	z-index:10091;
+	/*opacity:0.9;
+	-webkit-opacity:0.9;
+	-moz-opacity: 0.9;*/
+}
+
+
+

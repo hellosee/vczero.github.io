@@ -3,15 +3,15 @@ requirejs.config({
 });
 
 
-requirejs([
-		'lib/zepto_pj', 
+requirejs([ 
+		'lib/fastclick',
 		'home/map',
-		'lib/underscore',
 		'home/dashboard',
 		'home/router',
 		'home/info',
-		'home/tools'
+		'home/tools',
+		'home/search'
 	], 
-	function(zepto_pj, map, underscore, router) {
-		
+	function(fastclick, map, router) {
+		fastclick(document.body);
 });
