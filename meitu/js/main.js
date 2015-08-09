@@ -5,6 +5,7 @@ requirejs.config({
 
 requirejs([ 
 		'lib/fastclick',
+		'lib/underscore',
 		'home/map',
 		'home/dashboard',
 		'home/router',
@@ -12,6 +13,6 @@ requirejs([
 		'home/tools',
 		'home/search'
 	], 
-	function(fastclick, map, router) {
+	function(fastclick,underscore, map, router) {
 		fastclick(document.body);
 });
