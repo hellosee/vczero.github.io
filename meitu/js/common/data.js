@@ -79,6 +79,25 @@ define('common/data', function() {
 		content: '衢州'
 	}]);
 	
+	data.router.push([
+		{
+			x: 113.643436,
+			y: 34.766435,
+			content: '郑州',
+			startTime: '7:00'
+		},
+		{
+			x: 117.296723,
+			y: 36.784095,
+			content: '济南'
+		},
+		{
+			x: 120.362091,
+			y: 36.060201,
+			content: '青岛'
+		}
+	]);
+	
 	//链接
 	data.urls = [
 		'http://m.ctrip.com/webapp/you/appshare/bargain/18484.html?from=http%3A%2F%2Fm.ctrip.com%2Fwebapp%2Fyou%2Fplace%2F12.html',

@@ -6,7 +6,7 @@ define('home/map', function(require, exports, module){
 		mapStyle: 'fresh',
 		resizeEnable: true,
 	});
-	
+	map.setZoom(10);
 	return map;
 
 });

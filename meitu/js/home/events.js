@@ -1,6 +1,7 @@
 //全局事件
 define('home/events', function(require, exports, module) {
 	var $ = require('lib/zepto_pj');
+	var rt = require('home/router');
 	var Events = require('lib/events');
 	//全局事件对象
 	var events = new Events();
@@ -8,26 +9,65 @@ define('home/events', function(require, exports, module) {
 	var map = require('home/map');
 	//获取路线数据
 	var router = require('common/data').router[0];
-	//地图对象
-	events.set('map', map);
-	//默认路线
-	events.set('router', router);
-	//起点
-	events.set('origin', new AMap.LngLat(router[0].x, router[0].y));
-	//终点
-	events.set('destination', new AMap.LngLat(router[router.length - 1].x, router[router.length - 1].y));
-	//途经点
-	events.set('wayPoints', []);
-	//采集数据
-	events.set('disTime', []);
-	//所有点集合
-	events.set('allPoints', []);
-	//汽车点
-	events.set('carMarker', null);
-	//实时车的位置
-	events.set('realCarIndex', 0);
-	//仪表盘车速
-	events.set('dashSpeed', 0);
+	//	//地图对象
+	//	events.set('map', map);
+	//	//默认路线
+	//	events.set('router', router);
+	//	//起点
+	//	events.set('origin', new AMap.LngLat(router[0].x, router[0].y));
+	//	//终点
+	//	events.set('destination', new AMap.LngLat(router[router.length - 1].x, router[router.length - 1].y));
+	//	//途经点
+	//	events.set('wayPoints', []);
+	//	//采集数据
+	//	events.set('disTime', []);
+	//	//所有点集合
+	//	events.set('allPoints', []);
+	//	//汽车点
+	//	events.set('carMarker', null);
+	//	//实时车的位置
+	//	events.set('realCarIndex', 0);
+	//	//仪表盘车速
+	//	events.set('dashSpeed', 0);
+	//	//计时器
+	//	events.set('realSpeedHandle', null);
+	//	events.set('carWatchHandle', null);
+	
+	events.on('mapRefresh', function(){
+		map.clearMap();
+		if(events.get('carWatchHandle')){
+			clearInterval(events.get('carWatchHandle'));
+		}
+		if(events.get('realSpeedHandle')){
+			clearInterval(events.get('realSpeedHandle'));
+		}
+		//查看用户是否设置router
+		var rt = events.get('router') || router;
+		//地图对象
+		events.set('map', map);
+		//默认路线
+		events.set('router', rt);
+		//起点
+		events.set('origin', new AMap.LngLat(rt[0].x, rt[0].y));
+		//终点
+		events.set('destination', new AMap.LngLat(rt[rt.length - 1].x, rt[rt.length - 1].y));
+		//途经点
+		events.set('wayPoints', []);
+		//采集数据
+		events.set('disTime', []);
+		//所有点集合
+		events.set('allPoints', []);
+		//汽车点
+		events.set('carMarker', null);
+		//实时车的位置
+		events.set('realCarIndex', 0);
+		//仪表盘车速
+		events.set('dashSpeed', 0);
+		//计时器
+		events.set('realSpeedHandle', null);
+		events.set('carWatchHandle', null);
+	});
+	
 
 	//获取途经点
 	events.on('getWayPoints', function() {
@@ -42,6 +82,8 @@ define('home/events', function(require, exports, module) {
 				wayPoints.contents.push(router[i].content);
 			}
 		}
+		rt.set('router', events.get('router'));
+		rt.trigger('show');
 		events.set('wayPoints', wayPoints);
 	});
 
@@ -160,7 +202,7 @@ define('home/events', function(require, exports, module) {
 		$('#router_circle_0').css('background-color', '#ccc');
 		$('#router_circle_1').css('background-color', 'red');
 		$('#router_circle_1').addClass('firebug_flash');
-		var carWatch = setInterval(function() {
+		var carWatchHandle = setInterval(function() {
 			if (!carMarker) {
 				return;
 			}
@@ -188,6 +230,7 @@ define('home/events', function(require, exports, module) {
 			}
 
 		}, 500);
+		events.set('carWatchHandle', carWatchHandle);
 	});
 	
 	events.on('getWeather', function(){
@@ -242,18 +285,8 @@ define('home/events', function(require, exports, module) {
 				}
 			}
 		}, 1000);
+		events.set('realSpeedHandle', realSpeedHandle);
 	});
-
-
-
-	//默认操作
-	events.trigger('drawOriginDestination');
-	events.trigger('getWayPoints');
-	events.trigger('drawRouter');
-	events.trigger('carRun');
-	events.trigger('calcuSpeed');
-	events.trigger('getWeather');
-
 
 	//绘制两点间路线
 	function driving(origin, destination) {
