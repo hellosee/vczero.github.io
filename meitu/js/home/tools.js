@@ -11,7 +11,7 @@ define('home/tools', function(require, exports, module){
 		tools.css('overflow', 'hidden');
 
 		var height = parseInt($('.tools').css('height'));
-		if(height > 50){
+		if(height > 55){
 			var hideHandle = setInterval(function(){
 				height -= 50;
 				if(height < 10){
