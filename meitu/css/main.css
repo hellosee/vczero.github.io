@@ -398,15 +398,14 @@ html body {
 /*--------------------搜索自动补全---------------------------*/
 .auto_complete{
 	position:absolute;
-	top:45px;
-	left:40px;
-	right:55px;
-	/*height:100px;*/
+	top:50px;
+	left:0px;
+	right:0px;
+	min-height:110px;
 	background-color:#fff;
 	z-index:10091;
-	/*opacity:0.9;
-	-webkit-opacity:0.9;
-	-moz-opacity: 0.9;*/
+	border-top:1px solid #ccc;
+	display:none;
 }
 
 

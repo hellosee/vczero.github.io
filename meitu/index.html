@@ -31,7 +31,6 @@
 		<link rel="apple-touch-icon-precomposed" sizes="180x180" href="retinahd_icon.png">
 		<link type="text/css" rel="stylesheet" href="css/main.css" />
 		<link type="text/css" rel="stylesheet" href="css/font-awesome.css" />
-		<link type="text/css" rel="stylesheet" href="css/tianqi.css" />
 	</head>
 
 	<body>
@@ -49,9 +48,22 @@
 				<i class="fa fa-search" style="font-size:20px;color:#FFFFFF;"></i>
 			</button>
 		</div>
-		<div class="auto_complete">
-			
-		</div>
+		
+		<script type="text/template" id="tpl_search">
+			<% for (var i in items){%>
+				<div style="margin-left:10px;border-bottom:1px solid #ddd;height:35px;line-height:35px;">
+					<i class="fa fa-search" style="color:#ccc;font-size:15px;"></i>
+					<span style="font-size:14px;margin-left:4px;">
+						<%=items[i].router%>
+					</span>
+					<span style="font-size:12px; margin-left:4px;color:#999;">
+						<%=items[i].desc%>
+					</span>
+				</div>
+			<%}%>
+		</script>
+		
+		<div class="auto_complete" id="SEARCH_TPL"></div>
 		<!--描述：其他功能-->
 		<div class="tools">
 			<div id="tools_list" class="sh tools_items">
