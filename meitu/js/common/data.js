@@ -37,7 +37,7 @@ define('common/data', function() {
 		content: '扬州'
 	}]);
 
-	window.routes2 = [{
+	data.router.push([{
 		x: 121.406822,
 		y: 31.28794,
 		content: '上海',
@@ -54,7 +54,7 @@ define('common/data', function() {
 		x: 119.932251,
 		y: 31.858897,
 		content: '常州'
-	}];
+	}]);
 
 	data.router.push([{
 		x: 121.433945,

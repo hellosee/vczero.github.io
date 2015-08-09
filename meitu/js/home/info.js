@@ -44,9 +44,29 @@ define('home/info', function (require, exports, module) {
   wrapperContent.on('touchstart', function (e) {
     startX = e.changedTouches[0].clientX;
   });
+  
+  wrapperContent.on('touchend', endTouch);
 
-  wrapperContent.on('touchend', function (e) {
-    var dis = e.changedTouches[0].clientX - startX;
+  //隐藏和显示
+  var SN_info_btn = $('#SN_info_btn');
+  var SN_info = $('.SN_info');
+  var SN_info_item = $('.SN_info_item');
+
+  SN_info_btn.on('click', function(){
+      if(parseInt(SN_info.css('height')) > 100){
+        SN_info.css('height', '25px');
+        $('.SN_info_btn_icon').css('fontSize', '20px');
+        SN_info_item.hide();
+      }else{
+        SN_info.css('height', '130px');
+        SN_info_item.show();
+        $('.SN_info_btn_icon').css('fontSize', '17px');
+      }
+  });
+
+
+	function endTouch(e){
+  		var dis = e.changedTouches[0].clientX - startX;
     //获取当前translate3d的位置
     var transform = wrapperContent.css('transform') || wrapperContent.css('-webkit-transform');
     var currentPos = parseInt(transform.split(',')[0].split('(')[1]);
@@ -84,26 +104,7 @@ define('home/info', function (require, exports, module) {
         }, 30);
       }
     }
-  });
-
-
-  //隐藏和显示
-  var SN_info_btn = $('#SN_info_btn');
-  var SN_info = $('.SN_info');
-  var SN_info_item = $('.SN_info_item');
-
-  SN_info_btn.on('click', function(){
-      if(parseInt(SN_info.css('height')) > 100){
-        SN_info.css('height', '25px');
-        $('.SN_info_btn_icon').css('fontSize', '20px');
-        SN_info_item.hide();
-      }else{
-        SN_info.css('height', '130px');
-        SN_info_item.show();
-        $('.SN_info_btn_icon').css('fontSize', '17px');
-      }
-  });
-
+  }
 
 
 });

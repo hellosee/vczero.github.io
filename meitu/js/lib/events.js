@@ -1,6 +1,15 @@
 define('lib/events', function (require, exports, module) {
     var eventSplitter = /\s+/;
     function Events() {}
+    
+    Events.prototype.set = function(key, value){
+    		this[key] = value;
+    };
+    
+    Events.prototype.get = function(key){
+    		return this[key];
+    };
+    
     Events.prototype.on = function (events, callback, context) {
         var cache, event, list;
         if (!callback) return this;

@@ -51,12 +51,12 @@
 		
 		<script type="text/template" id="tpl_search">
 			<% for (var i in items){%>
-				<div style="margin-left:10px;border-bottom:1px solid #ddd;height:35px;line-height:35px;">
-					<i class="fa fa-search" style="color:#ccc;font-size:15px;"></i>
-					<span style="font-size:14px;margin-left:4px;">
+				<div _index="<%=i%>" style="margin-left:10px;border-bottom:1px solid #ddd;height:35px;line-height:35px;">
+					<i _index="<%=i%>" class="fa fa-search" style="color:#ccc;font-size:15px;"></i>
+					<span _index="<%=i%>" style="font-size:14px;margin-left:4px;">
 						<%=items[i].router%>
 					</span>
-					<span style="font-size:12px; margin-left:4px;color:#999;">
+					<span _index="<%=i%>" style="font-size:12px; margin-left:4px;color:#999;">
 						<%=items[i].desc%>
 					</span>
 				</div>
@@ -95,11 +95,11 @@
 				</div>
 				<div>分享</div>
 			</div>
-			<div class="sh tools_items">
+			<div class="sh tools_items" onclick="(function(){location.reload();return false;})()">
 				<div>
 					<i class="fa fa-refresh" style="color:#999999;"></i>
 				</div>
-				<div onclick="(function(){location.reload();return false;})()">刷新</div>
+				<div>刷新</div>
 			</div>
 		</div>
 		<!--仪表盘-->
