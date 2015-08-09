@@ -165,7 +165,20 @@
 		</div>-->
 		<!--路线图-->
 		<div class="router sh">
-			<canvas id="router_canvas"></canvas>
+			<!--<canvas id="router_canvas"></canvas>-->
+			<div class="router_line"></div>
+			<script type="text/template" id="tpl_router">
+				<% for (var i in items){%>
+					<%
+						var top = 10 + parseInt(i) * 22;
+					%>
+					<div class="router_span" style="top:<%=top%>px;">
+						<div class="fl"><%=items[i].content%></div>
+						<div class="fl router_circle"></div>
+					</div>
+				<%}%>
+			</script>
+			<div id="ROUTER_TPL"></div>
 		</div>
 		<!--信息窗-->
 		<div class="SN_info">
