@@ -306,7 +306,7 @@ html body {
 	left: 0px;
 	right: 0px;
 	bottom: 5px;
-	height: 130px;
+	height: 25px;
 	z-index: 10000;
 	overflow: hidden;
 }
@@ -337,9 +337,8 @@ html body {
 }
 .SN_info_tui {
 	position: relative;
-	margin-top: 20px;
 	margin-left: 4px;
-	height: 100px;
+	min-height: 100px;
 	overflow: hidden;
 }
 .SN_info_tui_div {
@@ -358,7 +357,6 @@ html body {
 }
 #SN_info_btn {
 	position: absolute;
-	top: 2px;
 	width: 25px;
 	margin-left: -12px;
 	left: 50%;

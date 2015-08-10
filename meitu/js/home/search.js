@@ -4,6 +4,7 @@ define('home/search', function(require, exports, module){
 	var $ = require('lib/zepto_pj');
 	var map = require('home/map');
 	var events = require('home/events');
+	var info = require('home/info');
 	var routers = require('common/data').router;
 	var input = $('#search_input_text');
 	var btn = $('.search_btn');
@@ -59,6 +60,12 @@ define('home/search', function(require, exports, module){
 		events.trigger('carRun');
 		events.trigger('calcuSpeed');
 		events.trigger('getWeather');
+		//触发数据填充到推荐列表
+		setTimeout(function(){
+			info.set('router', events.get('router'));
+			info.set('list', events.get('hots'));
+			info.trigger('refresh');
+		}, 3000);
 	});
 	
 		
@@ -127,6 +134,12 @@ define('home/search', function(require, exports, module){
 									events.trigger('carRun');
 									events.trigger('calcuSpeed');
 									events.trigger('getWeather');
+									//触发数据填充到推荐列表
+									setTimeout(function(){
+										info.set('router', events.get('router'));
+										info.set('list', events.get('hots'));
+										info.trigger('refresh');
+									}, 3000);
 				                		
 				                }
 				            }

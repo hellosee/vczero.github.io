@@ -9,29 +9,6 @@ define('home/events', function(require, exports, module) {
 	var map = require('home/map');
 	//获取路线数据
 	var router = require('common/data').router[0];
-	//	//地图对象
-	//	events.set('map', map);
-	//	//默认路线
-	//	events.set('router', router);
-	//	//起点
-	//	events.set('origin', new AMap.LngLat(router[0].x, router[0].y));
-	//	//终点
-	//	events.set('destination', new AMap.LngLat(router[router.length - 1].x, router[router.length - 1].y));
-	//	//途经点
-	//	events.set('wayPoints', []);
-	//	//采集数据
-	//	events.set('disTime', []);
-	//	//所有点集合
-	//	events.set('allPoints', []);
-	//	//汽车点
-	//	events.set('carMarker', null);
-	//	//实时车的位置
-	//	events.set('realCarIndex', 0);
-	//	//仪表盘车速
-	//	events.set('dashSpeed', 0);
-	//	//计时器
-	//	events.set('realSpeedHandle', null);
-	//	events.set('carWatchHandle', null);
 	
 	events.on('mapRefresh', function(){
 		map.clearMap();
@@ -66,6 +43,8 @@ define('home/events', function(require, exports, module) {
 		//计时器
 		events.set('realSpeedHandle', null);
 		events.set('carWatchHandle', null);
+		//热门推荐
+		events.set('hots', []);
 	});
 	
 
@@ -110,6 +89,31 @@ define('home/events', function(require, exports, module) {
 				var ep = new AMap.LngLat(router[k + 1].x, router[k + 1].y);
 				driving(sp, ep);
 			}
+		});
+		
+		//拿到地点数据
+		AMap.service(['AMap.PlaceSearch'], function(){
+			var search = new AMap.PlaceSearch({
+				type: '餐饮服务|购物服务|生活服务|住宿服务|风景名胜|餐饮|酒店',
+				extensions: 'base'
+			});
+			var router = events.get('router');
+			router.forEach(function(data){
+				var center = new AMap.LngLat(data.x, data.y);
+				search.searchNearBy('酒店|景点', center, 50000, function(status, result){
+					if(result.info === 'OK'){
+						var hots = events.get('hots');
+						var pois = result.poiList.pois;
+						var len = pois.length > 5 ? 5: pois.length;
+						for(var n = 0; n < len; n++){
+							hots.push(pois[n]);
+						}
+						events.set('hots', hots);
+					}else{
+						console.log('服务出错');
+					}
+				});
+			});
 		});
 	});
 
@@ -224,9 +228,9 @@ define('home/events', function(require, exports, module) {
 					$('#router_circle_' + i).removeClass('firebug_flash');
 				}
 			}
-
+			
 			if (Math.abs(carPos.lng - router[router.length - 1].x) < 0.01 && Math.abs(carPos.lat - router[router.length - 1].y) < 0.01) {
-				clearInterval(carWatch);
+				clearInterval(carWatchHandle);
 			}
 
 		}, 500);

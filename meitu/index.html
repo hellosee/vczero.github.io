@@ -189,48 +189,39 @@
 			<div id="ROUTER_TPL"></div>
 		</div>
 		<!--信息窗-->
-		<div class="SN_info">
+		<div class="SN_info" style="display:none;">
 			<div id="SN_info_btn">
 				<i class="fa fa-bars SN_info_btn_icon" style="font-size:17px;"></i>
 			</div>
 			<div id="SN_TPL"></div>
 			<script type="text/template" id="tpl">
 				<div class="SN_info_wrapper">
-					<% for(var i = 0; i < list.length; i++) { %>
+					<% for(var i = 0; i < list.length; i++) {%>
 						<div style="width:<%=width%>px;" class="SN_info_item sh">
 							<div class="fl SN_info_tui" style="width:<%=tui_width%>px;">
-								<div class="SN_info_tui_div" style="width:<%=tui_width%>px;">
-									<a target="_blank">
-										<i class="fa fa-star SN_info_tui_icon"></i> 那座城市 特价
-										<span class="SN_info_rmb"><i class="fa fa-jpy"></i> 899</span>
-									</a>
-								</div>
-
-								<div class="SN_info_tui_div" style="width:<%=tui_width%>px;">
-									<a target="_blank">
-										<i class="fa fa-star SN_info_tui_icon"></i> 那座城市 特价
-										<span class="SN_info_rmb"><i class="fa fa-jpy"></i> 899</span>
-									</a>
-								</div>
-								<div class="SN_info_tui_div" style="width:<%=tui_width%>px;">
-									<a target="_blank">
-										<i class="fa fa-star SN_info_tui_icon"></i> 那座城市 特价
-										<span class="SN_info_rmb"><i class="fa fa-jpy"></i> 899</span>
-									</a>
-								</div>
-								<div class="SN_info_tui_div" style="width:<%=tui_width%>px;">
-									<a target="_blank">
-										<i class="fa fa-star SN_info_tui_icon"></i> 那座城市 特价
-										<span class="SN_info_rmb"><i class="fa fa-jpy"></i> 899</span>
-									</a>
-								</div>
-								<div class="SN_info_tui_div" style="width:<%=tui_width%>px;">
-									<a target="_blank">
-										<i class="fa fa-star SN_info_tui_icon"></i> 那座城市 特价
-										<span class="SN_info_rmb"><i class="fa fa-jpy"></i> 899</span>
-									</a>
-								</div>
-
+								<div style="font-size:14px;font-style: italic;color:#4C4C4C;">
+									<%=i+1%>
+									<span style="font-style:normal;"><%=list[i].content%></span>
+								</div>								
+								<%if(data){%>
+									<%for(var n = 0; n < 5; n++){%>
+									<%var k = n + i * 5; %>
+									<div class="SN_info_tui_div" style="width:<%=tui_width%>px;">
+										<a target="_blank">
+											<i class="fa fa-star SN_info_tui_icon"></i> 
+											<span><%=data[k].name%></span>
+											<span style="color:#999;"><%=data[k].address%></span>
+											<%if(data[k].tel){%>
+												<a href="tel:<%=data[k].tel%>">
+												<span class="SN_info_rmb">
+													<i class="fa fa-phone" style="color:#23BCFF;font-size:16px;"></i>
+												</span>
+												</a>
+											<%}%>
+										</a>
+									</div>
+									<%}%>
+								<%}%>
 							</div>
 							<div class="fr SN_info_img">
 								<img src="img/iio.png" />

@@ -32,8 +32,12 @@ define('home/dashboard', function(require, exports, module) {
 			setInterval(function(){
 				var val = parseInt(events.get('dashSpeed'));
 				val = val + parseInt(Math.random() * 2);
+				if(isNaN(val)){
+					return;
+				}
 				gauge.set(val); 
 			}, 1000);
+			
 		}else{
 			charts_dash.fadeOut();
 		}

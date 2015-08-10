@@ -25,11 +25,11 @@ requirejs([
         //iPad优先
         if(bIsIpad){
         		console.log('ipad');
-        		fastclick(document.body);
+        		//fastclick(document.body);
         		return;
         }
         if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
-        		fastclick(document.body);
+        		//fastclick(document.body);
         		console.log('mobile');
         } else {
            console.log('pc');
