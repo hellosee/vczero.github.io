@@ -457,9 +457,9 @@ textarea, div{
 }
 .common_close {
 	position: absolute;
-	width: 60px;
+	width: 35px;
 	height: 30px;
-	top: 0;
+	top: 5px;
 	right: 0;
 	z-index: 19999;
 	text-align:ccenter;
@@ -468,9 +468,10 @@ textarea, div{
 	color:#24BDFF;
 }
 
-.common_close img{
-	margin-left:5px;
-	margin-top:5px;
+
+#common_div_iframe{
+	top:35px;
+	border:none;
 }
 
 /*----------------上报----------------------*/
@@ -510,6 +511,7 @@ textarea, div{
 	padding-left:5px;
 	resize:none;
 	border-radius:3px;
+	font-size:14px;
 }
 .shangbao_btn{
 	width:60px;

@@ -82,5 +82,6 @@ define('home/tools', function(require, exports, module){
 	$('#tools_shangbao').on('click', function(){
 		$('.shangbao_div').fadeIn();
 	});
+
 	
 });

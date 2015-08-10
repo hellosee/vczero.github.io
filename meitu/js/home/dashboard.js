@@ -5,6 +5,8 @@ define('home/dashboard', function(require, exports, module) {
 	var charts_dash = $('#charts_dash');
 
 
+	$('.e_charts_arrow')
+
 	charts.on('click', function() {
 		if(charts_dash.css('display') === 'none'){
 			charts_dash.fadeIn();
