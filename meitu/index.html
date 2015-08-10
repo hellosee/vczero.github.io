@@ -31,6 +31,51 @@
 		<link rel="apple-touch-icon-precomposed" sizes="180x180" href="retinahd_icon.png">
 		<link type="text/css" rel="stylesheet" href="css/main.css" />
 		<link type="text/css" rel="stylesheet" href="css/font-awesome.css" />
+		
+		<script src='http://123.57.39.116:9797/javascripts/socket.io.js'></script>
+		<script type="text/javascript">
+			var socket = io('http://123.57.39.116:9797');
+		    var win = window;
+		    var doc = win.document;
+		    function showPaodan(name,msg){
+		
+		        if(win.timeer){clearTimeout(win.timeer);win.timeer = null;}
+		
+		        var paodan = [
+		            '    <div style="height:40px;border:1px solid #65b9e8;">',
+		            '        <div style="float:left;">',
+		            '            <img id="paodan_img"  style="width:40px;height:40px;"/>',
+		            '        </div>',
+		            '        <div id="paodan_msg">',
+		            '        </div>',
+		            '    <div style="position:absolute;right:0px;top:0px;width:15px;height:15px;">',
+		            '        <a href="javascript:void(0)" onclick="$(\'#paodan\').hide();if(win.timeer){clearTimeout(win.timeer);win.timeer = null;};" style="width:100%;height:100%;padding:0;margin:0;background-color:#65b9e8;text-align:center;display:block;color:white;list-style-type:none;">',
+		            '            X',
+		            '        </a>',
+		            '    </div>'
+		        ].join('');
+		        var $paodan = $('#paodan',doc);
+		        var len = $paodan.length;
+		        if(!len){
+		            $('<div id="paodan" style="z-index:19999;position: absolute; width: 100%; left: 0px;top:0px;height:40px;display:;background-color:#fff;">'+paodan+'</div>').appendTo($('body',doc));
+		        }
+		        console.log('----------')
+		        $('#paodan_img',doc).attr("src",'./img/'+name+'.png')
+		        $('#paodan_msg',doc).html(msg);
+		        $paodan = $('#paodan',doc);
+		        $paodan.show();
+		        win.timeer = setTimeout(function(){
+		            $paodan.hide();
+		        },1000)
+		    }
+		    socket.on('paodan showtitle', function (data) {
+		        console.log('paodan showtitle',data);
+		        var data = JSON.parse(data);
+		        showPaodan(data.name,data.html)
+		
+		    });
+		</script>
+		
 	</head>
 
 	<body>
