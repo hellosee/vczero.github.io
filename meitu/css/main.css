@@ -8,7 +8,7 @@ html body {
 }
 
 /*去掉引用*/
-*{
+textarea, div{
 	-webkit-tap-highlight-color: #FFFFFF;
 	-webkit-appearance: none;
 	appearance: none;
