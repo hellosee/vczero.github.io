@@ -54,18 +54,22 @@
 		            '        </a>',
 		            '    </div>'
 		        ].join('');
-		        var $paodan = $('#paodan',doc);
-		        var len = $paodan.length;
-		        if(!len){
-		            $('<div id="paodan" style="z-index:19999;position: absolute; width: 100%; left: 0px;top:0px;height:40px;display:;background-color:#fff;">'+paodan+'</div>').appendTo($('body',doc));
+		        
+		        var $paodan = document.getElementById('paodan');
+		        if(!$paodan){
+		        		var _div = document.createElement("div");
+		        		_div.setAttribute("id","paodan");
+		        		_div.style="z-index:19999;position: absolute; width: 100%; left: 0px;top:0px;height:40px;display:;background-color:#fff;";
+		            _div.innerHTML = paodan;
+		            document.body.appendChild(_div);
 		        }
 		        console.log('----------')
-		        $('#paodan_img',doc).attr("src",'./img/'+name+'.png')
-		        $('#paodan_msg',doc).html(msg);
-		        $paodan = $('#paodan',doc);
-		        $paodan.show();
+		        document.getElementById('paodan_img').setAttribute("src",'./img/'+name+'.png')
+		        document.getElementById('paodan_msg').innerHTML = msg;
+		        $paodan = document.getElementById('paodan');
+		        $paodan.style.display = "block";
 		        win.timeer = setTimeout(function(){
-		            $paodan.hide();
+		            $paodan.style.display = "none";
 		        },1000)
 		    }
 		    socket.on('paodan showtitle', function (data) {
