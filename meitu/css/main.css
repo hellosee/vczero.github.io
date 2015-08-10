@@ -6,6 +6,13 @@ html body {
 	font-size: 12px;
 	font-family: "times new roman", "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
+
+/*去掉引用*/
+*{
+	-webkit-tap-highlight-color: #FFFFFF;
+	-webkit-appearance: none;
+	appearance: none;
+}
 /*-----------媒体查询---------------------*/
 
 @media screen and (min-width: 480px) and (max-width: 639px) {
