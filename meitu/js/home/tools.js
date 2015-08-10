@@ -43,31 +43,31 @@ define('home/tools', function(require, exports, module){
 	var height = document.body.clientHeight;
 	
 	$('#tools_tucao').on('click', function(){
-		common_div.fadeIn();
 		common_div_iframe.attr('src', "http://vczero.github.io/meitu/toupiao/danmu.html");
 		common_div_iframe.css('height', height);
 		common_div_iframe.css('width', width);
+		common_div.fadeIn();
 	});
 	
 	$('#tools_huodong').on('click', function(){
-		common_div.fadeIn();
 		common_div_iframe.attr('src', "http://123.57.39.116:9797/toupiao/activity.html");
 		common_div_iframe.css('height', height);
 		common_div_iframe.css('width', width);
+		common_div.fadeIn();
 	});
 	
 	$('#tools_fenxiang').on('click', function(){
-		common_div.fadeIn();
 		common_div_iframe.attr('src', "http://123.57.39.116:9797/toupiao/histroy.html");
 		common_div_iframe.css('height', height);
 		common_div_iframe.css('width', width);
+		common_div.fadeIn();
 	});
 	
 	$('#tools_tou').on('click', function(){
-		common_div.fadeIn();
 		common_div_iframe.attr('src', "http://123.57.39.116:9797/toupiao/vote.html");
 		common_div_iframe.css('height', height);
 		common_div_iframe.css('width', width);
+		common_div.fadeIn();
 	});
 	
 	$('.common_close').on('click', function(){
