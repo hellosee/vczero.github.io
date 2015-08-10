@@ -33,9 +33,12 @@
 		<link type="text/css" rel="stylesheet" href="css/font-awesome.css" />
 		<style>
 			#paodan{
-				z-index:19999;position: absolute; width: 100%;right:70px;
+				z-index:19999;position: absolute;right:70px;
 				left:100px;top:50%;height:40px;display:;background-color:#fff;
 				margin-top:-20px;
+			}
+			#paodan_msg{
+				font-size:15px;
 			}
 			
 		</style>
@@ -66,9 +69,6 @@
 		        if(!$paodan){
 		        		var _div = document.createElement("div");
 		        		_div.setAttribute("id","paodan");
-//		        		_div.style.zIndex = 19999;
-//		        		_div.style.po
-//		        		_div.stylesheet = "";
 		            _div.innerHTML = paodan;
 		            document.body.appendChild(_div);
 		        }
