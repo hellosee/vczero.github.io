@@ -44,7 +44,7 @@ define('home/tools', function(require, exports, module){
 	
 	$('#tools_tucao').on('click', function(){
 		common_div.fadeIn();
-		common_div_iframe.attr('src', "http://123.57.39.116:9797/toupiao/danmu.html");
+		common_div_iframe.attr('src', "http://vczero.github.io/meitu/toupiao/danmu.html");
 		common_div_iframe.css('height', height);
 		common_div_iframe.css('width', width);
 	});
