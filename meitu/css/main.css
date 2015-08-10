@@ -448,7 +448,7 @@ textarea, div{
 }
 .common_div {
 	position: absolute;
-	z-index: 19999;
+	z-index: 18999;
 	top: 0;
 	left: 0;
 	right: 0;
