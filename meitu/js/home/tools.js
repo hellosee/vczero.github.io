@@ -71,6 +71,7 @@ define('home/tools', function(require, exports, module){
 	});
 	
 	$('.common_close').on('click', function(){
+		common_div_iframe.attr('src', '');
 		common_div.fadeOut();
 	});
 	
