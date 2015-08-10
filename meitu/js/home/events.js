@@ -222,10 +222,11 @@ define('home/events', function(require, exports, module) {
 				if (i < (router.length) && i > 0 && Math.abs(carPos.lng - router[i].x) < 0.05 && Math.abs(carPos.lat - router[i].y) < 0.05) {
 					var index = parseInt(i - 1);
 					events.set('realCarIndex', index);
+					events.set('realIndex', i);
 					$('#router_circle_' + (parseInt(i) + 1)).css('background-color', 'red');
 					$('#router_circle_' + (parseInt(i) + 1)).addClass('firebug_flash');
 					$('#router_circle_' + i).css('background-color', '#ccc');
-					$('#router_circle_' + i).removeClass('firebug_flash');
+					$('#router_circle_' + i).removeClass('firebug_flash');					
 				}
 			}
 			
@@ -268,10 +269,11 @@ define('home/events', function(require, exports, module) {
 				var speed = (disTime[realCarIndex].speed - Math.random() * 5).toFixed(2);
 				var rmin = Math.ceil(Math.random() * 10);
 				$('#speed_real').text(speed + 'km');
-				events.set('dashSpeed', speed);
 				$('#ar_time').text(getRandomTime(getTime(disTime.length - 1), rmin));
 				$('#total_time').text(getHour(disTime.length - 1));
 				$('#total_dis').text(getAllDistance() + 'km');
+				
+				events.set('dashSpeed', speed);
 
 				if (carMarker) {
 					var pos = carMarker.getPosition();
@@ -290,6 +292,50 @@ define('home/events', function(require, exports, module) {
 			}
 		}, 1000);
 		events.set('realSpeedHandle', realSpeedHandle);
+		events.trigger('wayTui');
+	});
+	
+	//查询路途中景点
+	events.on('wayTui', function(){
+		var old = null;
+		var realCarIndex = null;
+		setInterval(function(){
+			realIndex = events.get('realIndex');
+			var router = events.get('router');			
+			if(realIndex !== old){
+				old = realIndex;
+				var n = (parseInt(old));
+				console.log(realIndex);
+				if(!router[n] || !router[n].x || !router[n].y){
+					return;
+				}
+				var loc = new AMap.LngLat(router[n].x, router[n].y);
+				var city = router[n].content;
+				AMap.service(['AMap.PlaceSearch'], function(){
+					var search = new AMap.PlaceSearch({
+						type: '风景名胜',
+						extensions: 'base'
+					});
+					search.searchNearBy('景点', loc, 50000, function(status, result){
+						if(result.info === 'OK'){
+							var pois = result.poiList.pois;
+							if(pois.length >= 3){
+								$('#alert_info_text1').text(pois[0].name);
+								$('#alert_info_text2').text(pois[1].name);
+								$('#alert_info_text3').text(pois[2].name);
+								$('.alert_info').fadeIn();
+								setTimeout(function(){
+									$('.alert_info').fadeOut();
+								}, 5000);
+							}
+							
+						}else{
+							console.log('服务出错');
+						}
+					});
+				});
+			}
+		}, 1000);
 	});
 
 	//绘制两点间路线

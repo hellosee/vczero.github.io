@@ -60,12 +60,17 @@ define('home/search', function(require, exports, module){
 		events.trigger('carRun');
 		events.trigger('calcuSpeed');
 		events.trigger('getWeather');
+		
 		//触发数据填充到推荐列表
-		setTimeout(function(){
-			info.set('router', events.get('router'));
-			info.set('list', events.get('hots'));
-			info.trigger('refresh');
-		}, 3000);
+		var infoHandle = setInterval(function(){
+			if(events.get('hots').length && events.get('hots')[0].name){
+				info.set('router', events.get('router'));
+				info.set('list', events.get('hots'));
+				info.trigger('refresh');
+				clearInterval(infoHandle);
+			}
+		}, 1000);
+		
 	});
 	
 		
@@ -134,12 +139,16 @@ define('home/search', function(require, exports, module){
 									events.trigger('carRun');
 									events.trigger('calcuSpeed');
 									events.trigger('getWeather');
+									
 									//触发数据填充到推荐列表
-									setTimeout(function(){
-										info.set('router', events.get('router'));
-										info.set('list', events.get('hots'));
-										info.trigger('refresh');
-									}, 3000);
+									var infoHandle = setInterval(function(){
+										if(events.get('hots').length && events.get('hots')[0].name){
+											info.set('router', events.get('router'));
+											info.set('list', events.get('hots'));
+											info.trigger('refresh');
+											clearInterval(infoHandle);
+										}
+									}, 1000);
 				                		
 				                }
 				            }

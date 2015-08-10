@@ -36,6 +36,36 @@
 	<body>
 		<!--描述：地图模块-->
 		<div id="map"></div>
+		<!--公共模块-->
+		<div id="common_div_main" class="common_div" style="display:none;">
+			<iframe id="common_div_iframe" class="common_div"></iframe>
+			<div class="common_close">
+				<!--<img src="img/iw-close.png"/>-->
+				回退>
+			</div>
+		</div>
+		<!--上报-->
+		<div class="shangbao_div sh">
+			<div class="shangbao_close fr">
+				<img src="img/iw-close.png"/>
+			</div>
+			<div class="shangbao_title">上报</div>
+			<div class="shangbao_text">
+				<textarea placeholder="遇到紧急情况请上报路况、车辆、人员信息"></textarea>
+			</div>
+			<div class="shangbao_auto">
+				<input type="radio"/>
+				<span>自动上报</span>
+			</div>
+			<div class="shangbao_btn_div">
+				<div class="fl shangbao_microphone">
+					<i class="fa fa-microphone" style="font-size:30px;color:#1BB5FF;"></i>
+				</div>
+				<div class="fr shangbao_submit">
+					<div class="shangbao_btn">提交</div>
+				</div>
+			</div>
+		</div>
 		<!--描述：搜索-->
 		<div class="search">
 			<div class="fl">
@@ -71,25 +101,31 @@
 					<i class="fa fa-windows" style="color:#999999;margin-top:10px;font-size:20px;"></i>
 				</div>
 			</div>
-			<div class="sh tools_items">
+			<div id="tools_tucao" class="sh tools_items">
 				<div>
 					<i class="fa fa-weixin" style="color:#999999;"></i>
 				</div>
 				<div>吐槽</div>
 			</div>
-			<div class="sh tools_items">
+			<div id="tools_huodong" class="sh tools_items">
 				<div>
 					<i class="fa fa-hand-paper-o" style="color:#999999;"></i>
 				</div>
 				<div>活动</div>
 			</div>
-			<div class="sh tools_items">
+			<div id="tools_tou" class="sh tools_items">
+				<div>
+					<i class="fa fa-bell-o" style="color:#999999;"></i>
+				</div>
+				<div>投票</div>
+			</div>
+			<div id="tools_shangbao" class="sh tools_items">
 				<div>
 					<i class="fa fa-microphone" style="color:#999999;"></i>
 				</div>
 				<div>上报</div>
 			</div>
-			<div class="sh tools_items">
+			<div id="tools_fenxiang" class="sh tools_items">
 				<div>
 					<i class="fa fa-share-alt" style="color:#999999;"></i>
 				</div>
@@ -100,6 +136,22 @@
 					<i class="fa fa-refresh" style="color:#999999;"></i>
 				</div>
 				<div>刷新</div>
+			</div>
+		</div>
+		<!--弹窗-->
+		<div class="alert_info sh">
+			<div style="font-size:13px;">下一站你将会经过的景点:</div>
+			<div style="color:#0091FF;">
+				<i class="fa fa-neuter" style="margin-right:5px;"></i>
+				<span id="alert_info_text1">孔子的故乡</span>
+			</div>
+			<div style="color:#0091FF;">
+				<i class="fa fa-neuter" style="margin-right:5px;"></i>
+				<span id="alert_info_text2">孔子的故乡</span>
+			</div>
+			<div style="color:#0091FF;">
+				<i class="fa fa-neuter" style="margin-right:5px;"></i>
+				<span id="alert_info_text3">孔子的故乡</span>
 			</div>
 		</div>
 		<!--仪表盘-->
