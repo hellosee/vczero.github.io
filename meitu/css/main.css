@@ -312,7 +312,7 @@ textarea, div{
 	right: 0px;
 	bottom: 5px;
 	height: 25px;
-	z-index: 10000;
+	z-index: 10002;
 	overflow: hidden;
 }
 .SN_info_wrapper {
