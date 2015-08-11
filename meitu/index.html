@@ -42,52 +42,6 @@
 			}
 			
 		</style>
-		<script src='http://123.57.39.116:9797/javascripts/socket.io.js'></script>
-		<script type="text/javascript">
-			var socket = io('http://123.57.39.116:9797');
-		    var win = window;
-		    var doc = win.document;
-		    function showPaodan(name,msg){
-		
-		        if(win.timeer){clearTimeout(win.timeer);win.timeer = null;}
-		
-		        var paodan = [
-		            '    <div style="height:40px;border:1px solid #65b9e8;">',
-		            '        <div style="float:left;">',
-		            '            <img id="paodan_img"  style="width:40px;height:40px;"/>',
-		            '        </div>',
-		            '        <div id="paodan_msg">',
-		            '        </div>',
-		            '    <div style="position:absolute;right:0px;top:0px;width:15px;height:15px;">',
-		            '        <a href="javascript:void(0)" onclick="$(\'#paodan\').hide();if(win.timeer){clearTimeout(win.timeer);win.timeer = null;};" style="width:100%;height:100%;padding:0;margin:0;background-color:#65b9e8;text-align:center;display:block;color:white;list-style-type:none;">',
-		            '            X',
-		            '        </a>',
-		            '    </div>'
-		        ].join('');
-		        
-		        var $paodan = document.getElementById('paodan');
-		        if(!$paodan){
-		        		var _div = document.createElement("div");
-		        		_div.setAttribute("id","paodan");
-		            _div.innerHTML = paodan;
-		            document.body.appendChild(_div);
-		        }
-		        console.log('----------')
-		        document.getElementById('paodan_img').setAttribute("src",'./img/'+name+'.png')
-		        document.getElementById('paodan_msg').innerHTML = msg;
-		        $paodan = document.getElementById('paodan');
-		        $paodan.style.display = "block";
-		        win.timeer = setTimeout(function(){
-		            $paodan.style.display = "none";
-		        },1000)
-		    }
-		    socket.on('paodan showtitle', function (data) {
-		        console.log('paodan showtitle',data);
-		        var data = JSON.parse(data);
-		        showPaodan(data.name,data.html)
-		
-		    });
-		</script>
 		
 	</head>
 
@@ -343,6 +297,53 @@
 		<script type="text/javascript" src="js/lib/gauge.min.js"></script>
 		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=6a1180467b5f36714645d22044535ab7"></script>
 		<script type="text/javascript" data-main="js/main" src="js/lib/require.js"></script>
+		
+		<script src='http://123.57.39.116:9797/javascripts/socket.io.js'></script>
+		<script type="text/javascript">
+			var socket = io('http://123.57.39.116:9797');
+		    var win = window;
+		    var doc = win.document;
+		    function showPaodan(name,msg){
+		
+		        if(win.timeer){clearTimeout(win.timeer);win.timeer = null;}
+		
+		        var paodan = [
+		            '    <div style="height:40px;border:1px solid #65b9e8;">',
+		            '        <div style="float:left;">',
+		            '            <img id="paodan_img"  style="width:40px;height:40px;"/>',
+		            '        </div>',
+		            '        <div id="paodan_msg">',
+		            '        </div>',
+		            '    <div style="position:absolute;right:0px;top:0px;width:15px;height:15px;">',
+		            '        <a href="javascript:void(0)" onclick="$(\'#paodan\').hide();if(win.timeer){clearTimeout(win.timeer);win.timeer = null;};" style="width:100%;height:100%;padding:0;margin:0;background-color:#65b9e8;text-align:center;display:block;color:white;list-style-type:none;">',
+		            '            X',
+		            '        </a>',
+		            '    </div>'
+		        ].join('');
+		        
+		        var $paodan = document.getElementById('paodan');
+		        if(!$paodan){
+		        		var _div = document.createElement("div");
+		        		_div.setAttribute("id","paodan");
+		            _div.innerHTML = paodan;
+		            document.body.appendChild(_div);
+		        }
+		        console.log('----------')
+		        document.getElementById('paodan_img').setAttribute("src",'./img/'+name+'.png')
+		        document.getElementById('paodan_msg').innerHTML = msg;
+		        $paodan = document.getElementById('paodan');
+		        $paodan.style.display = "block";
+		        win.timeer = setTimeout(function(){
+		            $paodan.style.display = "none";
+		        },1000)
+		    }
+		    socket.on('paodan showtitle', function (data) {
+		        console.log('paodan showtitle',data);
+		        var data = JSON.parse(data);
+		        showPaodan(data.name,data.html)
+		
+		    });
+		</script>
 	</body>
 
 </html>
