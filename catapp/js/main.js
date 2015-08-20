@@ -15,11 +15,48 @@ var App = (function() {
 				}
 			});
 		});
-
+	
 		J.Transition.add('flip', 'slideLeftOut', 'flipOut', 'slideRightOut', 'flipIn');
 		Jingle.launch({
-			showWelcome: false,
-			welcomeSlideChange: false,
+			showWelcome : true,
+            welcomeSlideChange : function(i){
+                switch(i){
+                    case 0 :
+                        J.anim('#welcome_jingle','welcome_jinlge',1000);
+						setTimeout(function(){
+							$("#css_jingle_welcome").remove();
+							$("#jingle_welcome").remove();
+							
+						},1000)
+						
+                        break;
+                    case 1 :
+                        $('#r_head,#r_body,#r_hand_left,#r_hand_right,#r_foot_left,#r_foot_right').hide()
+                        J.anim($('#r_head').show(),'r_head',500,function(){
+                            J.anim($('#r_body').show(),'r_body',1200,function(){
+                                J.anim($('#r_hand_left').show(),'r_hand_l',500);
+                                J.anim($('#r_hand_right').show(),'r_hand_r',500,function(){
+                                    J.anim($('#r_foot_left').show(),'r_foot_l',500);
+                                    J.anim($('#r_foot_right').show(),'r_foot_r',500,function(){
+                                        J.anim('#welcome_robot','welcome_robot',2000);
+                                    });
+                                });
+                            });
+                        });
+                        break;
+                    case 2 :
+                        $('#w_box_1,#w_box_2,#w_box_3,#w_box_4').hide()
+                        J.anim($('#w_box_1').show(),'box_l',500,function(){
+                            J.anim($('#w_box_2').show(),'box_r',500,function(){
+                                J.anim($('#w_box_3').show(),'box_l',500,function(){
+                                    J.anim($('#w_box_4').show(),'box_r',500);
+                                });
+                            });
+                        });
+                        break;
+                }
+            },
+			// welcomeSlideChange:false,
 			showPageLoading: false,
 			remotePage: {
 				'#about_section': 'remote/about_section.html'
@@ -150,9 +187,15 @@ function AppMonitor() {
 		$dely_vs = $('#success_delay_c');
 		
 		var LINE_HEIGHT = 200;
-		$lineChart.attr('width', wh.width).attr('height', wh.height - LINE_HEIGHT);
-		$barChart.attr('width', wh.width).attr('height', wh.height - LINE_HEIGHT);
-		$delay.attr('width', wh.width).attr('height', wh.height - LINE_HEIGHT);
+		var newValue =  wh.height - LINE_HEIGHT;
+		if(newValue < 200){
+			 newValue = 200;
+		}
+		$lineChart.attr('width', wh.width).attr('height', newValue);
+		$barChart.attr('width', wh.width).attr('height', newValue);
+		$delay.attr('width', wh.width).attr('height', newValue);
+
+		
 
 		var data = {
 			labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
@@ -188,9 +231,9 @@ function AppMonitor() {
 			}]
 		};
 		$('#changeDragChartType').on('change', function(e, el) {
-			$lineChart.attr('width', wh.width).attr('height', wh.height - LINE_HEIGHT);
-			$barChart.attr('width', wh.width).attr('height', wh.height - LINE_HEIGHT);
-			$delay.attr('width', wh.width).attr('height', wh.height - LINE_HEIGHT);
+			$lineChart.attr('width', wh.width).attr('height',newValue);
+			$barChart.attr('width', wh.width).attr('height', newValue);
+			$delay.attr('width', wh.width).attr('height', newValue);
 
 			renderChart(el.data('type'), data, data3);
 
@@ -200,13 +243,176 @@ function AppMonitor() {
 }
 
 
+$("#module_list").delegate("li","tap",function(){
+	var $li = $(this).find(">i");
+	var href = $(this).data("href");
+	var text = $(this).find("strong").text();
+	if($(this).find(".alizarin").css("display")!=="none"){
+		J.showToast("严重错误提示！！",'error',1000);
+	}
+	
+	$(this).find(".alizarin").hide();
+	
+	
+	
+	$(this).find(".alizarin").html(0);
+	clearNotice();
+	if($li.hasClass("next")){
+		J.Router.goTo("#"+href);
+	}else{
+		$("#module_list").find(".next").removeClass("next");
+		$li.addClass("next");
+		
+		
+		if($("#"+href).length){
+			J.Router.goTo("#"+href);
+		}else{
+			$("#empty_section").find(".title").text(text);
+			J.Router.goTo("#empty_section");
+		}
+	}
+})
 
-App.page('index', function() {
+
+$("#module_article").delegate("li","tap",function(){
+	var $this = $(this);
+	var $i = $(this).find(">i");
+	var href = $this.data("href");
+	var icon = $this.data("icons");
+	var text = $this.text();
+	console.log(this)
+	
+	if($i.hasClass("checkbox-unchecked")){
+		$i.removeClass("checkbox-unchecked").addClass("checkbox-checked");
+		$this.addClass("active");
+		var $li = $('<li  data-selected="selected" class="" data-href="'+href+'" id="module_'+href+'"></li>');
+		
+	
+		var html = [
+			'	<i class="icon"></i>',
+			'	<div class="tag alizarin">8</div>',
+			'	<a >',
+			'		<i class="icon '+icon+'"></i>',
+			'		<strong>'+text+'</strong>',
+			'	</a>'
+		];
+		$li.html(html.join(""));
+		$li.appendTo($("#module_list"));
+		//
+	}else{
+		if($this.hasClass("active")){
+			$i.removeClass("checkbox-checked").addClass("checkbox-unchecked");
+			$this.removeClass("active");
+			console.log("module_"+href)
+			console.log($("#module_"+href)[0])
+			$("#module_"+href).remove();
+			//
+		}else{
+		
+		}
+		
+	}
+});
+
+function addModule(){
+	
+}
+function deleteModule(){
+	
+}
+
+function createProblem(){
+
+//随机生成
+	var data = [];
+	var ids = [];
+	for (var i = 0; i < 15; i++) {
+		data[i] = Math.ceil(Math.random() * 1200);
+		if(data[i] <= 70){
+			data[i] = 70 + Math.ceil(Math.random()*10);
+		}
+		ids[i] = Math.ceil(Math.random() * 10000);
+		if(ids[i] <= 1000){
+			ids[i] = 1000 + Math.ceil(Math.random()*106);
+		}
+	}
+	
+	var tagValue = 0;　
+	//排序
+	for (i = 0; i < data.length; i++) {
+		var min = data[i];
+		var temp;
+		var index = i;
+		for (var j = i + 1; j < data.length; j++) {
+			if (data[j] > min) {
+				min = data[j];
+				index = j;
+			}
+		}
+	
+		temp = data[i];
+		data[i] = min;
+		data[index] = temp;
+	}
+	//渲染
+	console.log(data);
+	console.log(ids);
+	$('#__mychart').empty();
+	$('#__ids').empty();
+	
+	for(i = 0; i< data.length; i++){
+		var rate = Math.floor((data[i]/ data[0]) * 100) + '%';
+		var color = '';
+		if(data[i] >= 1000){
+			color = '#E10B70';
+		}
+		if(data[i] >= 500 && data[i] < 1000){
+			color = '#E6BC00';
+		}
+		if(data[i] < 500){
+			color = '#3BC1FF';
+		}
+		
+		var str = '<div onclick="showTip()" style="height:15px;padding-left:1px;box-sizing:border-box;background-color:';
+		str += color + ';margin-bottom:4px;';
+		str += 'width:' + rate + ';font-size:0.9em;color:#fff;font-style:italic;">';
+		str += data[i] + '</div>'
+		$('#__mychart').append(str);
+		
+		var idStr = '<div style="font-size:0.9em;color:#999;margin-bottom:2px;">';
+		idStr += ids[i] + '</div>';
+		$('#__ids').append(idStr);
+	}
+	
+	window.showTip = function showTip(){
+		$('#__id_tip').text("");
+		var str = ['酒店产品查询服务器', '机票产品查询服务器', '汽车服务器', '商旅', '团队游'];
+		var index = parseInt(Math.random() * 5);
+		$('#__id_tip').text(str[index]);
+	}
+}
+createProblem();				
+
+
+App.page('add_module', function() {
 	this.init = function() {
-		J.Scroll('#index_section nav.header-secondary', {
-			hScroll: true,
-			hScrollbar: false
-		});
+		
+	}
+})
+
+
+
+
+
+
+App.page('app', function() {
+	this.init = function() {
+		// J.Scroll('#index_section nav.header-secondary', {
+			// hScroll: true,
+			// hScrollbar: false
+		// });
+		
+		
 		AppMonitor();
 		$('#App_article').css('overflow', 'scroll');
 		$('#index_section nav.header-secondary a').on('tap', function(e) {
@@ -237,6 +443,61 @@ App.page('index', function() {
 
 	}
 });
+function ramNotice(){
+	var len = $("#module_list").find("li").length;
+	var ram =Math.round(Math.random()*(len-1));
+	var $li = $("#module_list").find("li").get(ram);
+	var $alizarin = $($li).find(".alizarin");
+	if($alizarin.css("display")!=="none"){
+	
+	}else{
+		val = 0;
+	}
+	if(val==".."){
+		curVla="..";
+	}else{
+		var val = $alizarin.text()*1;
+		
+		var curVla = val+1;
+		if(curVla>9){
+			curVla="..";
+		}
+	}
+	
+	$alizarin.text(curVla)
+	$alizarin.show();
+	clearNotice();
+	autoPlay();
+}
+setInterval(function(){
+	ramNotice();
+},1000*8);
+function clearNotice(){
+	var len = 0;
+	$("#module_list").find(".alizarin").each(function(){
+		if($(this).css("display")!="none"){
+			len = 1;
+			return false
+		}
+	})
+	console.log(len)
+	if(len){
+		$("header .alizarin").show();
+	}else{
+		$("header .alizarin").hide();
+	}
+}
+
+
+function autoPlay(){
+	console.log("autoPlay")
+	var myAuto = document.getElementById('myaudio');
+	myAuto.play();
+	setTimeout(function(){
+		myAuto.pause();
+	}, 1000);
+}
+
 
 $(function() {
 	App.run();
