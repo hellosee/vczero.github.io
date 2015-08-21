@@ -62,6 +62,10 @@ var App = (function() {
 				'#about_section': 'remote/about_section.html'
 			}
 		});
+		setTimeout(function(){
+			$('#App_section').addClass("active").show();
+			
+		},500)
 
 	};
 	var page = function(id, factory) {
@@ -248,7 +252,7 @@ $("#module_list").delegate("li","tap",function(){
 	var href = $(this).data("href");
 	var text = $(this).find("strong").text();
 	if($(this).find(".alizarin").css("display")!=="none"){
-		J.showToast("严重错误提示！！",'error',1000);
+		J.showToast("您现在有［"+$(this).find(".alizarin").html()+"］个错误警告！！",'error',1000);
 	}
 	
 	$(this).find(".alizarin").hide();
