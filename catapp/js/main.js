@@ -488,14 +488,19 @@ function clearNotice(){
 	}
 }
 
+var playHandle;
 
 function autoPlay(){
-	console.log("autoPlay")
-	var myAuto = document.getElementById('myaudio');
-	myAuto.play();
-	setTimeout(function(){
-		myAuto.pause();
+	console.log("autoPlay");
+	playHandle &&(clearTimeout(playHandle), playHandle=null);
+	playHandle = setTimeout(function(){
+		var myAuto = document.getElementById('myaudio');
+		myAuto.play();
+		setTimeout(function(){
+			myAuto.pause();
+		}, 1000);
 	}, 1000);
+	
 }
 
 
