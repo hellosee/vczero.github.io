@@ -498,7 +498,7 @@ function autoPlay(){
 		myAuto.play();
 		setTimeout(function(){
 			myAuto.pause();
-		}, 1000);
+		}, 1200);
 	}, 1000);
 	
 }
