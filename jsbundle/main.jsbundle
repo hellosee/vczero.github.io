@@ -1398,7 +1398,9 @@ return index === -1?undefined:this[index];}});}})();
 __d('catapp/index.ios.js',["Dimensions","react-native/Libraries/react-native/react-native.js","catapp/views/router.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
 React=require('react-native/Libraries/react-native/react-native.js');
 var Dimensions=require('Dimensions');
-var Router=require('catapp/views/router.js');var 
+var Router=require('catapp/views/router.js');
+
+global.nav = null;var 
 
 
 StyleSheet=
@@ -51545,6 +51547,7 @@ var App=require('catapp/views/app.js');var
 
 
 
+
 StyleSheet=
 
 
@@ -51562,6 +51565,7 @@ var Router=React.createClass({
 addPage:function(name){
 switch(name){
 case 'errors':
+nav = this.props.navigator;
 this.props.navigator.push({
 component:Errors,
 title:'报错大盘'});
@@ -52229,9 +52233,10 @@ sysTitle:"机酒无线公共服务"}]});
 
 module.exports = data;
 });
-__d('catapp/views/errors/table.js',["Dimensions","react-native/Libraries/react-native/react-native.js","catapp/views/errors/tab.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');
+__d('catapp/views/errors/table.js',["Dimensions","react-native/Libraries/react-native/react-native.js","catapp/views/errors/tab.js","catapp/views/errors/dependence.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');
 var Dimensions=require('Dimensions');
-var Tab=require('catapp/views/errors/tab.js');var 
+var Tab=require('catapp/views/errors/tab.js');
+var Dependence=require('catapp/views/errors/dependence.js');var 
 
 
 StyleSheet=
@@ -52251,7 +52256,7 @@ var px=1 / PixelRatio.get();
 
 var SCREE_WIDTH=Dimensions.get('window').width;
 
-var ROW_HEIGHT=35;
+var ROW_HEIGHT=40;
 
 var Table=React.createClass({
 getInitialState:function(){
@@ -52307,8 +52312,10 @@ exList),
 
 React.createElement(View,{style:[styles.row,{borderTopWidth:0,marginTop:10}]},
 React.createElement(View,{style:{flex:1}}),
+React.createElement(TouchableOpacity,{onPress:this.addDeps},
 React.createElement(View,{style:styles.btn},
-React.createElement(Text,{style:{color:'#383838',fontSize:13}},'依赖关系')))):
+React.createElement(Text,{style:{color:'#383838',fontSize:13}},'依赖关系'))))):
+
 
 
 
@@ -52452,7 +52459,14 @@ obj[title + '_' + i] = false;}
 if(!tag){
 obj[title + '_' + index] = true;}
 
-this.setState(obj);}});
+this.setState(obj);},
+
+
+addDeps:function(){
+nav.push({
+component:Dependence,
+title:'依赖关系'});}});
+
 
 
 
@@ -52634,6 +52648,585 @@ marginRight:5}});
 
 
 module.exports = Tab;
+});
+__d('catapp/views/errors/dependence.js',["react-native/Libraries/react-native/react-native.js","catapp/views/errors/actualdata.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
+
+
+React=require('react-native/Libraries/react-native/react-native.js');
+var actualdata=require('catapp/views/errors/actualdata.js');var 
+
+
+StyleSheet=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+React.StyleSheet;var Text=React.Text;var AppRegistry=React.AppRegistry;var View=React.View;var WebView=React.WebView;var PickerIOS=React.PickerIOS;var ScrollView=React.ScrollView;var StatusBarIOS=React.StatusBarIOS;var NavigatorIOS=React.NavigatorIOS;var PixelRatio=React.PixelRatio;var Dimensions=React.Dimensions;var TouchableHighlight=React.TouchableHighlight;var ListView=React.ListView;var Animated=React.Animated;var AnimatedValue=React.AnimatedValue;var LayoutAnimation=React.LayoutAnimation;
+var pt=1 / PixelRatio.get();
+
+var SCREE_WIDTH=Dimensions.get('window').width;
+var SCREE_HEIGHT=Dimensions.get('window').height;
+var rowheight=SCREE_HEIGHT / 22;
+var foldheight=SCREE_HEIGHT / 22;
+var headerheight=63;
+var lineheight=1;
+var xqheight=SCREE_HEIGHT / 18 * 4;
+
+
+var Dependence=React.createClass({
+xiangqingisfold:false,
+yilaifold:false,
+beiyilaifold:false,
+realdata:actualdata,
+animations:{
+layout:{
+spring:{
+duration:750,
+create:{
+duration:300,
+type:LayoutAnimation.Types.easeInEaseOut,
+property:LayoutAnimation.Properties.opacity},
+
+update:{
+type:LayoutAnimation.Types.spring,
+springDamping:400}},
+
+
+easeInEaseOut:{
+duration:300,
+create:{
+type:LayoutAnimation.Types.easeInEaseOut,
+property:LayoutAnimation.Properties.scaleXY},
+
+update:{
+delay:100,
+type:LayoutAnimation.Types.easeInEaseOut}}}},
+
+
+
+
+componentDidMount:function(){},
+
+
+
+getInitialState:function(){
+this.props.data = actualdata;
+var ds=new ListView.DataSource({rowHasChanged:function(r1,r2){return r1 !== r2;}});
+return {
+fadeAnim:new Animated.Value(1),
+pan:new Animated.ValueXY(),
+dataSource:ds.cloneWithRows(['org.apache.net.ConnectTimeoutException  1.0','org.apache.net.ConnectTimeoutExceptionA  2.0']),
+xiangqingheight:xqheight,
+yilaiheight:(SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight) / 2,
+beiyilaiheight:(SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight) / 2,
+xqcontent:[],
+yilaicontent:[],
+beiyilaicontent:[]};},
+
+
+componentWillMount:function(){
+this.state.xqcontent.push(React.createElement(View,{style:{height:this.state.xiangqingheight,flexDirection:'row',borderWidth:pt,borderColor:'#ddd'}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"xq"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",writingDirection:'ltr',fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'错误关系'))),
+
+
+React.createElement(ScrollView,{style:[{flex:8}]},
+React.createElement(Text,{style:styles.title},'Restful机票无线服务'),
+React.createElement(ListView,{
+dataSource:this.state.dataSource,
+renderRow:function(rowData){return React.createElement(Text,{style:styles.desc},rowData);}}))));
+
+
+
+
+this.state.yilaicontent.push(React.createElement(View,{style:{flexDirection:'row',flex:1}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"yl"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'依赖详情'))),
+
+
+React.createElement(ScrollView,{style:{flex:8}},
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'))));
+
+
+this.state.beiyilaicontent.push(
+React.createElement(View,{style:{flexDirection:'row',flex:1}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"byl"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'被依赖关系'))),
+
+
+React.createElement(ScrollView,{style:{flex:8}},
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'))));},
+
+
+
+
+
+changetab:function(mobj){
+if(mobj.name == "xq"){
+if(mobj.action == "fold"){
+this.xiangqingisfold = true;
+LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
+if(this.yilaifold == true && this.beiyilaifold == false){
+tpyilaiheight = this.state.yilaiheight;
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2;}else 
+if(this.yilaifold == false && this.beiyilaifold == true){
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2;
+tpbeiyilaiheight = this.state.beiyilaiheight;}else 
+if(this.yilaifold == false && this.beiyilaifold == false){
+tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - foldheight - headerheight) / 2;
+tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - foldheight - headerheight) / 2;}else 
+if(this.yilaifold == true && this.beiyilaifold == true){
+tpyilaiheight = this.state.yilaiheight;
+tpbeiyilaiheight = this.state.beiyilaiheight;}
+
+this.setState({
+xqcontent:[React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{
+action:'expand',
+name:"xq"}),
+underlayColor:"#ddd",style:{justifyContent:'center',flex:1,height:foldheight}},
+React.createElement(View,{style:{
+justifyContent:'center',
+flex:1,
+flexDirection:"row",
+backgroundColor:"#F4F4F4"}},
+
+React.createElement(View,{style:{
+justifyContent:'center',
+flex:1,
+alignItems:'flex-start',
+paddingLeft:10}},
+
+React.createElement(Text,{style:{
+color:"#005BFF",
+fontSize:SCREE_HEIGHT / 40,
+fontWeight:600}},
+'错误详情')),
+
+React.createElement(View,{style:{justifyContent:'center',flex:4,alignItems:'flex-end'}},
+React.createElement(Text,{style:{
+color:"#005BFF",
+fontSize:SCREE_HEIGHT / 40,
+fontWeight:400}},
+'+   '))))],
+
+
+
+yilaiheight:tpyilaiheight,
+beiyilaiheight:tpbeiyilaiheight});}else 
+
+{
+LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
+this.xiangqingisfold = false;
+if(this.yilaifold == true && this.beiyilaifold == false){
+tpyilaiheight = this.state.yilaiheight;
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight - foldheight;}else 
+if(this.yilaifold == false && this.beiyilaifold == true){
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight - foldheight;
+tpbeiyilaiheight = this.state.beiyilaiheight;}else 
+if(this.yilaifold == false && this.beiyilaifold == false){
+tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight) / 2;
+tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight) / 2;}else 
+if(this.yilaifold == true && this.beiyilaifold == true){
+tpyilaiheight = this.state.yilaiheight;
+tpbeiyilaiheight = this.state.beiyilaiheight;}
+
+
+this.setState({
+xqcontent:[React.createElement(View,{style:{height:this.state.xiangqingheight,flexDirection:'row',borderWidth:pt,borderColor:'#ddd'}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"xq"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",writingDirection:'ltr',fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'错误详情'))),
+
+
+React.createElement(ScrollView,{style:[{flex:8}]},
+React.createElement(Text,{style:styles.title},'Restful机票无线服务'),
+React.createElement(ListView,{
+dataSource:this.state.dataSource,
+renderRow:function(rowData){return React.createElement(Text,{style:styles.desc},rowData);}})))],
+
+
+
+
+yilaiheight:tpyilaiheight,
+beiyilaiheight:tpbeiyilaiheight});}}
+
+
+
+
+if(mobj.name == "yl"){
+if(mobj.action == "fold"){
+LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
+
+
+
+
+
+
+
+
+
+
+
+
+this.yilaifold = true;
+if(this.xiangqingisfold == true && this.beiyilaifold == false){
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2;}else 
+if(this.xiangqingisfold == false && this.beiyilaifold == true){
+tpbeiyilaiheight = this.state.beiyilaiheight;}else 
+if(this.xiangqingisfold == false && this.beiyilaifold == false){
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight - xqheight;}else 
+if(this.xiangqingisfold == true && this.beiyilaifold == true){
+tpbeiyilaiheight = this.state.beiyilaiheight;}
+
+this.setState({
+yilaicontent:[React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{
+action:'expand',
+name:"yl"}),
+underlayColor:"#ddd",style:{justifyContent:'center',flex:1,height:foldheight}},
+React.createElement(View,{style:{
+justifyContent:'center',
+flex:1,
+flexDirection:"row",
+backgroundColor:"#F4F4F4"}},
+
+React.createElement(View,{style:{
+justifyContent:'center',
+flex:1,
+alignItems:'flex-start',
+paddingLeft:10}},
+
+React.createElement(Text,{style:{
+color:"#005BFF",
+fontSize:SCREE_HEIGHT / 40,
+fontWeight:600}},
+'依赖关系')),
+
+React.createElement(View,{style:{justifyContent:'center',flex:4,alignItems:'flex-end'}},
+React.createElement(Text,{style:{
+color:"#005BFF",
+fontSize:SCREE_HEIGHT / 40,
+fontWeight:400}},
+'+   '))))],
+
+
+
+yilaiheight:foldheight,
+beiyilaiheight:tpbeiyilaiheight});}else 
+
+{
+LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
+this.yilaifold = false;
+if(this.xiangqingisfold == true && this.beiyilaifold == false){
+tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight) / 2;
+tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight) / 2;}else 
+if(this.xiangqingisfold == false && this.beiyilaifold == true){
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight - foldheight;
+tpbeiyilaiheight = this.state.beiyilaiheight;}else 
+if(this.xiangqingisfold == false && this.beiyilaifold == false){
+tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight) / 2;
+tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight) / 2;}else 
+if(this.xiangqingisfold == true && this.beiyilaifold == true){
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - SCREE_HEIGHT / 11;
+tpbeiyilaiheight = this.state.beiyilaiheight;}
+
+
+this.setState({
+yilaicontent:[React.createElement(View,{style:{flexDirection:'row',flex:1}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"yl"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",writingDirection:'ltr',fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'依赖关系'))),
+
+
+React.createElement(ScrollView,{style:{flex:8}},
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)')))],
+
+
+yilaiheight:tpyilaiheight,
+beiyilaiheight:tpbeiyilaiheight});}}
+
+
+
+
+if(mobj.name == "byl"){
+if(mobj.action == "fold"){
+LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
+this.beiyilaifold = true;
+if(this.xiangqingisfold == true && this.yilaifold == false){
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2;}else 
+if(this.xiangqingisfold == false && this.yilaifold == true){
+tpyilaiheight = this.state.yilaiheight;}else 
+if(this.xiangqingisfold == false && this.yilaifold == false){
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight - xqheight;}else 
+if(this.xiangqingisfold == true && this.yilaifold == true){
+tpyilaiheight = this.state.yilaiheight;}
+
+this.setState({
+beiyilaicontent:[React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{
+action:'expand',
+name:"byl"}),
+underlayColor:"#ddd",style:{justifyContent:'center',flex:1,height:foldheight}},
+React.createElement(View,{style:{
+justifyContent:'center',
+flex:1,
+flexDirection:"row",
+backgroundColor:"#F4F4F4"}},
+
+React.createElement(View,{style:{
+justifyContent:'center',
+flex:1,
+alignItems:'flex-start',
+paddingLeft:10}},
+
+React.createElement(Text,{style:{
+color:"#005BFF",
+fontSize:SCREE_HEIGHT / 40,
+fontWeight:600}},
+'被依赖关系')),
+
+React.createElement(View,{style:{justifyContent:'center',flex:3,alignItems:'flex-end'}},
+React.createElement(Text,{style:{
+color:"#005BFF",
+fontSize:SCREE_HEIGHT / 40,
+fontWeight:400}},
+'+   '))))],
+
+
+
+yilaiheight:tpyilaiheight,
+beiyilaiheight:foldheight});}else 
+
+{
+LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
+this.beiyilaifold = false;
+
+if(this.xiangqingisfold == true && this.yilaifold == false){
+tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight) / 2;
+tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight) / 2;}else 
+if(this.xiangqingisfold == false && this.yilaifold == true){
+tpyilaiheight = this.state.yilaiheight;
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight - foldheight;}else 
+if(this.xiangqingisfold == false && this.yilaifold == false){
+tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight) / 2;
+tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight) / 2;}else 
+if(this.xiangqingisfold == true && this.yilaifold == true){
+tpyilaiheight = this.state.yilaiheight;
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2;}
+
+
+this.setState({
+beiyilaicontent:[React.createElement(View,{style:{flexDirection:'row',flex:1}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"byl"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",writingDirection:'ltr',fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'被依赖关系'))),
+
+
+React.createElement(ScrollView,{style:{flex:8}},
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)')))],
+
+
+yilaiheight:tpyilaiheight,
+beiyilaiheight:tpbeiyilaiheight});}}},
+
+
+
+
+render:function(){
+return (
+React.createElement(View,null,
+React.createElement(View,{style:[styles.row]},
+React.createElement(View,{style:styles.item},
+React.createElement(Text,{style:[styles.fontBold,{textAlign:'center'}]},'App ID')),
+
+React.createElement(View,{style:styles.item},
+React.createElement(Text,{style:[styles.fontBold,{textAlign:'center'}]},'错误数')),
+
+React.createElement(View,{style:styles.item},
+React.createElement(Text,{style:[styles.fontBold,{width:120,textAlign:'center'}]},'环比'))),
+
+
+React.createElement(View,{style:styles.row},
+React.createElement(View,{style:styles.item},
+React.createElement(Text,{style:[styles.fontitemBold,{textAlign:'center'}]},'12344')),
+
+React.createElement(View,{style:styles.item},
+React.createElement(Text,{style:[styles.fontitemBold,{color:'#F78900',textAlign:'center'}]},'706')),
+
+React.createElement(View,{style:styles.item},
+React.createElement(Text,{style:[styles.fontitemBold,{width:120,color:'red',textAlign:'center'}]},'+79%'))),
+
+
+React.createElement(View,{style:styles.bottomrow}),
+
+
+
+this.state.xqcontent,
+
+React.createElement(Animated.View,{style:{opacity:this.state.fadeAnim,height:this.state.yilaiheight,borderWidth:pt,borderColor:'#ddd',transform:this.state.pan.getTranslateTransform()}},
+this.state.yilaicontent),
+
+
+React.createElement(View,{style:{height:this.state.beiyilaiheight,borderWidth:pt,borderColor:'#ddd'}},
+this.state.beiyilaicontent)));}});
+
+
+
+
+
+
+var styles=StyleSheet.create({
+border:{
+borderBottomWidth:pt,
+borderColor:'#ddd'},
+
+bottomrow:{
+flexDirection:'row',
+borderTopWidth:pt,
+borderColor:'#ddd',
+height:lineheight},
+
+row:{
+flexDirection:'row',
+borderTopWidth:pt,
+borderColor:'#ddd',
+height:rowheight,
+alignItems:'center'},
+
+item:{
+width:SCREE_WIDTH / 3,
+borderTopWidth:pt,
+borderLeftWidth:pt,
+height:rowheight,
+borderColor:'#ddd',
+
+justifyContent:'center'},
+
+fontBold:{
+fontWeight:'700'},
+
+fontitemBold:{
+fontWeight:'400'},
+
+title:{
+color:'#616161',
+marginLeft:8,
+marginTop:5,
+fontSize:15,
+fontWeight:'600'},
+
+gxtitle:{
+marginTop:5,
+color:'#616161',
+marginLeft:0,
+fontSize:15,
+fontWeight:'600'},
+
+gxdesc:{
+marginLeft:15,
+fontSize:12},
+
+desc:{
+marginLeft:15,
+marginRight:5,
+fontSize:12}});
+
+
+
+module.exports = Dependence;
+});
+__d('catapp/views/errors/actualdata.js',[],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
+
+
+actualdata=[{
+"minute":"09:47",
+"domains":[{
+"total":1.0,
+"appName":null,
+"errors":[{
+"num":1.0,
+"name":"org.apache.hadoop.net.ConnectTimeoutException"}],
+
+
+"appId":"cat",
+"alert":0}]},
+
+
+{
+"minute":"09:36",
+"domains":[{
+"total":1.0,
+"appName":null,
+"errors":[{
+"num":1.0,
+"name":"org.apache.hadoop.net.ConnectTimeoutException"}],
+
+
+"appId":"cat",
+"alert":0}]}];
+
+
+
+
+
+
+module.exports = actualdata;
 });
 __d('catapp/views/app.js',["react-native/Libraries/react-native/react-native.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');var 
 
