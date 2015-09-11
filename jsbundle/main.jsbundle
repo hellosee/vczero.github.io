@@ -1395,9 +1395,12 @@ throw new TypeError(
 
 var index=findIndex.call(this,predicate,context);
 return index === -1?undefined:this[index];}});}})();
-__d('catapp/index.ios.js',["Dimensions","react-native/Libraries/react-native/react-native.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
+__d('catapp/index.ios.js',["Dimensions","react-native/Libraries/react-native/react-native.js","catapp/views/router.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
 React=require('react-native/Libraries/react-native/react-native.js');
-var Dimensions=require('Dimensions');var 
+var Dimensions=require('Dimensions');
+var Router=require('catapp/views/router.js');
+
+global.nav = null;var 
 
 
 StyleSheet=
@@ -1410,22 +1413,36 @@ StyleSheet=
 
 
 
+React.StyleSheet;var Text=React.Text;var AppRegistry=React.AppRegistry;var View=React.View;var WebView=React.WebView;var PickerIOS=React.PickerIOS;var ScrollView=React.ScrollView;var StatusBarIOS=React.StatusBarIOS;var NavigatorIOS=React.NavigatorIOS;
 
-React.StyleSheet;var Text=React.Text;var AppRegistry=React.AppRegistry;var View=React.View;var WebView=React.WebView;var PickerIOS=React.PickerIOS;var ScrollView=React.ScrollView;var StatusBarIOS=React.StatusBarIOS;var NavigatorIOS=React.NavigatorIOS;var CameraRoll=React.CameraRoll;
-
-
-
-CameraRoll.saveImageWithTag('http://vczero.github.io/ctrip/mouse.jpg',function(){
-alert('保存图片成功');},
-function(){
-alert('保存图片失败');});
-
+StatusBarIOS.setStyle('light-content');
 
 var App=React.createClass({
 render:function(){
 return (
-React.createElement(View,null,
-React.createElement(Text,null,'摄像头')));}});
+React.createElement(NavigatorIOS,{
+style:{flex:1},
+barTintColor:'#007AFF',
+titleTextColor:'#fff',
+tintColor:'#fff',
+translucent:false,
+initialRoute:{
+component:Router,
+title:'首页'}}));}});
+
+
+
+
+
+
+var styles=StyleSheet.create({
+container:{
+flex:1,
+backgroundColor:'#000'},
+
+scrollView:{
+backgroundColor:'#FFF'}});
+
 
 
 
@@ -51519,6 +51536,1723 @@ Object.keys(componentOrElement));}
 
 
 module.exports = findDOMNode;
+});
+__d('catapp/views/router.js',["Dimensions","react-native/Libraries/react-native/react-native.js","catapp/views/errors.js","catapp/views/app.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
+React=require('react-native/Libraries/react-native/react-native.js');
+var Dimensions=require('Dimensions');
+
+
+var Errors=require('catapp/views/errors.js');
+var App=require('catapp/views/app.js');var 
+
+
+
+
+StyleSheet=
+
+
+
+
+
+
+
+
+
+
+React.StyleSheet;var Text=React.Text;var AppRegistry=React.AppRegistry;var View=React.View;var WebView=React.WebView;var PickerIOS=React.PickerIOS;var ScrollView=React.ScrollView;var StatusBarIOS=React.StatusBarIOS;var NavigatorIOS=React.NavigatorIOS;var Image=React.Image;var TouchableOpacity=React.TouchableOpacity;
+
+var Router=React.createClass({
+addPage:function(name){
+switch(name){
+case 'errors':
+nav = this.props.navigator;
+this.props.navigator.push({
+component:Errors,
+title:'报错大盘'});
+
+break;
+case 'app':
+this.props.navigator.push({
+component:App,
+title:'App访问趋势'});
+
+break;
+default:
+break;}},
+
+
+
+render:function(){
+return (
+React.createElement(ScrollView,{style:styles.container},
+React.createElement(View,{style:{marginTop:10}}),
+
+React.createElement(TouchableOpacity,{onPress:this.addPage.bind(this,'errors')},
+React.createElement(View,{style:styles.items},
+React.createElement(Text,{style:styles.title},'报错大盘'))),
+
+
+
+React.createElement(TouchableOpacity,{onPress:this.addPage.bind(this,'app')},
+React.createElement(View,{style:styles.items},
+React.createElement(Text,{style:styles.title},'App访问趋势')))));}});
+
+
+
+
+
+
+
+var styles=StyleSheet.create({
+container:{
+flex:1},
+
+items:{
+height:45,
+borderWidth:1,
+justifyContent:'center',
+marginTop:5,
+marginLeft:5,
+marginRight:5,
+borderColor:'#ddd',
+borderRadius:5},
+
+errors:{
+width:60,
+height:60,
+backgroundColor:'#E72D00'},
+
+title:{
+marginLeft:10,
+fontSize:15},
+
+
+icon:{
+width:20,
+height:20,
+borderWidth:1,
+position:'relative',
+right:10}});
+
+
+
+
+module.exports = Router;
+});
+__d('catapp/views/errors.js',["Dimensions","react-native/Libraries/react-native/react-native.js","catapp/views/errors/data.js","catapp/views/errors/table.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');
+var Dimensions=require('Dimensions');
+var data=require('catapp/views/errors/data.js');
+var Table=require('catapp/views/errors/table.js');var 
+
+
+
+StyleSheet=
+
+
+
+
+
+
+
+
+
+
+
+React.StyleSheet;var Text=React.Text;var AppRegistry=React.AppRegistry;var View=React.View;var WebView=React.WebView;var PickerIOS=React.PickerIOS;var ScrollView=React.ScrollView;var StatusBarIOS=React.StatusBarIOS;var DatePickerIOS=React.DatePickerIOS;var TextInput=React.TextInput;var TouchableOpacity=React.TouchableOpacity;var PixelRatio=React.PixelRatio;
+
+var pt=1 / PixelRatio.get();
+var height=Dimensions.get('window').height - 65;
+var width=Dimensions.get('window').width;
+
+var Errors=React.createClass({
+getInitialState:function(){
+return {
+showDate:false,
+mode:'date',
+date:new Date(),
+time:new Date(),
+dateIOS:new Date(),
+dateText:this.getDate(new Date()),
+timeText:this.getTime(new Date())};},
+
+
+getDate:function(date){
+return date.getFullYear() + '年' + (
+parseInt(date.getMonth()) + 1) + '月' + 
+date.getDate() + '月';},
+
+getTime:function(date){
+return date.getHours() + '点' + 
+date.getMinutes() + '分';},
+
+selectDate:function(){
+this.setState({
+showDate:true,
+mode:'date',
+dateIOS:new Date()});},
+
+
+selectTime:function(){
+this.setState({
+showDate:true,
+mode:'time',
+dateIOS:new Date()});},
+
+
+complete:function(){
+if(this.state.mode === 'time'){
+this.setState({
+timeText:this.getTime(this.state.time)});}else 
+
+{
+this.setState({
+dateText:this.getDate(this.state.date)});}
+
+
+this.setState({
+showDate:false});},
+
+
+
+
+cancel:function(){
+this.setState({
+showDate:false});},
+
+
+dateChange:function(date){
+if(this.state.mode === 'time'){
+this.setState({
+time:date,
+dateIOS:new Date(date)});}else 
+
+{
+this.setState({
+date:date,
+dateIOS:new Date(date)});}},
+
+
+
+render:function(){
+return (
+React.createElement(View,{style:{height:height}},
+React.createElement(ScrollView,{
+automaticallyAdjustContentInsets:true},
+React.createElement(View,{style:{alignItems:'center',marginTop:10}},
+React.createElement(View,{style:[styles.inputCenter,styles.row]},
+React.createElement(TouchableOpacity,{onPress:this.selectDate},
+React.createElement(Text,{style:styles.date},
+this.state.dateText)),
+
+
+React.createElement(TouchableOpacity,{onPress:this.selectTime},
+React.createElement(Text,{style:styles.date},
+this.state.timeText)))),
+
+
+
+
+React.createElement(View,{style:{marginTop:10}},
+React.createElement(Table,{data:data}))),
+
+
+
+this.state.showDate?
+React.createElement(View,{style:styles.picker},
+React.createElement(View,{style:styles.row},
+React.createElement(Text,{style:{flex:1}}),
+React.createElement(TouchableOpacity,{onPress:this.cancel},
+React.createElement(Text,{style:styles.dateText},'取消')),
+
+React.createElement(TouchableOpacity,{onPress:this.complete},
+React.createElement(Text,{style:styles.dateText},'完成'))),
+
+
+React.createElement(DatePickerIOS,{
+onDateChange:this.dateChange,
+date:this.state.dateIOS,
+mode:this.state.mode})):
+
+null));}});
+
+
+
+
+
+
+var styles=StyleSheet.create({
+flex:{
+flex:1},
+
+picker:{
+position:'absolute',
+flex:1,
+bottom:0,
+left:0,
+right:0,
+borderTopWidth:pt,
+borderTopColor:'#767676'},
+
+row:{
+flexDirection:'row'},
+
+search:{
+height:35,
+width:110,
+borderWidth:1,
+paddingLeft:5,
+borderRadius:4,
+borderColor:'#ccc',
+fontSize:13},
+
+inputCenter:{
+width:240},
+
+date:{
+borderWidth:pt,
+height:35,
+width:121,
+textAlign:'center',
+fontSize:15,
+lineHeight:25,
+marginRight:10,
+borderColor:"#ccc",
+borderRadius:4},
+
+dateText:{
+fontSize:14,
+width:50,
+borderWidth:1,
+textAlign:'center',
+marginTop:10,
+marginRight:5,
+height:30,
+lineHeight:21,
+borderColor:'#14B3FF',
+borderRadius:4}});
+
+
+
+
+
+module.exports = Errors;
+});
+__d('catapp/views/errors/data.js',[],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
+data=[];
+data.push({
+'15:41':[
+{
+appID:'111301',
+errorNum:'534',
+rate:'+ 35.9%',
+desc:["Exception 1",
+"System.Net.WebException 16",
+"Ctrip.Duckbill.Wireless.MobileService.ServiceProcessorBase.ExtendException 543"],
+numbers:90,
+sysTitle:"酒店无线RestApi"},
+
+{
+appID:'hermes',
+errorNum:'221',
+rate:'- 3.1%',
+desc:["javax.servlet.ServletException 221"],
+numbers:90,
+sysTitle:""},
+
+{
+appID:'922201',
+errorNum:'177',
+rate:'+ 12.2%',
+desc:["System.ArgumentException 1",
+"System.Exception 131",
+"System.Net.WebException 42",
+"Microsoft.ClearScript.ScriptEngineException 3"],
+numbers:90,
+sysTitle:"html5站点"},
+
+{
+appID:'131011',
+errorNum:'159',
+rate:'+ 35.0%',
+desc:["System.ArgumentException 2","System.Exception 104","System.NullReferenceException 53"],
+numbers:90,
+sysTitle:"Amadeus服务"},
+
+{
+appID:'100001031',
+errorNum:'138',
+rate:'0.1%',
+desc:["System.IO.InvalidDataException 138"],
+numbers:90,
+sysTitle:"授权服务"},
+
+{
+appID:'340116',
+errorNum:'133',
+rate:'+ 0.7%',
+desc:["Exception 88","System.Net.WebException 11","Ctrip.Mobile.Server.Flight.ServiceCore.Businesses.FlightServiceException 34"],
+numbers:90,
+sysTitle:"Restful机票无线服务"},
+
+{
+appID:'100000865',
+errorNum:'130',
+rate:'- 1.8%',
+desc:["CServiceStack.ServiceClient.CServiceException 128","System.NullReferenceException 2"],
+numbers:90,
+sysTitle:"酒店服务端微信返现服务"},
+
+
+{
+appID:'350001',
+errorNum:'112',
+rate:'+ 3.0%',
+desc:["System.Exception 7","System.Net.WebException 50",
+"Ctrip.Mobile.Server.Flight.ServiceCore.Businesses.FlightServiceException 44",
+"Ctrip.Mobile.Server.Flight.ServiceCore.Businesses.Inland.CheckInSegmentSearchManagerV66.ProcessSoaException 11"],
+numbers:90,
+sysTitle:"机票无线主服务"},
+
+{
+appID:'140811',
+errorNum:'94',
+rate:'0.02%',
+desc:["System.Exception 47","System.Net.WebException 47"],
+numbers:90,
+sysTitle:"门票OpenAPI"},
+
+{
+appID:'110102',
+errorNum:'75',
+rate:'+ 8.7%',
+desc:["System.ArgumentException 1","System.Net.WebException 74"],
+numbers:90,
+sysTitle:"Online国内酒店查询"}]});
+
+
+
+
+data.push({
+'15:40':[
+{
+appID:'111301',
+errorNum:'518',
+rate:'+ 37.9%',
+desc:["Exception 6",
+"System.Net.WebException 30",
+"Ctrip.Duckbill.Wireless.MobileService.ServiceProcessorBase.ExtendException 482"],
+numbers:90,
+sysTitle:"酒店无线RestApi"},
+
+{
+appID:'720109',
+errorNum:'243',
+rate:'+ 10.1%',
+desc:["System.ArgumentException 236",
+"System.Net.WebException 7"],
+numbers:90,
+sysTitle:"门票online预订网站（首页，列表，详情）"},
+
+{
+appID:'922201',
+errorNum:'217',
+rate:'+ 12.2%',
+desc:["System.ArgumentException 1",
+"System.Exception 180",
+"System.Net.WebException 31",
+"Microsoft.ClearScript.ScriptEngineException 5"],
+numbers:90,
+sysTitle:"html5站点"},
+
+{
+appID:'100001031',
+errorNum:'150',
+rate:'+ 25.0%',
+desc:["System.IO.InvalidDataException 150"],
+numbers:90,
+sysTitle:"授权服务"},
+
+{
+appID:'100000865',
+errorNum:'128',
+rate:'-0.1%',
+desc:["CServiceStack.ServiceClient.CServiceException 128"],
+numbers:90,
+sysTitle:"酒店服务端微信返现服务"},
+
+{
+appID:'100000716',
+errorNum:'120',
+rate:'+ 0.7%',
+desc:["com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException 120"],
+numbers:90,
+sysTitle:"SLB"},
+
+{
+appID:'130701',
+errorNum:'115',
+rate:'- 1.8%',
+desc:["Ctrip.IntlFlight.Aggregator.DomainModel.Exception.EngineTimeoutException 115"],
+numbers:90,
+sysTitle:"国际机票Aggregator"},
+
+
+{
+appID:'131011',
+errorNum:'107',
+rate:'- 3.0%',
+desc:["System.Exception 71",
+"System.NullReferenceException 36"],
+numbers:90,
+sysTitle:"Amadeus服务"},
+
+{
+appID:'140811',
+errorNum:'84',
+rate:'-0.02%',
+desc:["System.Exception 42",
+"System.Net.WebException 42"],
+numbers:90,
+sysTitle:"门票OpenAPI"},
+
+{
+appID:'110117',
+errorNum:'75',
+rate:'+ 8.7%',
+desc:["System.Data.SqlClient.SqlException 18",
+"System.Net.WebException 57"],
+numbers:90,
+sysTitle:"酒店订单服务组"}]});
+
+
+
+
+data.push({
+'15:39':[
+{
+appID:'111301',
+errorNum:'704',
+rate:'- 31.9%',
+desc:["Exception 8",
+"System.Net.WebException 22",
+"Ctrip.Duckbill.Wireless.MobileService.ServiceProcessorBase.ExtendException 546",
+"System.NullReferenceException 128"],
+numbers:90,
+sysTitle:"酒店无线RestApi"},
+
+{
+appID:'922201',
+errorNum:'169',
+rate:'+ 5.4%',
+desc:["System.Exception 130",
+"System.Net.WebException 36",
+"Microsoft.ClearScript.ScriptEngineException 3"],
+numbers:90,
+sysTitle:"html5站点"},
+
+{
+appID:'100001031',
+errorNum:'143',
+rate:'+43.5%',
+desc:["System.ArgumentException 1",
+"System.IO.InvalidDataException 141",
+"System.FormatException 1"],
+numbers:90,
+sysTitle:"授权服务"},
+
+{
+appID:'340116',
+errorNum:'133',
+rate:'+ 10.9%',
+desc:["Exception 90",
+"System.Web.Services.Protocols.SoapException 1",
+"System.Net.WebException 3",
+"Ctrip.Mobile.Server.Flight.ServiceCore.Businesses.FlightServiceException 38",
+"System.InvalidOperationException 1"],
+
+numbers:90,
+sysTitle:"Restful机票无线服务"},
+
+{
+appID:'100000865',
+errorNum:'128',
+rate:'+ 6.1%',
+desc:["CServiceStack.ServiceClient.CServiceException 128"],
+numbers:90,
+sysTitle:"酒店服务端微信返现服务"},
+
+{
+appID:'100000716',
+errorNum:'116',
+rate:'+ 20.5%',
+desc:["com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException 116"],
+numbers:90,
+sysTitle:"SLB"},
+
+{
+appID:'140811',
+errorNum:'106',
+rate:'- 2.8%',
+desc:["System.Exception 53",
+"System.Net.WebException 53"],
+numbers:90,
+sysTitle:"门票OpenAPI"},
+
+
+{
+appID:'110102',
+errorNum:'96',
+rate:'+ 39.8%',
+desc:["System.ArgumentException 1",
+"System.Net.WebException 93",
+"System.InvalidOperationException 1",
+"System.Runtime.InteropServices.COMException 1"],
+numbers:90,
+sysTitle:"Online国内酒店查询"},
+
+{
+appID:'150229',
+errorNum:'87',
+rate:'-0.12%',
+desc:["System.Data.SqlClient.SqlException 43",
+"SqlException 43",
+"System.Xml.XmlException 1"],
+numbers:90,
+sysTitle:"商旅会员酒店订单状态推送接收JobWS"},
+
+{
+appID:'130701',
+errorNum:'79',
+rate:'+ 47.2%',
+desc:["Ctrip.IntlFlight.Aggregator.DomainModel.Exception.EngineTimeoutException 78",
+"System.Web.Services.Protocols.SoapException 1"],
+numbers:90,
+sysTitle:"国际机票Aggregator"}]});
+
+
+
+
+data.push({
+'15:38':[
+{
+appID:'111301',
+errorNum:'694',
+rate:'+ 51.1%',
+desc:["Exception 4",
+"System.Net.WebException 9",
+"Ctrip.Duckbill.Wireless.MobileService.ServiceProcessorBase.ExtendException 517",
+"System.NullReferenceException 164"],
+numbers:90,
+sysTitle:"酒店无线RestApi"},
+
+{
+appID:'922201',
+errorNum:'139',
+rate:'-0.1%',
+desc:["System.ArgumentException 2",
+"System.Exception 114",
+"System.Net.WebException 20",
+"Microsoft.ClearScript.ScriptEngineException 3"],
+numbers:90,
+sysTitle:"html5站点"},
+
+{
+appID:'100001031',
+errorNum:'137',
+rate:'+2.2%',
+desc:["System.IO.InvalidDataException 137"],
+numbers:90,
+sysTitle:"授权服务"},
+
+{
+appID:'340116',
+errorNum:'133',
+rate:'+ 10.9%',
+desc:["Exception 84",
+"System.Net.WebException 9",
+"Ctrip.Mobile.Server.Flight.ServiceCore.Businesses.FlightServiceException 40"],
+
+numbers:90,
+sysTitle:"机票无线服务"},
+
+{
+appID:'100000865',
+errorNum:'128',
+rate:'-0.1%',
+desc:["CServiceStack.ServiceClient.CServiceException 128"],
+numbers:90,
+sysTitle:"酒店服务端微信返现服务"},
+
+{
+appID:'350001',
+errorNum:'128',
+rate:'- 10.7%',
+desc:["System.Net.WebException 101",
+"Ctrip.Mobile.Server.Flight.ServiceCore.Businesses.FlightServiceException 25",
+"Ctrip.Mobile.Server.Flight.ServiceCore.Businesses.Inland.CheckInSegmentSearchManagerV66.ProcessSoaException 2"],
+numbers:90,
+sysTitle:"机票无线主服务"},
+
+{
+appID:'100000716',
+errorNum:'114',
+rate:'- 2.8%',
+desc:["com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException 114"],
+numbers:90,
+sysTitle:"SLB"},
+
+
+{
+appID:'140811',
+errorNum:'108',
+rate:'+ 9.0%',
+desc:["System.Exception 54",
+"System.Net.WebException 54"],
+numbers:90,
+sysTitle:"门票OpenAPI"},
+
+{
+appID:'130701',
+errorNum:'101',
+rate:'-0.12%',
+desc:["Ctrip.IntlFlight.Aggregator.DomainModel.Exception.EngineTimeoutException 101"],
+numbers:90,
+sysTitle:"国际机票Aggregator"},
+
+{
+appID:'100000512',
+errorNum:'62',
+rate:'+ 29.7%',
+desc:["System.IndexOutOfRangeException 62"],
+numbers:90,
+sysTitle:"机酒无线公共服务"}]});
+
+
+
+
+
+module.exports = data;
+});
+__d('catapp/views/errors/table.js',["Dimensions","react-native/Libraries/react-native/react-native.js","catapp/views/errors/tab.js","catapp/views/errors/dependence.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');
+var Dimensions=require('Dimensions');
+var Tab=require('catapp/views/errors/tab.js');
+var Dependence=require('catapp/views/errors/dependence.js');var 
+
+
+StyleSheet=
+
+
+
+
+
+
+
+
+
+React.StyleSheet;var Text=React.Text;var View=React.View;var WebView=React.WebView;var PickerIOS=React.PickerIOS;var ScrollView=React.ScrollView;var PixelRatio=React.PixelRatio;var TouchableOpacity=React.TouchableOpacity;var Animated=React.Animated;var LayoutAnimation=React.LayoutAnimation;
+
+
+var px=1 / PixelRatio.get();
+
+var SCREE_WIDTH=Dimensions.get('window').width;
+
+var ROW_HEIGHT=40;
+
+var Table=React.createClass({
+getInitialState:function(){
+var data=this.props.data;
+var title='';
+if(data && data.length){
+for(var i in data[0]) {
+title = i;
+break;}}
+
+
+return {
+title:title,
+blocksIndex:0,
+arrIndex:0};},
+
+
+render:function(){
+var data=this.props.data;
+var blocks=[];
+for(var i in data) {
+var rows=[];
+var block=data[i];
+for(var j in block) {
+var arr=block[j];
+for(var k in arr) {
+var obj=arr[k];
+
+var exList=[];
+for(var i in obj.desc) {
+exList.push(React.createElement(Text,{numberOfLines:1,style:{color:'#4D4D4D',fontSize:13}},'● ',obj.desc[i]));}
+
+
+rows.push(
+React.createElement(View,null,
+React.createElement(TouchableOpacity,{onPress:this.showDetail.bind(this,k)},
+React.createElement(View,{style:styles.row},
+React.createElement(View,{style:{marginLeft:10}},
+React.createElement(Text,{style:[styles.item]},obj.appID)),
+
+this.formatErrorNumCell(obj.errorNum,k),
+this.formatRateCell(obj.rate))),
+
+
+
+this.state[this.state.title + '_' + k]?
+React.createElement(View,{style:{minHeight:40,padding:10,borderTopWidth:1,borderColor:"#EEEEEE"}},
+React.createElement(Text,null,
+obj.sysTitle),
+
+React.createElement(View,{style:{marginTop:5}},
+exList),
+
+React.createElement(View,{style:[styles.row,{borderTopWidth:0,marginTop:10}]},
+React.createElement(View,{style:{flex:1}}),
+React.createElement(TouchableOpacity,{onPress:this.addDeps},
+React.createElement(View,{style:styles.btn},
+React.createElement(Text,{style:{color:'#383838',fontSize:13}},'依赖关系'))))):
+
+
+
+
+null));}}
+
+
+
+
+
+blocks.push(
+React.createElement(View,{style:{width:SCREE_WIDTH,height:this.getBlockHeight()}},
+React.createElement(View,{style:[styles.row]},
+React.createElement(Text,{style:[styles.item,styles.fontBold,{marginLeft:10}]},'App ID'),
+React.createElement(View,{style:styles.item},
+React.createElement(Text,{style:[styles.fontBold,{width:65,textAlign:'right'}]},'错误数')),
+
+React.createElement(View,{style:styles.item},
+React.createElement(Text,{style:[styles.fontBold,{width:50,textAlign:'right'}]},'环比'))),
+
+
+rows));}
+
+
+
+
+return (
+React.createElement(View,null,
+React.createElement(Text,{style:styles.title},this.state.title),
+React.createElement(ScrollView,{
+horizontal:true,
+pagingEnabled:true,
+showsHorizontalScrollIndicator:true,
+onMomentumScrollEnd:this.scrollEnd,
+onScroll:this.onScroll,
+contentContainerStyle:[styles.border,{height:this.getBlockHeight()}]},
+blocks)));},
+
+
+
+
+
+getBlockHeight:function(){
+var data=this.props.data;
+var blockHeight=0;
+for(var i in data[0]) {
+blockHeight = data[0][i].length * ROW_HEIGHT;
+break;}},
+
+
+
+formatRateCell:function(rate){
+var styleCell=null;
+styleCell = [styles.item,styles.fontBig,styles.grey];
+if(rate.split('+').length > 1){
+styleCell = [styles.item,styles.red,styles.fontBig];}
+
+if(rate.split('-').length > 1){
+styleCell = [styles.item,styles.green,styles.fontBig];}
+
+return (
+React.createElement(View,{style:{flex:1}},
+React.createElement(Text,{style:[styleCell,{width:120,textAlign:'right'}]},rate)));},
+
+
+
+
+formatErrorNumCell:function(errorNum,index){
+var styleError=null;
+styleError = [styles.item];
+if(parseInt(errorNum) >= 1000){
+styleError = [styles.item,styles.red];}
+
+if(parseInt(errorNum) >= 500 && parseInt(errorNum) < 1000){
+styleError = [styles.item,styles.yellow];}
+
+return (
+React.createElement(View,null,
+React.createElement(View,{style:{flex:1}},
+React.createElement(Text,{style:[styleError,{width:60,textAlign:'right'}]},errorNum))));},
+
+
+
+
+
+scrollEnd:function(e){
+var data=this.props.data;
+var offset=e.nativeEvent.contentOffset;
+if(offset){
+var index=offset.x / SCREE_WIDTH;
+for(var i in data[index]) {
+var title=i;
+this.setState({
+title:title,
+pageIndex:index});
+
+break;}}},
+
+
+
+
+showDetail:function(index){
+var key=this.state.title;
+var arrIndex=index;
+var data=this.props.data;
+var obj=null;
+var breakTag=false;
+
+for(var i in data) {
+for(var j in data[i]) {
+if(j === key){
+obj = data[i][key];
+breakTag = true;
+break;}}
+
+
+if(breakTag){
+break;}}
+
+
+
+obj = obj[arrIndex];
+LayoutAnimation.configureNext(animations.layout.easeInEaseOut);
+this.indexShow(index);},
+
+
+onScroll:function(){
+
+this.indexShow(0,true);},
+
+
+
+
+
+
+indexShow:function(index,tag){
+var title=this.state.title;
+var obj={};
+for(var i=0;i < 10;i++) {
+obj[title + '_' + i] = false;}
+
+if(!tag){
+obj[title + '_' + index] = true;}
+
+this.setState(obj);},
+
+
+addDeps:function(){
+nav.push({
+component:Dependence,
+title:'依赖关系'});}});
+
+
+
+
+
+var styles=StyleSheet.create({
+border:{
+borderBottomWidth:px,
+borderColor:'#ddd'},
+
+row:{
+flexDirection:'row',
+borderTopWidth:px,
+borderColor:'#ddd',
+height:ROW_HEIGHT,
+alignItems:'center',
+paddingLeft:8},
+
+item:{
+width:SCREE_WIDTH / 3},
+
+fontBold:{
+fontWeight:'700'},
+
+title:{
+alignItems:'center',
+height:ROW_HEIGHT,
+justifyContent:'center',
+textAlign:'center',
+lineHeight:ROW_HEIGHT,
+fontSize:parseInt(ROW_HEIGHT / 1.2),
+color:'#29C1FD'},
+
+title_text:{
+fontSize:30,
+color:'#368CE9'},
+
+red:{
+color:'red'},
+
+green:{
+color:'#00C349'},
+
+fontBig:{
+fontSize:15},
+
+yellow:{
+color:'#F78900'},
+
+grey:{
+color:'#757575'},
+
+maRight:{
+alignItems:'flex-end'},
+
+textCenter:{
+textAlign:'center'},
+
+btn:{
+borderWidth:px,
+borderColor:"#007AFF",
+height:30,
+width:65,
+borderRadius:4,
+justifyContent:'center',
+alignItems:'center'}});
+
+
+
+
+var animations={
+layout:{
+spring:{
+duration:750,
+create:{
+duration:300,
+type:LayoutAnimation.Types.easeInEaseOut,
+property:LayoutAnimation.Properties.opacity},
+
+update:{
+type:LayoutAnimation.Types.spring,
+springDamping:400}},
+
+
+easeInEaseOut:{
+duration:300,
+create:{
+type:LayoutAnimation.Types.easeInEaseOut,
+property:LayoutAnimation.Properties.scaleXY},
+
+update:{
+delay:100,
+type:LayoutAnimation.Types.easeInEaseOut}}}};
+
+
+
+
+
+
+
+
+module.exports = Table;
+});
+__d('catapp/views/errors/tab.js',["Dimensions","react-native/Libraries/react-native/react-native.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');
+var Dimensions=require('Dimensions');var 
+
+
+StyleSheet=
+
+
+
+
+
+React.StyleSheet;var Text=React.Text;var View=React.View;var ScrollView=React.ScrollView;var SegmentedControlIOS=React.SegmentedControlIOS;var PixelRatio=React.PixelRatio;
+var pt=1 / PixelRatio.get();var _Dimensions$get=
+
+Dimensions.get('window');var width=_Dimensions$get.width;var height=_Dimensions$get.height;
+
+var Tab=React.createClass({
+getInitialState:function(){
+return {
+name:'详情'};},
+
+
+render:function(){
+var title=this.props.title;
+var content=this.props.content;
+
+var viewXML=null;
+if(this.state.name === '详情'){
+viewXML = 
+React.createElement(View,null,
+React.createElement(Text,{style:styles.title},title),
+React.createElement(Text,{style:styles.desc},content));}else 
+
+
+{
+viewXML = 
+React.createElement(View,null,
+React.createElement(Text,{style:styles.title},'拓扑图'),
+React.createElement(Text,null));}
+
+
+
+return (
+React.createElement(View,null,
+React.createElement(View,{style:{alignItems:'center',marginTop:20}},
+React.createElement(View,{style:styles.segment},
+React.createElement(SegmentedControlIOS,{
+selectedIndex:0,
+onValueChange:this.onValueChange,
+values:['详情','拓扑图']}))),
+
+
+viewXML));},
+
+
+
+onValueChange:function(val){
+this.setState({
+name:val});}});
+
+
+
+var styles=StyleSheet.create({
+segment:{
+width:200},
+
+title:{
+marginLeft:8,
+fontSize:15,
+fontWeight:'bold'},
+
+desc:{
+marginLeft:8,
+marginTop:5,
+marginRight:5}});
+
+
+
+
+module.exports = Tab;
+});
+__d('catapp/views/errors/dependence.js',["react-native/Libraries/react-native/react-native.js","catapp/views/errors/actualdata.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
+
+
+React=require('react-native/Libraries/react-native/react-native.js');
+var actualdata=require('catapp/views/errors/actualdata.js');var 
+
+
+StyleSheet=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+React.StyleSheet;var Text=React.Text;var AppRegistry=React.AppRegistry;var View=React.View;var WebView=React.WebView;var PickerIOS=React.PickerIOS;var ScrollView=React.ScrollView;var StatusBarIOS=React.StatusBarIOS;var NavigatorIOS=React.NavigatorIOS;var PixelRatio=React.PixelRatio;var Dimensions=React.Dimensions;var TouchableHighlight=React.TouchableHighlight;var ListView=React.ListView;var Animated=React.Animated;var AnimatedValue=React.AnimatedValue;var LayoutAnimation=React.LayoutAnimation;
+var pt=1 / PixelRatio.get();
+
+var SCREE_WIDTH=Dimensions.get('window').width;
+var SCREE_HEIGHT=Dimensions.get('window').height;
+var rowheight=SCREE_HEIGHT / 22;
+var foldheight=SCREE_HEIGHT / 22;
+var headerheight=63;
+var lineheight=1;
+var xqheight=SCREE_HEIGHT / 18 * 4;
+
+
+var Dependence=React.createClass({
+xiangqingisfold:false,
+yilaifold:false,
+beiyilaifold:false,
+realdata:actualdata,
+animations:{
+layout:{
+spring:{
+duration:750,
+create:{
+duration:300,
+type:LayoutAnimation.Types.easeInEaseOut,
+property:LayoutAnimation.Properties.opacity},
+
+update:{
+type:LayoutAnimation.Types.spring,
+springDamping:400}},
+
+
+easeInEaseOut:{
+duration:300,
+create:{
+type:LayoutAnimation.Types.easeInEaseOut,
+property:LayoutAnimation.Properties.scaleXY},
+
+update:{
+delay:100,
+type:LayoutAnimation.Types.easeInEaseOut}}}},
+
+
+
+
+componentDidMount:function(){},
+
+
+
+getInitialState:function(){
+this.props.data = actualdata;
+var ds=new ListView.DataSource({rowHasChanged:function(r1,r2){return r1 !== r2;}});
+return {
+fadeAnim:new Animated.Value(1),
+pan:new Animated.ValueXY(),
+dataSource:ds.cloneWithRows(['org.apache.net.ConnectTimeoutException  1.0','org.apache.net.ConnectTimeoutExceptionA  2.0']),
+xiangqingheight:xqheight,
+yilaiheight:(SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight) / 2,
+beiyilaiheight:(SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight) / 2,
+xqcontent:[],
+yilaicontent:[],
+beiyilaicontent:[]};},
+
+
+componentWillMount:function(){
+this.state.xqcontent.push(React.createElement(View,{style:{height:this.state.xiangqingheight,flexDirection:'row',borderWidth:pt,borderColor:'#ddd'}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"xq"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",writingDirection:'ltr',fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'错误关系'))),
+
+
+React.createElement(ScrollView,{style:[{flex:8}]},
+React.createElement(Text,{style:styles.title},'Restful机票无线服务'),
+React.createElement(ListView,{
+dataSource:this.state.dataSource,
+renderRow:function(rowData){return React.createElement(Text,{style:styles.desc},rowData);}}))));
+
+
+
+
+this.state.yilaicontent.push(React.createElement(View,{style:{flexDirection:'row',flex:1}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"yl"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'依赖详情'))),
+
+
+React.createElement(ScrollView,{style:{flex:8}},
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'))));
+
+
+this.state.beiyilaicontent.push(
+React.createElement(View,{style:{flexDirection:'row',flex:1}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"byl"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'被依赖关系'))),
+
+
+React.createElement(ScrollView,{style:{flex:8}},
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'))));},
+
+
+
+
+
+changetab:function(mobj){
+if(mobj.name == "xq"){
+if(mobj.action == "fold"){
+this.xiangqingisfold = true;
+LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
+if(this.yilaifold == true && this.beiyilaifold == false){
+tpyilaiheight = this.state.yilaiheight;
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2;}else 
+if(this.yilaifold == false && this.beiyilaifold == true){
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2;
+tpbeiyilaiheight = this.state.beiyilaiheight;}else 
+if(this.yilaifold == false && this.beiyilaifold == false){
+tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - foldheight - headerheight) / 2;
+tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - foldheight - headerheight) / 2;}else 
+if(this.yilaifold == true && this.beiyilaifold == true){
+tpyilaiheight = this.state.yilaiheight;
+tpbeiyilaiheight = this.state.beiyilaiheight;}
+
+this.setState({
+xqcontent:[React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{
+action:'expand',
+name:"xq"}),
+underlayColor:"#ddd",style:{justifyContent:'center',flex:1,height:foldheight}},
+React.createElement(View,{style:{
+justifyContent:'center',
+flex:1,
+flexDirection:"row",
+backgroundColor:"#F4F4F4"}},
+
+React.createElement(View,{style:{
+justifyContent:'center',
+flex:1,
+alignItems:'flex-start',
+paddingLeft:10}},
+
+React.createElement(Text,{style:{
+color:"#005BFF",
+fontSize:SCREE_HEIGHT / 40,
+fontWeight:600}},
+'错误详情')),
+
+React.createElement(View,{style:{justifyContent:'center',flex:4,alignItems:'flex-end'}},
+React.createElement(Text,{style:{
+color:"#005BFF",
+fontSize:SCREE_HEIGHT / 40,
+fontWeight:400}},
+'+   '))))],
+
+
+
+yilaiheight:tpyilaiheight,
+beiyilaiheight:tpbeiyilaiheight});}else 
+
+{
+LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
+this.xiangqingisfold = false;
+if(this.yilaifold == true && this.beiyilaifold == false){
+tpyilaiheight = this.state.yilaiheight;
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight - foldheight;}else 
+if(this.yilaifold == false && this.beiyilaifold == true){
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight - foldheight;
+tpbeiyilaiheight = this.state.beiyilaiheight;}else 
+if(this.yilaifold == false && this.beiyilaifold == false){
+tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight) / 2;
+tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight) / 2;}else 
+if(this.yilaifold == true && this.beiyilaifold == true){
+tpyilaiheight = this.state.yilaiheight;
+tpbeiyilaiheight = this.state.beiyilaiheight;}
+
+
+this.setState({
+xqcontent:[React.createElement(View,{style:{height:this.state.xiangqingheight,flexDirection:'row',borderWidth:pt,borderColor:'#ddd'}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"xq"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",writingDirection:'ltr',fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'错误详情'))),
+
+
+React.createElement(ScrollView,{style:[{flex:8}]},
+React.createElement(Text,{style:styles.title},'Restful机票无线服务'),
+React.createElement(ListView,{
+dataSource:this.state.dataSource,
+renderRow:function(rowData){return React.createElement(Text,{style:styles.desc},rowData);}})))],
+
+
+
+
+yilaiheight:tpyilaiheight,
+beiyilaiheight:tpbeiyilaiheight});}}
+
+
+
+
+if(mobj.name == "yl"){
+if(mobj.action == "fold"){
+LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
+
+
+
+
+
+
+
+
+
+
+
+
+this.yilaifold = true;
+if(this.xiangqingisfold == true && this.beiyilaifold == false){
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2;}else 
+if(this.xiangqingisfold == false && this.beiyilaifold == true){
+tpbeiyilaiheight = this.state.beiyilaiheight;}else 
+if(this.xiangqingisfold == false && this.beiyilaifold == false){
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight - xqheight;}else 
+if(this.xiangqingisfold == true && this.beiyilaifold == true){
+tpbeiyilaiheight = this.state.beiyilaiheight;}
+
+this.setState({
+yilaicontent:[React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{
+action:'expand',
+name:"yl"}),
+underlayColor:"#ddd",style:{justifyContent:'center',flex:1,height:foldheight}},
+React.createElement(View,{style:{
+justifyContent:'center',
+flex:1,
+flexDirection:"row",
+backgroundColor:"#F4F4F4"}},
+
+React.createElement(View,{style:{
+justifyContent:'center',
+flex:1,
+alignItems:'flex-start',
+paddingLeft:10}},
+
+React.createElement(Text,{style:{
+color:"#005BFF",
+fontSize:SCREE_HEIGHT / 40,
+fontWeight:600}},
+'依赖关系')),
+
+React.createElement(View,{style:{justifyContent:'center',flex:4,alignItems:'flex-end'}},
+React.createElement(Text,{style:{
+color:"#005BFF",
+fontSize:SCREE_HEIGHT / 40,
+fontWeight:400}},
+'+   '))))],
+
+
+
+yilaiheight:foldheight,
+beiyilaiheight:tpbeiyilaiheight});}else 
+
+{
+LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
+this.yilaifold = false;
+if(this.xiangqingisfold == true && this.beiyilaifold == false){
+tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight) / 2;
+tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight) / 2;}else 
+if(this.xiangqingisfold == false && this.beiyilaifold == true){
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight - foldheight;
+tpbeiyilaiheight = this.state.beiyilaiheight;}else 
+if(this.xiangqingisfold == false && this.beiyilaifold == false){
+tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight) / 2;
+tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight) / 2;}else 
+if(this.xiangqingisfold == true && this.beiyilaifold == true){
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - SCREE_HEIGHT / 11;
+tpbeiyilaiheight = this.state.beiyilaiheight;}
+
+
+this.setState({
+yilaicontent:[React.createElement(View,{style:{flexDirection:'row',flex:1}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"yl"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",writingDirection:'ltr',fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'依赖关系'))),
+
+
+React.createElement(ScrollView,{style:{flex:8}},
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)')))],
+
+
+yilaiheight:tpyilaiheight,
+beiyilaiheight:tpbeiyilaiheight});}}
+
+
+
+
+if(mobj.name == "byl"){
+if(mobj.action == "fold"){
+LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
+this.beiyilaifold = true;
+if(this.xiangqingisfold == true && this.yilaifold == false){
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2;}else 
+if(this.xiangqingisfold == false && this.yilaifold == true){
+tpyilaiheight = this.state.yilaiheight;}else 
+if(this.xiangqingisfold == false && this.yilaifold == false){
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight - xqheight;}else 
+if(this.xiangqingisfold == true && this.yilaifold == true){
+tpyilaiheight = this.state.yilaiheight;}
+
+this.setState({
+beiyilaicontent:[React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{
+action:'expand',
+name:"byl"}),
+underlayColor:"#ddd",style:{justifyContent:'center',flex:1,height:foldheight}},
+React.createElement(View,{style:{
+justifyContent:'center',
+flex:1,
+flexDirection:"row",
+backgroundColor:"#F4F4F4"}},
+
+React.createElement(View,{style:{
+justifyContent:'center',
+flex:1,
+alignItems:'flex-start',
+paddingLeft:10}},
+
+React.createElement(Text,{style:{
+color:"#005BFF",
+fontSize:SCREE_HEIGHT / 40,
+fontWeight:600}},
+'被依赖关系')),
+
+React.createElement(View,{style:{justifyContent:'center',flex:3,alignItems:'flex-end'}},
+React.createElement(Text,{style:{
+color:"#005BFF",
+fontSize:SCREE_HEIGHT / 40,
+fontWeight:400}},
+'+   '))))],
+
+
+
+yilaiheight:tpyilaiheight,
+beiyilaiheight:foldheight});}else 
+
+{
+LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
+this.beiyilaifold = false;
+
+if(this.xiangqingisfold == true && this.yilaifold == false){
+tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight) / 2;
+tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight) / 2;}else 
+if(this.xiangqingisfold == false && this.yilaifold == true){
+tpyilaiheight = this.state.yilaiheight;
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight - foldheight;}else 
+if(this.xiangqingisfold == false && this.yilaifold == false){
+tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight) / 2;
+tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight) / 2;}else 
+if(this.xiangqingisfold == true && this.yilaifold == true){
+tpyilaiheight = this.state.yilaiheight;
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2;}
+
+
+this.setState({
+beiyilaicontent:[React.createElement(View,{style:{flexDirection:'row',flex:1}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"byl"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",writingDirection:'ltr',fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'被依赖关系'))),
+
+
+React.createElement(ScrollView,{style:{flex:8}},
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)')))],
+
+
+yilaiheight:tpyilaiheight,
+beiyilaiheight:tpbeiyilaiheight});}}},
+
+
+
+
+render:function(){
+return (
+React.createElement(View,null,
+React.createElement(View,{style:[styles.row]},
+React.createElement(View,{style:styles.item},
+React.createElement(Text,{style:[styles.fontBold,{textAlign:'center'}]},'App ID')),
+
+React.createElement(View,{style:styles.item},
+React.createElement(Text,{style:[styles.fontBold,{textAlign:'center'}]},'错误数')),
+
+React.createElement(View,{style:styles.item},
+React.createElement(Text,{style:[styles.fontBold,{width:120,textAlign:'center'}]},'环比'))),
+
+
+React.createElement(View,{style:styles.row},
+React.createElement(View,{style:styles.item},
+React.createElement(Text,{style:[styles.fontitemBold,{textAlign:'center'}]},'12344')),
+
+React.createElement(View,{style:styles.item},
+React.createElement(Text,{style:[styles.fontitemBold,{color:'#F78900',textAlign:'center'}]},'706')),
+
+React.createElement(View,{style:styles.item},
+React.createElement(Text,{style:[styles.fontitemBold,{width:120,color:'red',textAlign:'center'}]},'+79%'))),
+
+
+React.createElement(View,{style:styles.bottomrow}),
+
+
+
+this.state.xqcontent,
+
+React.createElement(Animated.View,{style:{opacity:this.state.fadeAnim,height:this.state.yilaiheight,borderWidth:pt,borderColor:'#ddd',transform:this.state.pan.getTranslateTransform()}},
+this.state.yilaicontent),
+
+
+React.createElement(View,{style:{height:this.state.beiyilaiheight,borderWidth:pt,borderColor:'#ddd'}},
+this.state.beiyilaicontent)));}});
+
+
+
+
+
+
+var styles=StyleSheet.create({
+border:{
+borderBottomWidth:pt,
+borderColor:'#ddd'},
+
+bottomrow:{
+flexDirection:'row',
+borderTopWidth:pt,
+borderColor:'#ddd',
+height:lineheight},
+
+row:{
+flexDirection:'row',
+borderTopWidth:pt,
+borderColor:'#ddd',
+height:rowheight,
+alignItems:'center'},
+
+item:{
+width:SCREE_WIDTH / 3,
+borderTopWidth:pt,
+borderLeftWidth:pt,
+height:rowheight,
+borderColor:'#ddd',
+
+justifyContent:'center'},
+
+fontBold:{
+fontWeight:'700'},
+
+fontitemBold:{
+fontWeight:'400'},
+
+title:{
+color:'#616161',
+marginLeft:8,
+marginTop:5,
+fontSize:15,
+fontWeight:'600'},
+
+gxtitle:{
+marginTop:5,
+color:'#616161',
+marginLeft:0,
+fontSize:15,
+fontWeight:'600'},
+
+gxdesc:{
+marginLeft:15,
+fontSize:12},
+
+desc:{
+marginLeft:15,
+marginRight:5,
+fontSize:12}});
+
+
+
+module.exports = Dependence;
+});
+__d('catapp/views/errors/actualdata.js',[],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
+
+
+actualdata=[{
+"minute":"09:47",
+"domains":[{
+"total":1.0,
+"appName":null,
+"errors":[{
+"num":1.0,
+"name":"org.apache.hadoop.net.ConnectTimeoutException"}],
+
+
+"appId":"cat",
+"alert":0}]},
+
+
+{
+"minute":"09:36",
+"domains":[{
+"total":1.0,
+"appName":null,
+"errors":[{
+"num":1.0,
+"name":"org.apache.hadoop.net.ConnectTimeoutException"}],
+
+
+"appId":"cat",
+"alert":0}]}];
+
+
+
+
+
+
+module.exports = actualdata;
+});
+__d('catapp/views/app.js',["react-native/Libraries/react-native/react-native.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');var 
+
+
+StyleSheet=
+
+
+
+
+
+
+
+
+React.StyleSheet;var Text=React.Text;var AppRegistry=React.AppRegistry;var View=React.View;var WebView=React.WebView;var PickerIOS=React.PickerIOS;var ScrollView=React.ScrollView;var StatusBarIOS=React.StatusBarIOS;var NavigatorIOS=React.NavigatorIOS;
+
+var App=React.createClass({
+render:function(){
+return (
+React.createElement(View,null,
+React.createElement(Text,null,'App访问趋势')));}});
+
+
+
+
+
+module.exports = App;
 });
 ;require("catapp/index.ios.js");
 //@ sourceMappingURL=/index.ios.map
