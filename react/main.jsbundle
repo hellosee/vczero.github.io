@@ -1406,14 +1406,8 @@ ActivityIndicatorIOS=
 
 
 
-React.ActivityIndicatorIOS;var CameraRoll=React.CameraRoll;var Image=React.Image;var ListView=React.ListView;var StyleSheet=React.StyleSheet;var View=React.View;var AppRegistry=React.AppRegistry;var Text=React.Text;
 
-
-
-CameraRoll.saveImageWithTag('http://vczero.github.io/ctrip/mouse.jpg',function(){
-alert('保存图片成功');},
-function(){
-alert('保存图片失败');});
+React.ActivityIndicatorIOS;var CameraRoll=React.CameraRoll;var Image=React.Image;var ListView=React.ListView;var StyleSheet=React.StyleSheet;var View=React.View;var AppRegistry=React.AppRegistry;var Text=React.Text;var VibrationIOS=React.VibrationIOS;
 
 
 
@@ -1434,10 +1428,17 @@ alert('保存图片失败');});
 
 
 
-var fetchParams={
-first:5,
-groupTypes:'All',
-assetType:'Photos'};
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1446,19 +1447,21 @@ var App=React.createClass({
 render:function(){
 return (
 React.createElement(View,null,
-React.createElement(Text,null,'摄像头'),
+React.createElement(Text,null,'摄像头222'),
 React.createElement(Image,{style:{width:300,height:300},source:{uri:'assets-library://asset/asset.JPG?id=2A456415-B1AE-424A-9795-A0625A768EBD&ext=JPG'}})));},
 
 
 
-componentDidMount:function(){
-CameraRoll.getPhotos(fetchParams,function(data){
-console.log(data);},
-function(){
-alert('失败');});}});
+componentDidMount:function(){}});
 
 
 
+
+
+
+
+
+VibrationIOS.vibrate();
 
 
 
