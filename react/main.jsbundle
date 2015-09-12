@@ -1395,26 +1395,30 @@ throw new TypeError(
 
 var index=findIndex.call(this,predicate,context);
 return index === -1?undefined:this[index];}});}})();
-__d('catapp/index.ios.js',["react-native/Libraries/react-native/react-native.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');var 
+__d('catapp/index.ios.js',["Geolocation","react-native/Libraries/react-native/react-native.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');var 
 
 AppRegistry=
 
 
 
+React.AppRegistry;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;
 
-React.AppRegistry;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;var VibrationIOS=React.VibrationIOS;
+var Geolocation=require('Geolocation');
 
 var App=React.createClass({
 render:function(){
 return (
 React.createElement(View,null,
-React.createElement(Text,{onPress:this.vibration,style:styles.btn},'震动一下')));},
+React.createElement(Text,{onPress:this.vibration,style:styles.btn},'获取位置')));},
 
 
 
 vibration:function(){
-VibrationIOS.vibrate();
-VibrationIOS.vibrate();}});
+Geolocation.getCurrentPosition(function(data){
+alert(JSON.stringify(data));},
+function(){
+alert('获取位置失败');});}});
+
 
 
 
@@ -1435,7 +1439,7 @@ textAlign:'center'}});
 
 AppRegistry.registerComponent('catapp',function(){return App;});
 });
-__d('react-native/Libraries/react-native/react-native.js',["React","ActivityIndicatorIOS","DatePickerIOS","Image","ListView","MapView","Modal","Navigator","NavigatorIOS","PickerIOS","ProgressViewIOS","ScrollView","SegmentedControlIOS","SliderIOS","SwitchIOS","TabBarIOS","Text","TextInput","TouchableHighlight","TouchableOpacity","TouchableWithoutFeedback","View","WebView","ActionSheetIOS","AdSupportIOS","AlertIOS","Animated","AppRegistry","AppStateIOS","AsyncStorage","CameraRoll","Dimensions","Easing","ImagePickerIOS","InteractionManager","LayoutAnimation","LinkingIOS","NetInfo","PanResponder","PixelRatio","PushNotificationIOS","Settings","StatusBarIOS","StyleSheet","VibrationIOS","RCTDeviceEventEmitter","RCTNativeAppEventEmitter","NativeModules","Platform","requireNativeComponent","EdgeInsetsPropType","PointPropType","LinkedStateMixin","ReactComponentWithPureRenderMixin","NativeModules","ReactUpdates","ReactFragment","update","ReactDefaultPerf","ReactTestUtils","cloneWithProps"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+__d('react-native/Libraries/react-native/react-native.js',["React","ActivityIndicatorIOS","DatePickerIOS","Image","ListView","MapView","Modal","Navigator","NavigatorIOS","PickerIOS","ProgressViewIOS","ScrollView","SegmentedControlIOS","SliderIOS","SwitchIOS","TabBarIOS","Text","TextInput","TouchableHighlight","TouchableOpacity","TouchableWithoutFeedback","View","WebView","ActionSheetIOS","AdSupportIOS","AlertIOS","Animated","AppRegistry","AppStateIOS","AsyncStorage","CameraRoll","Dimensions","Easing","ImagePickerIOS","InteractionManager","LayoutAnimation","LinkingIOS","NetInfo","PanResponder","PixelRatio","PushNotificationIOS","Settings","StatusBarIOS","StyleSheet","VibrationIOS","RCTDeviceEventEmitter","RCTNativeAppEventEmitter","NativeModules","Platform","requireNativeComponent","EdgeInsetsPropType","PointPropType","LinkedStateMixin","ReactComponentWithPureRenderMixin","NativeModules","ReactUpdates","cloneWithProps","ReactFragment","update","ReactDefaultPerf","ReactTestUtils"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 
 
