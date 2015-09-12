@@ -1395,85 +1395,47 @@ throw new TypeError(
 
 var index=findIndex.call(this,predicate,context);
 return index === -1?undefined:this[index];}});}})();
-__d('catapp/index.ios.js',["react-native/Libraries/react-native/react-native.js","react-native-camera/Camera.ios.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');var 
+__d('catapp/index.ios.js',["react-native/Libraries/react-native/react-native.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');var 
 
 AppRegistry=
 
 
 
 
-React.AppRegistry;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;var TouchableHighlight=React.TouchableHighlight;
-var Camera=require('react-native-camera/Camera.ios.js');
+React.AppRegistry;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;var VibrationIOS=React.VibrationIOS;
 
-var cameraApp=React.createClass({
-getInitialState:function(){
-return {
-cameraType:Camera.constants.Type.back};},
-
-
-
+var App=React.createClass({
 render:function(){
 return (
-React.createElement(Camera,{
-ref:'cam',
-style:styles.container,
-onBarCodeRead:this._onBarCodeRead,
-type:this.state.cameraType},
-React.createElement(Text,{style:styles.welcome},'Welcome to React Native!'),
-
-
-React.createElement(Text,{style:styles.instructions},'To get started, edit index.ios.js',
-'\n','Press Cmd+R to reload'),
-
-
-React.createElement(TouchableHighlight,{onPress:this._switchCamera},
-React.createElement(Text,null,'The old switcheroo')),
-
-React.createElement(TouchableHighlight,{onPress:this._takePicture},
-React.createElement(Text,null,'Take Picture'))));},
+React.createElement(View,null,
+React.createElement(Text,{onPress:this.vibration,style:styles.btn},'震动一下')));},
 
 
 
-
-_onBarCodeRead:function(e){
-console.log(e);},
-
-_switchCamera:function(){
-var state=this.state;
-state.cameraType = state.cameraType === Camera.constants.Type.back?
-Camera.constants.Type.front:Camera.constants.Type.back;
-this.setState(state);},
-
-_takePicture:function(){
-this.refs.cam.capture(function(err,data){
-console.log(err,data);});}});
-
-
+vibration:function(){
+VibrationIOS.vibrate();
+VibrationIOS.vibrate();}});
 
 
 
 var styles=StyleSheet.create({
-container:{
-flex:1,
-justifyContent:'center',
-alignItems:'center',
-backgroundColor:'transparent'},
-
-welcome:{
-fontSize:20,
-textAlign:'center',
-margin:10},
-
-instructions:{
-textAlign:'center',
-color:'#333333'}});
+btn:{
+marginTop:50,
+marginLeft:10,
+marginRight:10,
+height:35,
+backgroundColor:'#3BC1FF',
+color:'#fff',
+lineHeight:24,
+fontWeight:'bold',
+textAlign:'center'}});
 
 
 
 
-AppRegistry.registerComponent('catapp',function(){return cameraApp;});
+AppRegistry.registerComponent('catapp',function(){return App;});
 });
-__d('react-native/Libraries/react-native/react-native.js',["React","ActivityIndicatorIOS","DatePickerIOS","Image","ListView","MapView","Modal","Navigator","NavigatorIOS","PickerIOS","ProgressViewIOS","ScrollView","SegmentedControlIOS","SliderIOS","SwitchIOS","TabBarIOS","Text","TextInput","TouchableHighlight","TouchableOpacity","TouchableWithoutFeedback","View","WebView","ActionSheetIOS","AdSupportIOS","AlertIOS","Animated","AppRegistry","AppStateIOS","AsyncStorage","CameraRoll","Dimensions","Easing","ImagePickerIOS","InteractionManager","LayoutAnimation","LinkingIOS","NetInfo","PanResponder","PixelRatio","PushNotificationIOS","Settings","StatusBarIOS","StyleSheet","VibrationIOS","RCTDeviceEventEmitter","RCTNativeAppEventEmitter","NativeModules","Platform","requireNativeComponent","EdgeInsetsPropType","PointPropType","LinkedStateMixin","ReactComponentWithPureRenderMixin","NativeModules","ReactUpdates","cloneWithProps","ReactFragment","update","ReactDefaultPerf","ReactTestUtils"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+__d('react-native/Libraries/react-native/react-native.js',["React","ActivityIndicatorIOS","DatePickerIOS","Image","ListView","MapView","Modal","Navigator","NavigatorIOS","PickerIOS","ProgressViewIOS","ScrollView","SegmentedControlIOS","SliderIOS","SwitchIOS","TabBarIOS","Text","TextInput","TouchableHighlight","TouchableOpacity","TouchableWithoutFeedback","View","WebView","ActionSheetIOS","AdSupportIOS","AlertIOS","Animated","AppRegistry","AppStateIOS","AsyncStorage","CameraRoll","Dimensions","Easing","ImagePickerIOS","InteractionManager","LayoutAnimation","LinkingIOS","NetInfo","PanResponder","PixelRatio","PushNotificationIOS","Settings","StatusBarIOS","StyleSheet","VibrationIOS","RCTDeviceEventEmitter","RCTNativeAppEventEmitter","NativeModules","Platform","requireNativeComponent","EdgeInsetsPropType","PointPropType","LinkedStateMixin","ReactComponentWithPureRenderMixin","NativeModules","ReactUpdates","ReactFragment","update","ReactDefaultPerf","ReactTestUtils","cloneWithProps"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
 
 
@@ -51559,225 +51521,6 @@ Object.keys(componentOrElement));}
 
 
 module.exports = findDOMNode;
-});
-__d('react-native-camera/Camera.ios.js',[],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('React');
-var DeviceEventEmitter=require('RCTDeviceEventEmitter');
-var NativeModules=require('NativeModules');
-var ReactNativeViewAttributes=require('ReactNativeViewAttributes');
-var StyleSheet=require('StyleSheet');
-var createReactNativeComponentClass=require('createReactNativeComponentClass');
-var PropTypes=require('ReactPropTypes');
-var StyleSheetPropType=require('StyleSheetPropType');
-var NativeMethodsMixin=require('NativeMethodsMixin');
-var flattenStyle=require('flattenStyle');
-var merge=require('merge');
-
-var constants={
-Aspect:NativeModules.CameraManager.Aspect,
-BarCodeType:NativeModules.CameraManager.BarCodeType,
-Type:NativeModules.CameraManager.Type,
-CaptureMode:NativeModules.CameraManager.CaptureMode,
-CaptureTarget:NativeModules.CameraManager.CaptureTarget,
-Orientation:NativeModules.CameraManager.Orientation,
-FlashMode:NativeModules.CameraManager.FlashMode,
-TorchMode:NativeModules.CameraManager.TorchMode};
-
-
-var Camera=React.createClass({
-propTypes:{
-aspect:PropTypes.oneOfType([
-PropTypes.string,
-PropTypes.number]),
-
-captureAudio:PropTypes.bool,
-captureMode:PropTypes.oneOfType([
-PropTypes.string,
-PropTypes.number]),
-
-captureTarget:PropTypes.oneOfType([
-PropTypes.string,
-PropTypes.number]),
-
-type:PropTypes.oneOfType([
-PropTypes.string,
-PropTypes.number]),
-
-orientation:PropTypes.oneOfType([
-PropTypes.string,
-PropTypes.number]),
-
-flashMode:PropTypes.oneOfType([
-PropTypes.string,
-PropTypes.number]),
-
-torchMode:PropTypes.oneOfType([
-PropTypes.string,
-PropTypes.number])},
-
-
-
-mixins:[NativeMethodsMixin],
-
-viewConfig:{
-uiViewClassName:'UIView',
-validAttributes:ReactNativeViewAttributes.UIView},
-
-
-getDefaultProps:function(){
-return {
-aspect:constants.Aspect.fill,
-type:constants.Type.back,
-orientation:constants.Orientation.auto,
-captureAudio:true,
-captureMode:constants.CaptureMode.still,
-captureTarget:constants.CaptureTarget.cameraRoll,
-flashMode:constants.FlashMode.off,
-torchMode:constants.TorchMode.off};},
-
-
-
-getInitialState:function(){
-return {
-isAuthorized:false,
-isRecording:false};},
-
-
-
-componentWillMount:function(){
-NativeModules.CameraManager.checkDeviceAuthorizationStatus((function(err,isAuthorized){
-this.state.isAuthorized = isAuthorized;
-this.setState(this.state);}).
-bind(this));
-this.cameraBarCodeReadListener = DeviceEventEmitter.addListener('CameraBarCodeRead',this._onBarCodeRead);},
-
-
-componentWillUnmount:function(){
-this.cameraBarCodeReadListener.remove();
-
-if(this.state.isRecording){
-this.stopRecording();}},
-
-
-
-render:function(){
-var style=flattenStyle([styles.base,this.props.style]);
-
-var aspect=this.props.aspect,
-type=this.props.type,
-orientation=this.props.orientation,
-flashMode=this.props.flashMode,
-torchMode=this.props.torchMode;
-
-var legacyProps={
-aspect:{
-Fill:'fill',
-Fit:'fit',
-Stretch:'stretch'},
-
-orientation:{
-LandscapeLeft:'landscapeLeft',
-LandscapeRight:'landscapeRight',
-Portrait:'portrait',
-PortraitUpsideDown:'portraitUpsideDown'},
-
-type:{
-Front:'front',
-Back:'back'}};
-
-
-
-if(typeof aspect === 'string'){
-aspect = constants.Aspect[aspect];}
-
-
-if(typeof flashMode === 'string'){
-flashMode = constants.FlashMode[flashMode];}
-
-
-if(typeof orientation === 'string'){
-orientation = constants.Orientation[orientation];}
-
-
-if(typeof torchMode === 'string'){
-torchMode = constants.TorchMode[torchMode];}
-
-
-if(typeof type === 'string'){
-type = constants.Type[type];}
-
-
-var nativeProps=merge(this.props,{
-style:style,
-aspect:aspect,
-type:type,
-orientation:orientation,
-flashMode:flashMode,
-torchMode:torchMode});
-
-
-return React.createElement(RCTCamera,nativeProps);},
-
-
-_onBarCodeRead:function(e){
-this.props.onBarCodeRead && this.props.onBarCodeRead(e);},
-
-
-capture:function(options,cb){
-
-if(arguments.length == 1){
-cb = options;
-options = {};}
-
-
-options = Object.assign({},{
-audio:this.props.captureAudio,
-mode:this.props.captureMode,
-target:this.props.captureTarget},
-options);
-
-if(typeof options.mode === 'string'){
-options.mode = constants.CaptureMode[options.mode];}
-
-
-if(options.mode === constants.CaptureMode.video){
-options.totalSeconds = options.totalSeconds > -1?options.totalSeconds:-1;
-options.preferredTimeScale = options.preferredTimeScale || 30;
-this.setState({isRecording:true});}
-
-
-if(typeof options.target === 'string'){
-options.target = constants.CaptureTarget[options.target];}
-
-
-NativeModules.CameraManager.capture(options,cb);},
-
-
-stopCapture:function(){
-if(this.state.isRecording){
-NativeModules.CameraManager.stopCapture();
-this.setState({isRecording:false});}}});
-
-
-
-
-
-var RCTCamera=createReactNativeComponentClass({
-validAttributes:merge(ReactNativeViewAttributes.UIView,{
-aspect:true,
-type:true,
-orientation:true,
-flashMode:true,
-torchMode:true}),
-
-uiViewClassName:'RCTCamera'});
-
-
-var styles=StyleSheet.create({
-base:{}});
-
-
-Camera.constants = constants;
-module.exports = Camera;
 });
 ;require("catapp/index.ios.js");
 //@ sourceMappingURL=/index.ios.map
