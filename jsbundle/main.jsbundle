@@ -51845,9 +51845,9 @@ data.push({
 appID:'111301',
 errorNum:'534',
 rate:'+ 35.9%',
-desc:["Exception 1",
-"System.Net.WebException 16",
-"Ctrip.Duckbill.Wireless.MobileService.ServiceProcessorBase.ExtendException 543"],
+desc:["(1) Exception",
+"(16)System.Net.WebException",
+"(543)Ctrip.Duckbill.Wireless.MobileService.ServiceProcessorBase.ExtendException"],
 numbers:90,
 sysTitle:"酒店无线RestApi"},
 
@@ -51855,7 +51855,7 @@ sysTitle:"酒店无线RestApi"},
 appID:'hermes',
 errorNum:'221',
 rate:'- 3.1%',
-desc:["javax.servlet.ServletException 221"],
+desc:["(221) javax.servlet.ServletException"],
 numbers:90,
 sysTitle:""},
 
@@ -51863,10 +51863,10 @@ sysTitle:""},
 appID:'922201',
 errorNum:'177',
 rate:'+ 12.2%',
-desc:["System.ArgumentException 1",
-"System.Exception 131",
-"System.Net.WebException 42",
-"Microsoft.ClearScript.ScriptEngineException 3"],
+desc:["(1) System.ArgumentException",
+"(131) System.Exception",
+"(42) System.Net.WebException",
+"(3) Microsoft.ClearScript.ScriptEngineException"],
 numbers:90,
 sysTitle:"html5站点"},
 
@@ -51874,7 +51874,7 @@ sysTitle:"html5站点"},
 appID:'131011',
 errorNum:'159',
 rate:'+ 35.0%',
-desc:["System.ArgumentException 2","System.Exception 104","System.NullReferenceException 53"],
+desc:["(2) System.ArgumentException","(104) System.Exception","(53) System.NullReferenceException"],
 numbers:90,
 sysTitle:"Amadeus服务"},
 
@@ -51882,7 +51882,7 @@ sysTitle:"Amadeus服务"},
 appID:'100001031',
 errorNum:'138',
 rate:'0.1%',
-desc:["System.IO.InvalidDataException 138"],
+desc:["(138) System.IO.InvalidDataException"],
 numbers:90,
 sysTitle:"授权服务"},
 
@@ -51890,7 +51890,7 @@ sysTitle:"授权服务"},
 appID:'340116',
 errorNum:'133',
 rate:'+ 0.7%',
-desc:["Exception 88","System.Net.WebException 11","Ctrip.Mobile.Server.Flight.ServiceCore.Businesses.FlightServiceException 34"],
+desc:["(88) Exception","(11) System.Net.WebException","(34) Ctrip.Mobile.Server.Flight.ServiceCore.Businesses.FlightServiceException"],
 numbers:90,
 sysTitle:"Restful机票无线服务"},
 
@@ -51898,7 +51898,7 @@ sysTitle:"Restful机票无线服务"},
 appID:'100000865',
 errorNum:'130',
 rate:'- 1.8%',
-desc:["CServiceStack.ServiceClient.CServiceException 128","System.NullReferenceException 2"],
+desc:["(128) CServiceStack.ServiceClient.CServiceException","(2) System.NullReferenceException"],
 numbers:90,
 sysTitle:"酒店服务端微信返现服务"},
 
@@ -51907,9 +51907,9 @@ sysTitle:"酒店服务端微信返现服务"},
 appID:'350001',
 errorNum:'112',
 rate:'+ 3.0%',
-desc:["System.Exception 7","System.Net.WebException 50",
-"Ctrip.Mobile.Server.Flight.ServiceCore.Businesses.FlightServiceException 44",
-"Ctrip.Mobile.Server.Flight.ServiceCore.Businesses.Inland.CheckInSegmentSearchManagerV66.ProcessSoaException 11"],
+desc:["(7) System.Exception","(50) System.Net.WebException",
+"(44) Ctrip.Mobile.Server.Flight.ServiceCore.Businesses.FlightServiceException",
+"(11) Ctrip.Mobile.Server.Flight.ServiceCore.Businesses.Inland.CheckInSegmentSearchManagerV66.ProcessSoaException"],
 numbers:90,
 sysTitle:"机票无线主服务"},
 
@@ -51917,7 +51917,7 @@ sysTitle:"机票无线主服务"},
 appID:'140811',
 errorNum:'94',
 rate:'0.02%',
-desc:["System.Exception 47","System.Net.WebException 47"],
+desc:["(47) System.Exception","(47) System.Net.WebException"],
 numbers:90,
 sysTitle:"门票OpenAPI"},
 
@@ -51925,7 +51925,7 @@ sysTitle:"门票OpenAPI"},
 appID:'110102',
 errorNum:'75',
 rate:'+ 8.7%',
-desc:["System.ArgumentException 1","System.Net.WebException 74"],
+desc:["(1) System.ArgumentException","(74) System.Net.WebException"],
 numbers:90,
 sysTitle:"Online国内酒店查询"}]});
 
@@ -51938,9 +51938,9 @@ data.push({
 appID:'111301',
 errorNum:'518',
 rate:'+ 37.9%',
-desc:["Exception 6",
-"System.Net.WebException 30",
-"Ctrip.Duckbill.Wireless.MobileService.ServiceProcessorBase.ExtendException 482"],
+desc:["(6) Exception",
+"(30) System.Net.WebException",
+"(482) Ctrip.Duckbill.Wireless.MobileService.ServiceProcessorBase.ExtendException"],
 numbers:90,
 sysTitle:"酒店无线RestApi"},
 
@@ -51948,8 +51948,8 @@ sysTitle:"酒店无线RestApi"},
 appID:'720109',
 errorNum:'243',
 rate:'+ 10.1%',
-desc:["System.ArgumentException 236",
-"System.Net.WebException 7"],
+desc:["(236) System.ArgumentException",
+"(7) System.Net.WebException"],
 numbers:90,
 sysTitle:"门票online预订网站（首页，列表，详情）"},
 
@@ -51957,8 +51957,8 @@ sysTitle:"门票online预订网站（首页，列表，详情）"},
 appID:'922201',
 errorNum:'217',
 rate:'+ 12.2%',
-desc:["System.ArgumentException 1",
-"System.Exception 180",
+desc:["(1) System.ArgumentException",
+"(180) System.Exception",
 "System.Net.WebException 31",
 "Microsoft.ClearScript.ScriptEngineException 5"],
 numbers:90,
@@ -52442,9 +52442,9 @@ LayoutAnimation.configureNext(animations.layout.easeInEaseOut);
 this.indexShow(index);},
 
 
-onScroll:function(){
+onScroll:function(){},
 
-this.indexShow(0,true);},
+
 
 
 
@@ -52472,7 +52472,6 @@ title:'依赖关系'});},
 
 componentDidMount:function(){
 this.showDetail(0);}});
-
 
 
 
@@ -52688,6 +52687,10 @@ var foldheight=SCREE_HEIGHT / 22;
 var headerheight=63;
 var lineheight=1;
 var xqheight=SCREE_HEIGHT / 18 * 4;
+var ylheight=SCREE_HEIGHT / 30;
+var bylheight=SCREE_HEIGHT / 30;
+var xqheadheight=SCREE_HEIGHT / 30;
+
 
 
 var Dependence=React.createClass({
@@ -52745,28 +52748,28 @@ RoundRate:this.props.RoundRate || '+79%'};},
 
 
 getLinkResult:function(id){
-
-
-
-
-
-nav.push({
-component:Dependence,
-title:'依赖关系',
-backButtonTitle:id,
-passProps:{AppID:id,
+this.setState({
+AppID:id,
 ErrCount:'1259',
-RoundRate:'+10%'}});},
+RoundRate:'+10%'});},
+
+
+
+
+
+
+
+
 
 
 componentWillMount:function(){
-this.state.xqcontent.push(React.createElement(View,{style:{height:this.state.xiangqingheight,flexDirection:'row',borderWidth:pt,borderColor:'#ddd'}},
-React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"xq"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
-React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
-React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",writingDirection:'ltr',fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'错误详情'))),
+this.state.xqcontent.push(React.createElement(View,{style:{flex:1,height:this.state.xiangqingheight,borderWidth:pt,borderColor:'#ddd'}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"xq"}),underlayColor:"#ddd",style:{alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{height:xqheadheight,backgroundColor:"#ddd",flex:1,borderBottomWidth:pt * 1,borderBottomColor:'#ddd',alignItems:"center",alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'错误汇总'))),
 
 
-React.createElement(ScrollView,{style:[{flex:8}]},
+React.createElement(ScrollView,{style:[{flex:7}]},
 React.createElement(Text,{style:styles.title},'Restful机票无线服务'),
 React.createElement(ListView,{
 dataSource:this.state.dataSource,
@@ -52775,10 +52778,10 @@ renderRow:function(rowData){return React.createElement(Text,{style:styles.desc},
 
 
 
-this.state.yilaicontent.push(React.createElement(View,{style:{flexDirection:'row',flex:1}},
-React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"yl"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
-React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
-React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'依赖关系'))),
+this.state.yilaicontent.push(React.createElement(View,{style:{flex:1}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"yl"}),underlayColor:"#ddd",style:{alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{backgroundColor:"#ddd",height:ylheight,borderBottomWidth:pt * 1,borderBottomColor:'#ddd',alignItems:"center",alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'依赖服务'))),
 
 
 React.createElement(ScrollView,{style:{flex:8}},
@@ -52793,10 +52796,10 @@ React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.Get
 
 
 this.state.beiyilaicontent.push(
-React.createElement(View,{style:{flexDirection:'row',flex:1}},
-React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"byl"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
-React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
-React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'被依赖关系'))),
+React.createElement(View,{style:{flex:1}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"byl"}),underlayColor:"#ddd",style:{alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{backgroundColor:"#ddd",height:bylheight,flex:1,borderBottomWidth:pt * 1,borderBottomColor:'#ddd',alignItems:"center",alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'被依赖服务'))),
 
 
 React.createElement(ScrollView,{style:{flex:8}},
@@ -52860,7 +52863,7 @@ React.createElement(Text,{style:{
 color:"#005BFF",
 fontSize:SCREE_HEIGHT / 40,
 fontWeight:600}},
-'错误详情')),
+'错误汇总')),
 
 React.createElement(View,{style:{justifyContent:'center',flex:4,alignItems:'flex-end'}},
 React.createElement(Text,{style:{
@@ -52892,13 +52895,13 @@ tpbeiyilaiheight = this.state.beiyilaiheight;}
 
 
 this.setState({
-xqcontent:[React.createElement(View,{style:{height:this.state.xiangqingheight,flexDirection:'row',borderWidth:pt,borderColor:'#ddd'}},
-React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"xq"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
-React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
-React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",writingDirection:'ltr',fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'错误详情'))),
+xqcontent:[React.createElement(View,{style:{flex:1,height:this.state.xiangqingheight,borderWidth:pt,borderColor:'#ddd'}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"xq"}),underlayColor:"#ddd",style:{alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{height:xqheadheight,backgroundColor:"#ddd",flex:1,borderBottomWidth:pt * 1,borderBottomColor:'#ddd',alignItems:"center",alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'错误汇总'))),
 
 
-React.createElement(ScrollView,{style:[{flex:8}]},
+React.createElement(ScrollView,{style:[{flex:7}]},
 React.createElement(Text,{style:styles.title},'Restful机票无线服务'),
 React.createElement(ListView,{
 dataSource:this.state.dataSource,
@@ -52991,10 +52994,10 @@ tpbeiyilaiheight = this.state.beiyilaiheight;}
 
 
 this.setState({
-yilaicontent:[React.createElement(View,{style:{flexDirection:'row',flex:1}},
-React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"yl"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
-React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
-React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",writingDirection:'ltr',fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'依赖关系'))),
+yilaicontent:[React.createElement(View,{style:{flex:1}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"yl"}),underlayColor:"#ddd",style:{alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{backgroundColor:"#ddd",height:ylheight,borderBottomWidth:pt * 1,borderBottomColor:'#ddd',alignItems:"center",alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'依赖服务'))),
 
 
 React.createElement(ScrollView,{style:{flex:8}},
@@ -53081,10 +53084,10 @@ tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - fo
 
 
 this.setState({
-beiyilaicontent:[React.createElement(View,{style:{flexDirection:'row',flex:1}},
-React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"byl"}),underlayColor:"#ddd",style:{flex:1,alignContent:"center",justifyContent:'center'}},
-React.createElement(View,{style:{flex:1,borderRightWidth:pt * 4,borderRightColor:'#ddd',alignContent:"center",justifyContent:'center'}},
-React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",writingDirection:'ltr',fontSize:SCREE_HEIGHT / 40,fontWeight:800,alignContent:"center",justifyContent:'center'}},'被依赖关系'))),
+beiyilaicontent:[React.createElement(View,{style:{flex:1}},
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"byl"}),underlayColor:"#ddd",style:{alignContent:"center",justifyContent:'center'}},
+React.createElement(View,{style:{backgroundColor:"#ddd",height:bylheight,flex:1,borderBottomWidth:pt * 1,borderBottomColor:'#ddd',alignItems:"center",alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'被依赖服务'))),
 
 
 React.createElement(ScrollView,{style:{flex:8}},
@@ -53196,9 +53199,8 @@ fontSize:15,
 fontWeight:'600'},
 
 gxtitle:{
-textDecorationLine:'underline',
 marginTop:5,
-color:'#005BFF',
+color:'#000',
 
 marginLeft:0,
 fontSize:18,
