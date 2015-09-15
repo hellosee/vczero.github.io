@@ -52465,6 +52465,7 @@ this.setState(obj);},
 
 addDeps:function(){
 nav.push({
+backButtonTitle:"12344",
 component:Dependence,
 title:'依赖关系'});},
 
@@ -52738,12 +52739,24 @@ beiyilaiheight:(SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerhei
 xqcontent:[],
 yilaicontent:[],
 beiyilaicontent:[],
-AppID:'12344',
-ErrCount:'706',
-RoundRate:'+79%'};},
+AppID:this.props.AppID || '12344',
+ErrCount:this.props.ErrCount || '706',
+RoundRate:this.props.RoundRate || '+79%'};},
 
 
-getLinkResult:function(id){},
+getLinkResult:function(id){
+
+
+
+
+
+nav.push({
+component:Dependence,
+title:'依赖关系',
+backButtonTitle:id,
+passProps:{AppID:id,
+ErrCount:'1259',
+RoundRate:'+10%'}});},
 
 
 componentWillMount:function(){
@@ -52769,11 +52782,11 @@ React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",fontSize:SCR
 
 
 React.createElement(ScrollView,{style:{flex:8}},
-React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110441"),style:styles.gxtitle},'【110441 天马比价查询服务】'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110442"),style:styles.gxtitle},'【110442 天马比价查询服务A】'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'))));
@@ -52787,19 +52800,19 @@ React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",fontSize:SCR
 
 
 React.createElement(ScrollView,{style:{flex:8}},
-React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110443"),style:styles.gxtitle},'【110443 天马比价查询服务】'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110444"),style:styles.gxtitle},'【110444 天马比价查询服务】'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110445"),style:styles.gxtitle},'【110445 天马比价查询服务】'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110446"),style:styles.gxtitle},'【110446 天马比价查询服务】'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'))));},
@@ -52985,11 +52998,11 @@ React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",writingDirec
 
 
 React.createElement(ScrollView,{style:{flex:8}},
-React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110441"),style:styles.gxtitle},'【110441 天马比价查询服务】'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110442"),style:styles.gxtitle},'【110442 天马比价查询服务A】'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)')))],
@@ -53075,19 +53088,19 @@ React.createElement(Text,{style:{paddingHorizontal:"8",color:"#000",writingDirec
 
 
 React.createElement(ScrollView,{style:{flex:8}},
-React.createElement(Text,{numberOfLines:'1',suppressHighlighting:'true',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110443"),style:styles.gxtitle},'【110443 天马比价查询服务】'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110444"),style:styles.gxtitle},'【110444 天马比价查询服务】'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110445"),style:styles.gxtitle},'【110445 天马比价查询服务】'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxtitle},'【110441 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110446"),style:styles.gxtitle},'【110446 天马比价查询服务】'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)')))],
