@@ -51639,11 +51639,11 @@ right:10}});
 
 module.exports = Router;
 });
-__d('catapp/views/errors.js',["Dimensions","react-native/Libraries/react-native/react-native.js","catapp/views/errors/data.js","catapp/views/errors/table.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');
+__d('catapp/views/errors.js',["Dimensions","react-native/Libraries/react-native/react-native.js","catapp/views/errors/data.js","catapp/views/errors/table.js","catapp/views/service.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');
 var Dimensions=require('Dimensions');
 var data=require('catapp/views/errors/data.js');
-var Table=require('catapp/views/errors/table.js');var 
-
+var Table=require('catapp/views/errors/table.js');
+var ServiceURL=require('catapp/views/service.js');var 
 
 
 StyleSheet=
@@ -51697,6 +51697,16 @@ this.setState({
 showDate:true,
 mode:'time',
 dateIOS:new Date()});},
+
+
+componentDidMount:function(){
+fetch(ServiceURL.errorsGrai).
+then(function(response){return response.text();}).
+then(function(responseText){
+console.log(responseText);}).
+
+catch(function(error){
+console.warn(error);});},
 
 
 complete:function(){
@@ -52465,7 +52475,6 @@ this.setState(obj);},
 
 addDeps:function(){
 nav.push({
-backButtonTitle:"12344",
 component:Dependence,
 title:'依赖关系'});},
 
@@ -52657,6 +52666,9 @@ module.exports = Tab;
 __d('catapp/views/errors/dependence.js',["react-native/Libraries/react-native/react-native.js","catapp/views/errors/actualdata.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
 
 
+
+
+
 React=require('react-native/Libraries/react-native/react-native.js');
 var actualdata=require('catapp/views/errors/actualdata.js');var 
 
@@ -52677,19 +52689,26 @@ StyleSheet=
 
 
 
-React.StyleSheet;var Text=React.Text;var AppRegistry=React.AppRegistry;var View=React.View;var WebView=React.WebView;var PickerIOS=React.PickerIOS;var ScrollView=React.ScrollView;var StatusBarIOS=React.StatusBarIOS;var NavigatorIOS=React.NavigatorIOS;var PixelRatio=React.PixelRatio;var Dimensions=React.Dimensions;var TouchableHighlight=React.TouchableHighlight;var ListView=React.ListView;var Animated=React.Animated;var AnimatedValue=React.AnimatedValue;var LayoutAnimation=React.LayoutAnimation;
+
+React.StyleSheet;var Text=React.Text;var AppRegistry=React.AppRegistry;var View=React.View;var WebView=React.WebView;var PickerIOS=React.PickerIOS;var ScrollView=React.ScrollView;var StatusBarIOS=React.StatusBarIOS;var NavigatorIOS=React.NavigatorIOS;var PixelRatio=React.PixelRatio;var Dimensions=React.Dimensions;var TouchableHighlight=React.TouchableHighlight;var ListView=React.ListView;var Animated=React.Animated;var AnimatedValue=React.AnimatedValue;var LayoutAnimation=React.LayoutAnimation;var TouchableOpacity=React.TouchableOpacity;
 var pt=1 / PixelRatio.get();
 
 var SCREE_WIDTH=Dimensions.get('window').width;
 var SCREE_HEIGHT=Dimensions.get('window').height;
 var rowheight=SCREE_HEIGHT / 22;
-var foldheight=SCREE_HEIGHT / 22;
+var foldheight=20;
 var headerheight=63;
 var lineheight=1;
 var xqheight=SCREE_HEIGHT / 18 * 4;
-var ylheight=SCREE_HEIGHT / 30;
-var bylheight=SCREE_HEIGHT / 30;
-var xqheadheight=SCREE_HEIGHT / 30;
+var ylheight=20;
+var marginheight=16;
+var bylheight=20;
+var xqheadheight=35;
+var scrollviewheight=SCREE_HEIGHT - headerheight - SCREE_HEIGHT / 11;
+var realdata=['org.apache.net.ConnectTimeoutException  1.0','org.apache.net.ConnectTimeoutExceptionA  2.0',
+'org.apache.net.ConnectTimeoutExceptionB  3.0','org.apache.net.ConnectTimeoutExceptionC  4.0',
+'org.apache.net.ConnectTimeoutExceptionB  5.0','org.apache.net.ConnectTimeoutExceptionC  6.0'];
+
 
 
 
@@ -52697,7 +52716,7 @@ var Dependence=React.createClass({
 xiangqingisfold:false,
 yilaifold:false,
 beiyilaifold:false,
-realdata:actualdata,
+
 animations:{
 layout:{
 spring:{
@@ -52733,9 +52752,8 @@ getInitialState:function(){
 this.props.data = actualdata;
 var ds=new ListView.DataSource({rowHasChanged:function(r1,r2){return r1 !== r2;}});
 return {
-fadeAnim:new Animated.Value(1),
-pan:new Animated.ValueXY(),
-dataSource:ds.cloneWithRows(['org.apache.net.ConnectTimeoutException  1.0','org.apache.net.ConnectTimeoutExceptionA  2.0']),
+dataSource:ds.cloneWithRows(realdata),
+dataSourceFolder:ds.cloneWithRows([realdata[0],realdata[1]]),
 xiangqingheight:xqheight,
 yilaiheight:(SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight) / 2,
 beiyilaiheight:(SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight) / 2,
@@ -52744,7 +52762,11 @@ yilaicontent:[],
 beiyilaicontent:[],
 AppID:this.props.AppID || '12344',
 ErrCount:this.props.ErrCount || '706',
-RoundRate:this.props.RoundRate || '+79%'};},
+RoundRate:this.props.RoundRate || '+79%',
+marginylTop:0,
+marginylBottom:0,
+marginbylTop:0,
+marginbylBottom:0};},
 
 
 getLinkResult:function(id){
@@ -52762,60 +52784,176 @@ RoundRate:'+10%'});},
 
 
 
-componentWillMount:function(){
-this.state.xqcontent.push(React.createElement(View,{style:{flex:1,height:this.state.xiangqingheight,borderWidth:pt,borderColor:'#ddd'}},
-React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"xq"}),underlayColor:"#ddd",style:{alignContent:"center",justifyContent:'center'}},
-React.createElement(View,{style:{height:xqheadheight,backgroundColor:"#ddd",flex:1,borderBottomWidth:pt * 1,borderBottomColor:'#ddd',alignItems:"center",alignContent:"center",justifyContent:'center'}},
-React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'错误汇总'))),
+xqinitcontent:function(){
+return React.createElement(View,{style:{flex:1,borderWidth:pt,borderColor:'#EBEBEB'}},
+React.createElement(View,{style:{height:10,flex:1,backgroundColor:"#EBEBEB"}}),
+React.createElement(View,{style:{overflow:'hidden',backgroundColor:"#FFF"}},
+React.createElement(TouchableHighlight,{style:{borderBottomWidth:pt,borderBottomColor:"#ddd"},onPress:this.changetab.bind(this,{action:'fold',name:"xq"}),underlayColor:"#ddd"},
+React.createElement(View,{style:{flexDirection:"row",height:xqheadheight,flex:1}},
+React.createElement(View,{style:{flex:20,flexDirection:"row",alignItems:"center",alignContent:"center",marginLeft:8}},
+React.createElement(View,{style:styles.titleicon}),
+React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'错误汇总')),
+
+React.createElement(View,{style:{flex:1}},
+React.createElement(Text,{style:{color:"#000",lineHeight:24,fontSize:18,fontWeight:400,alignContent:"center",justifyContent:'center'}},'-')))),
 
 
-React.createElement(ScrollView,{style:[{flex:7}]},
+
+
+React.createElement(View,{style:[{flex:7}]},
 React.createElement(Text,{style:styles.title},'Restful机票无线服务'),
+
+React.createElement(View,null,
+
+realdata.length > 2?
+React.createElement(View,null,
+React.createElement(ListView,{
+dataSource:this.state.dataSourceFolder,
+renderRow:function(rowData){return React.createElement(Text,{style:styles.desc},rowData);}}),
+
+React.createElement(View,{style:{flex:1,marginTop:5}},
+React.createElement(TouchableOpacity,{onPress:this.xqchanged.bind(this,"expand"),style:styles.morestyle},
+React.createElement(View,{style:{
+justifyContent:'center',
+alignItems:'center'}},
+React.createElement(Text,{style:styles.moretext},'查看更多'))))):
+
+
+
+
 React.createElement(ListView,{
 dataSource:this.state.dataSource,
-renderRow:function(rowData){return React.createElement(Text,{style:styles.desc},rowData);}}))));
+renderRow:function(rowData){return React.createElement(Text,{style:styles.desc},rowData);}})))));},
 
 
 
 
-this.state.yilaicontent.push(React.createElement(View,{style:{flex:1}},
-React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"yl"}),underlayColor:"#ddd",style:{alignContent:"center",justifyContent:'center'}},
-React.createElement(View,{style:{backgroundColor:"#ddd",height:ylheight,borderBottomWidth:pt * 1,borderBottomColor:'#ddd',alignItems:"center",alignContent:"center",justifyContent:'center'}},
-React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'依赖服务'))),
 
 
-React.createElement(ScrollView,{style:{flex:8}},
-React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110441"),style:styles.gxtitle},'【110441 天马比价查询服务】'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
-React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110442"),style:styles.gxtitle},'【110442 天马比价查询服务A】'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'))));
 
 
-this.state.beiyilaicontent.push(
+xqexpandcontent:function(){
+return React.createElement(View,{style:{flex:1,borderWidth:pt,borderColor:'#EBEBEB'}},
+React.createElement(View,{style:{height:10,flex:1,backgroundColor:"#EBEBEB"}}),
+React.createElement(View,{style:{overflow:'hidden',backgroundColor:"#FFF"}},
+React.createElement(TouchableHighlight,{style:{borderBottomWidth:pt,borderBottomColor:"#ddd"},onPress:this.changetab.bind(this,{action:'fold',name:"xq"}),underlayColor:"#ddd"},
+React.createElement(View,{style:{flexDirection:"row",height:xqheadheight,flex:1}},
+React.createElement(View,{style:{flex:20,flexDirection:"row",alignItems:"center",alignContent:"center",marginLeft:8}},
+React.createElement(View,{style:styles.titleicon}),
+React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'错误汇总')),
+
 React.createElement(View,{style:{flex:1}},
-React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"byl"}),underlayColor:"#ddd",style:{alignContent:"center",justifyContent:'center'}},
-React.createElement(View,{style:{backgroundColor:"#ddd",height:bylheight,flex:1,borderBottomWidth:pt * 1,borderBottomColor:'#ddd',alignItems:"center",alignContent:"center",justifyContent:'center'}},
-React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'被依赖服务'))),
+React.createElement(Text,{style:{color:"#000",lineHeight:24,fontSize:18,fontWeight:400,alignContent:"center",justifyContent:'center'}},'-')))),
 
 
-React.createElement(ScrollView,{style:{flex:8}},
-React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110443"),style:styles.gxtitle},'【110443 天马比价查询服务】'),
+
+
+React.createElement(View,{style:[{flex:7}]},
+React.createElement(Text,{style:styles.title},'Restful机票无线服务'),
+
+React.createElement(View,null,
+
+React.createElement(ListView,{
+dataSource:this.state.dataSource,
+renderRow:function(rowData){return React.createElement(Text,{style:styles.desc},rowData);}})))));},
+
+
+
+
+
+
+
+
+xqchanged:function(action){
+var tpxqcontent=this.xqexpandcontent();
+if(action = "expand"){
+this.setState({
+xqcontent:[
+tpxqcontent]});}},
+
+
+
+
+
+ylinitcontent:function(){
+return React.createElement(View,{style:{flex:1}},
+
+React.createElement(View,{style:{height:10,flex:1,backgroundColor:"#EBEBEB"}}),
+React.createElement(View,{style:{flex:1,overflow:'hidden',backgroundColor:"#FFF"}},
+React.createElement(TouchableHighlight,{style:{flex:1,borderBottomWidth:pt,borderBottomColor:"#ddd"},onPress:this.changetab.bind(this,{action:'fold',name:"yl"}),underlayColor:"#ddd"},
+React.createElement(View,{style:{flexDirection:"row",height:xqheadheight,flex:1}},
+React.createElement(View,{style:{flex:20,flexDirection:"row",alignItems:"center",alignContent:"center",marginLeft:8}},
+React.createElement(View,{style:styles.titleicon}),
+React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'依赖服务')),
+
+React.createElement(View,{style:{flex:1}},
+React.createElement(Text,{style:{color:"#000",lineHeight:24,fontSize:18,fontWeight:400,alignContent:"center",justifyContent:'center'}},'-')))),
+
+
+
+
+
+React.createElement(View,{style:{flex:8}},
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110441"),style:styles.gxtitle},' 110441 天马比价查询服务'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● Redis.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110442"),style:styles.gxtitle},' 110442 天马比价查询服务A'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
-React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110444"),style:styles.gxtitle},'【110444 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110446"),style:styles.gxtitle},' 110446 天马比价查询服务A'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
-React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110445"),style:styles.gxtitle},'【110445 天马比价查询服务】'),
+React.createElement(View,{style:{flex:1,marginTop:5}},
+React.createElement(TouchableOpacity,{onPress:this.ylchanged.bind(this,"expand"),style:styles.morestyle},
+React.createElement(View,{style:{
+justifyContent:'center',
+alignItems:'center'}},
+React.createElement(Text,{style:styles.moretext},'查看更多')))))));},
+
+
+
+
+
+
+
+
+ylexpandcontent:function(){
+return React.createElement(View,{style:{flex:1,borderWidth:pt,borderColor:'#EBEBEB'}},
+React.createElement(View,{style:{height:10,flex:1,backgroundColor:"#EBEBEB"}}),
+React.createElement(View,{style:{overflow:'hidden',backgroundColor:"#FFF"}},
+React.createElement(TouchableHighlight,{style:{borderBottomWidth:pt,borderBottomColor:"#ddd"},onPress:this.changetab.bind(this,{action:'fold',name:"yl"}),underlayColor:"#ddd"},
+React.createElement(View,{style:{flexDirection:"row",height:xqheadheight,flex:1}},
+React.createElement(View,{style:{flex:20,flexDirection:"row",alignItems:"center",alignContent:"center",marginLeft:8}},
+React.createElement(View,{style:styles.titleicon}),
+React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'依赖服务')),
+
+React.createElement(View,{style:{flex:1}},
+React.createElement(Text,{style:{color:"#000",lineHeight:24,fontSize:18,fontWeight:400,alignContent:"center",justifyContent:'center'}},'-')))),
+
+
+
+
+React.createElement(View,{style:[{flex:7}]},
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110441"),style:styles.gxtitle},' 110441 天马比价查询服务'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● Redis.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110442"),style:styles.gxtitle},' 110442 天马比价查询服务A'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
-React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110446"),style:styles.gxtitle},'【110446 天马比价查询服务】'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110446"),style:styles.gxtitle},' 110446 天马比价查询服务A'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110447"),style:styles.gxtitle},' 110447 天马比价查询服务A'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110448"),style:styles.gxtitle},' 110448 天马比价查询服务A'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
 React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'))));},
@@ -52824,20 +52962,148 @@ React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.Get
 
 
 
+ylchanged:function(action){
+var tpylcontent=this.ylexpandcontent();
+if(action = "expand"){
+this.setState({
+yilaicontent:[
+tpylcontent]});}},
+
+
+
+
+
+bylinitcontent:function(){
+return React.createElement(View,{style:{flex:1}},
+
+React.createElement(View,{style:{height:10,flex:1,backgroundColor:"#EBEBEB"}}),
+React.createElement(View,{style:{flex:1,overflow:'hidden',backgroundColor:"#FFF"}},
+React.createElement(TouchableHighlight,{style:{flex:1,borderBottomWidth:pt,borderBottomColor:"#ddd"},onPress:this.changetab.bind(this,{action:'fold',name:"byl"}),underlayColor:"#ddd"},
+React.createElement(View,{style:{flexDirection:"row",height:xqheadheight,flex:1}},
+React.createElement(View,{style:{flex:20,flexDirection:"row",alignItems:"center",alignContent:"center",marginLeft:8}},
+React.createElement(View,{style:styles.titleicon}),
+React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'被依赖服务')),
+
+React.createElement(View,{style:{flex:1}},
+React.createElement(Text,{style:{color:"#000",lineHeight:24,fontSize:18,fontWeight:400,alignContent:"center",justifyContent:'center'}},'-')))),
+
+
+
+
+React.createElement(View,{style:{flex:7}},
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110443"),style:styles.gxtitle},' 110443 天马比价查询服务'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110444"),style:styles.gxtitle},' 110444 天马比价查询服务'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110444"),style:styles.gxtitle},' 110444 天马比价查询服务'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110445"),style:styles.gxtitle},' 110445 天马比价查询服务'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(View,{style:{flex:1,marginTop:5}},
+React.createElement(TouchableOpacity,{onPress:this.bylchanged.bind(this,"expand"),style:styles.morestyle},
+React.createElement(View,{style:{
+justifyContent:'center',
+alignItems:'center'}},
+React.createElement(Text,{style:styles.moretext},'查看更多')))))));},
+
+
+
+
+
+
+
+
+bylexpandcontent:function(){
+return React.createElement(View,{style:{flex:1,borderWidth:pt,borderColor:'#EBEBEB'}},
+React.createElement(View,{style:{height:10,flex:1,backgroundColor:"#EBEBEB"}}),
+React.createElement(View,{style:{overflow:'hidden',backgroundColor:"#FFF"}},
+React.createElement(TouchableHighlight,{style:{borderBottomWidth:pt,borderBottomColor:"#ddd"},onPress:this.changetab.bind(this,{action:'fold',name:"byl"}),underlayColor:"#ddd"},
+React.createElement(View,{style:{flexDirection:"row",height:xqheadheight,flex:1}},
+React.createElement(View,{style:{flex:20,flexDirection:"row",alignItems:"center",alignContent:"center",marginLeft:8}},
+React.createElement(View,{style:styles.titleicon}),
+React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'被依赖服务')),
+
+React.createElement(View,{style:{flex:1}},
+React.createElement(Text,{style:{color:"#000",lineHeight:24,fontSize:18,fontWeight:400,alignContent:"center",justifyContent:'center'}},'-')))),
+
+
+
+
+React.createElement(View,{style:[{flex:7}]},
+
+React.createElement(Text,{numberOfLines:'2',onPress:this.getLinkResult.bind(this,"110443"),style:styles.gxtitle},' 110443 天马比价查询服务'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'2',onPress:this.getLinkResult.bind(this,"110444"),style:styles.gxtitle},' 110444 天马比价查询服务'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'2',onPress:this.getLinkResult.bind(this,"110444"),style:styles.gxtitle},' 110444 天马比价查询服务'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'2',onPress:this.getLinkResult.bind(this,"110445"),style:styles.gxtitle},' 110445 天马比价查询服务'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'2',onPress:this.getLinkResult.bind(this,"110446"),style:styles.gxtitle},' 110446 天马比价查询服务'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
+React.createElement(Text,{numberOfLines:'2',onPress:this.getLinkResult.bind(this,"110447"),style:styles.gxtitle},' 110447 天马比价查询服务'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
+React.createElement(Text,{numberOfLines:'2',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'))));},
+
+
+
+
+
+bylchanged:function(action){
+var tpbylcontent=this.bylexpandcontent();
+if(action = "expand"){
+this.setState({
+beiyilaicontent:[
+tpbylcontent]});}},
+
+
+
+
+
+
+componentWillMount:function(){
+var tpxqcontent=this.xqinitcontent();
+var tpylcontent=this.ylinitcontent();
+var tpbylcontent=this.bylinitcontent();
+this.state.xqcontent.push(tpxqcontent);
+this.state.yilaicontent.push(tpylcontent);
+this.state.beiyilaicontent.push(tpbylcontent);},
+
+
 changetab:function(mobj){
 if(mobj.name == "xq"){
 if(mobj.action == "fold"){
+
 this.xiangqingisfold = true;
 LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
 if(this.yilaifold == true && this.beiyilaifold == false){
 tpyilaiheight = this.state.yilaiheight;
-tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2;}else 
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2 - marginheight;}else 
 if(this.yilaifold == false && this.beiyilaifold == true){
-tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2;
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2 - marginheight;
 tpbeiyilaiheight = this.state.beiyilaiheight;}else 
 if(this.yilaifold == false && this.beiyilaifold == false){
-tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - foldheight - headerheight) / 2;
-tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - foldheight - headerheight) / 2;}else 
+tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - foldheight - headerheight - marginheight) / 2;
+tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - foldheight - headerheight - marginheight) / 2;}else 
 if(this.yilaifold == true && this.beiyilaifold == true){
 tpyilaiheight = this.state.yilaiheight;
 tpbeiyilaiheight = this.state.beiyilaiheight;}
@@ -52846,31 +53112,13 @@ this.setState({
 xqcontent:[React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{
 action:'expand',
 name:"xq"}),
-underlayColor:"#ddd",style:{justifyContent:'center',flex:1,height:foldheight}},
-React.createElement(View,{style:{
-justifyContent:'center',
-flex:1,
-flexDirection:"row",
-backgroundColor:"#F4F4F4"}},
+underlayColor:"#ddd",style:{justifyContent:'center',flex:1,height:foldheight,marginTop:16,marginBottom:8,alignItems:"center"}},
+React.createElement(View,{style:{backgroundColor:"",flexDirection:"row",height:xqheadheight,width:SCREE_WIDTH * 0.95,borderWidth:pt,borderRadius:4,borderColor:'transparent',overflow:'hidden',backgroundColor:"#FFF"}},
+React.createElement(View,{style:{flex:20,alignItems:"center",alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'错误汇总')),
 
-React.createElement(View,{style:{
-justifyContent:'center',
-flex:1,
-alignItems:'flex-start',
-paddingLeft:10}},
-
-React.createElement(Text,{style:{
-color:"#005BFF",
-fontSize:SCREE_HEIGHT / 40,
-fontWeight:600}},
-'错误汇总')),
-
-React.createElement(View,{style:{justifyContent:'center',flex:4,alignItems:'flex-end'}},
-React.createElement(Text,{style:{
-color:"#005BFF",
-fontSize:SCREE_HEIGHT / 40,
-fontWeight:400}},
-'+   '))))],
+React.createElement(View,{style:{flex:1}},
+React.createElement(Text,{style:{color:"#000",fontSize:18,lineHeight:24,fontWeight:400,alignContent:"center",justifyContent:'center'}},'+'))))],
 
 
 
@@ -52878,13 +53126,14 @@ yilaiheight:tpyilaiheight,
 beiyilaiheight:tpbeiyilaiheight});}else 
 
 {
+var tpxqcontent=this.xqinitcontent();
 LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
 this.xiangqingisfold = false;
 if(this.yilaifold == true && this.beiyilaifold == false){
 tpyilaiheight = this.state.yilaiheight;
-tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight - foldheight;}else 
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight - foldheight - marginheight;}else 
 if(this.yilaifold == false && this.beiyilaifold == true){
-tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight - foldheight;
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight - foldheight - marginheight;
 tpbeiyilaiheight = this.state.beiyilaiheight;}else 
 if(this.yilaifold == false && this.beiyilaifold == false){
 tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - xqheight - headerheight) / 2;
@@ -52895,21 +53144,7 @@ tpbeiyilaiheight = this.state.beiyilaiheight;}
 
 
 this.setState({
-xqcontent:[React.createElement(View,{style:{flex:1,height:this.state.xiangqingheight,borderWidth:pt,borderColor:'#ddd'}},
-React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"xq"}),underlayColor:"#ddd",style:{alignContent:"center",justifyContent:'center'}},
-React.createElement(View,{style:{height:xqheadheight,backgroundColor:"#ddd",flex:1,borderBottomWidth:pt * 1,borderBottomColor:'#ddd',alignItems:"center",alignContent:"center",justifyContent:'center'}},
-React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'错误汇总'))),
-
-
-React.createElement(ScrollView,{style:[{flex:7}]},
-React.createElement(Text,{style:styles.title},'Restful机票无线服务'),
-React.createElement(ListView,{
-dataSource:this.state.dataSource,
-renderRow:function(rowData){return React.createElement(Text,{style:styles.desc},rowData);}})))],
-
-
-
-
+xqcontent:[tpxqcontent],
 yilaiheight:tpyilaiheight,
 beiyilaiheight:tpbeiyilaiheight});}}
 
@@ -52919,98 +53154,59 @@ beiyilaiheight:tpbeiyilaiheight});}}
 if(mobj.name == "yl"){
 if(mobj.action == "fold"){
 LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
-
-
-
-
-
-
-
-
-
-
-
-
 this.yilaifold = true;
 if(this.xiangqingisfold == true && this.beiyilaifold == false){
-tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2;}else 
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2 - marginheight;}else 
 if(this.xiangqingisfold == false && this.beiyilaifold == true){
 tpbeiyilaiheight = this.state.beiyilaiheight;}else 
 if(this.xiangqingisfold == false && this.beiyilaifold == false){
-tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight - xqheight;}else 
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight - xqheight - marginheight;}else 
 if(this.xiangqingisfold == true && this.beiyilaifold == true){
 tpbeiyilaiheight = this.state.beiyilaiheight;}
 
 this.setState({
-yilaicontent:[React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{
+yilaicontent:[
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{
 action:'expand',
 name:"yl"}),
-underlayColor:"#ddd",style:{justifyContent:'center',flex:1,height:foldheight}},
-React.createElement(View,{style:{
-justifyContent:'center',
-flex:1,
-flexDirection:"row",
-backgroundColor:"#F4F4F4"}},
+underlayColor:"#ddd",style:{justifyContent:'center',flex:1,height:foldheight,marginTop:12,marginBottom:8,alignItems:"center"}},
+React.createElement(View,{style:{backgroundColor:"",flexDirection:"row",height:xqheadheight,width:SCREE_WIDTH * 0.95,borderWidth:pt,borderRadius:4,borderColor:'transparent',overflow:'hidden',backgroundColor:"#FFF"}},
+React.createElement(View,{style:{flex:20,alignItems:"center",alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'依赖服务')),
 
-React.createElement(View,{style:{
-justifyContent:'center',
-flex:1,
-alignItems:'flex-start',
-paddingLeft:10}},
-
-React.createElement(Text,{style:{
-color:"#005BFF",
-fontSize:SCREE_HEIGHT / 40,
-fontWeight:600}},
-'依赖关系')),
-
-React.createElement(View,{style:{justifyContent:'center',flex:4,alignItems:'flex-end'}},
-React.createElement(Text,{style:{
-color:"#005BFF",
-fontSize:SCREE_HEIGHT / 40,
-fontWeight:400}},
-'+   '))))],
+React.createElement(View,{style:{flex:1}},
+React.createElement(Text,{style:{color:"#000",fontSize:18,lineHeight:24,fontWeight:400,alignContent:"center",justifyContent:'center'}},'+'))))],
 
 
 
+
+marginylTop:8,
+marginylBottom:8,
 yilaiheight:foldheight,
 beiyilaiheight:tpbeiyilaiheight});}else 
 
 {
+var tpylcontent=this.ylinitcontent();
 LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
 this.yilaifold = false;
 if(this.xiangqingisfold == true && this.beiyilaifold == false){
-tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight) / 2;
-tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight) / 2;}else 
+tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight - marginheight) / 2;
+tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight - marginheight) / 2;}else 
 if(this.xiangqingisfold == false && this.beiyilaifold == true){
-tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight - foldheight;
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight - foldheight - marginheight;
 tpbeiyilaiheight = this.state.beiyilaiheight;}else 
 if(this.xiangqingisfold == false && this.beiyilaifold == false){
 tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight) / 2;
 tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight) / 2;}else 
 if(this.xiangqingisfold == true && this.beiyilaifold == true){
-tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - SCREE_HEIGHT / 11;
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - SCREE_HEIGHT / 11 - marginheight * 2;
 tpbeiyilaiheight = this.state.beiyilaiheight;}
 
 
 this.setState({
-yilaicontent:[React.createElement(View,{style:{flex:1}},
-React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"yl"}),underlayColor:"#ddd",style:{alignContent:"center",justifyContent:'center'}},
-React.createElement(View,{style:{backgroundColor:"#ddd",height:ylheight,borderBottomWidth:pt * 1,borderBottomColor:'#ddd',alignItems:"center",alignContent:"center",justifyContent:'center'}},
-React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'依赖服务'))),
-
-
-React.createElement(ScrollView,{style:{flex:8}},
-React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110441"),style:styles.gxtitle},'【110441 天马比价查询服务】'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
-React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110442"),style:styles.gxtitle},'【110442 天马比价查询服务A】'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)')))],
-
-
+yilaicontent:[tpylcontent],
+marginylTop:0,
+marginylBottom:0,
 yilaiheight:tpyilaiheight,
 beiyilaiheight:tpbeiyilaiheight});}}
 
@@ -53022,93 +53218,58 @@ if(mobj.action == "fold"){
 LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
 this.beiyilaifold = true;
 if(this.xiangqingisfold == true && this.yilaifold == false){
-tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2;}else 
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2 - marginheight;}else 
 if(this.xiangqingisfold == false && this.yilaifold == true){
 tpyilaiheight = this.state.yilaiheight;}else 
 if(this.xiangqingisfold == false && this.yilaifold == false){
-tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight - xqheight;}else 
+tpyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight - xqheight - marginheight;}else 
 if(this.xiangqingisfold == true && this.yilaifold == true){
 tpyilaiheight = this.state.yilaiheight;}
 
 this.setState({
-beiyilaicontent:[React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{
+beiyilaicontent:[
+React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{
 action:'expand',
 name:"byl"}),
-underlayColor:"#ddd",style:{justifyContent:'center',flex:1,height:foldheight}},
-React.createElement(View,{style:{
-justifyContent:'center',
-flex:1,
-flexDirection:"row",
-backgroundColor:"#F4F4F4"}},
+underlayColor:"#ddd",style:{justifyContent:'center',flex:1,height:foldheight,marginTop:12,marginBottom:8,alignItems:"center"}},
+React.createElement(View,{style:{backgroundColor:"",flexDirection:"row",height:xqheadheight,width:SCREE_WIDTH * 0.95,borderWidth:pt,borderRadius:4,borderColor:'transparent',overflow:'hidden',backgroundColor:"#FFF"}},
+React.createElement(View,{style:{flex:20,alignItems:"center",alignContent:"center",justifyContent:'center'}},
+React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'被依赖服务')),
 
-React.createElement(View,{style:{
-justifyContent:'center',
-flex:1,
-alignItems:'flex-start',
-paddingLeft:10}},
-
-React.createElement(Text,{style:{
-color:"#005BFF",
-fontSize:SCREE_HEIGHT / 40,
-fontWeight:600}},
-'被依赖关系')),
-
-React.createElement(View,{style:{justifyContent:'center',flex:3,alignItems:'flex-end'}},
-React.createElement(Text,{style:{
-color:"#005BFF",
-fontSize:SCREE_HEIGHT / 40,
-fontWeight:400}},
-'+   '))))],
+React.createElement(View,{style:{flex:1}},
+React.createElement(Text,{style:{color:"#000",fontSize:18,lineHeight:24,fontWeight:400,alignContent:"center",justifyContent:'center'}},'+'))))],
 
 
 
+
+marginbylTop:8,
+marginbylBottom:8,
 yilaiheight:tpyilaiheight,
 beiyilaiheight:foldheight});}else 
 
 {
+var tpbylcontent=this.bylinitcontent();
 LayoutAnimation.configureNext(this.animations.layout.easeInEaseOut);
 this.beiyilaifold = false;
 
 if(this.xiangqingisfold == true && this.yilaifold == false){
-tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight) / 2;
-tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight) / 2;}else 
+tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight - marginheight) / 2;
+tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight - marginheight) / 2;}else 
 if(this.xiangqingisfold == false && this.yilaifold == true){
 tpyilaiheight = this.state.yilaiheight;
-tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight - foldheight;}else 
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight - foldheight - marginheight;}else 
 if(this.xiangqingisfold == false && this.yilaifold == false){
 tpyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight) / 2;
 tpbeiyilaiheight = (SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - xqheight) / 2;}else 
 if(this.xiangqingisfold == true && this.yilaifold == true){
 tpyilaiheight = this.state.yilaiheight;
-tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2;}
+tpbeiyilaiheight = SCREE_HEIGHT - lineheight - rowheight * 2 - headerheight - foldheight * 2 - marginheight;}
 
 
 this.setState({
-beiyilaicontent:[React.createElement(View,{style:{flex:1}},
-React.createElement(TouchableHighlight,{onPress:this.changetab.bind(this,{action:'fold',name:"byl"}),underlayColor:"#ddd",style:{alignContent:"center",justifyContent:'center'}},
-React.createElement(View,{style:{backgroundColor:"#ddd",height:bylheight,flex:1,borderBottomWidth:pt * 1,borderBottomColor:'#ddd',alignItems:"center",alignContent:"center",justifyContent:'center'}},
-React.createElement(Text,{style:{color:"#000",fontSize:18,fontWeight:800,alignContent:"center",justifyContent:'center'}},'被依赖服务'))),
-
-
-React.createElement(ScrollView,{style:{flex:8}},
-React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110443"),style:styles.gxtitle},'【110443 天马比价查询服务】'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
-React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110444"),style:styles.gxtitle},'【110444 天马比价查询服务】'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
-React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110445"),style:styles.gxtitle},'【110445 天马比价查询服务】'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)'),
-React.createElement(Text,{numberOfLines:'1',onPress:this.getLinkResult.bind(this,"110446"),style:styles.gxtitle},'【110446 天马比价查询服务】'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis 访问量 12597 响应时间 0.5 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● SOA2Client 访问量 426 响应时间 28.2 (ms)'),
-React.createElement(Text,{numberOfLines:'1',style:styles.gxdesc},' ● Redis.GetValues.Group 访问量 252030 响应时间 0.4 (ms)')))],
-
-
+beiyilaicontent:[tpbylcontent],
+marginbylTop:0,
+marginbylBottom:0,
 yilaiheight:tpyilaiheight,
 beiyilaiheight:tpbeiyilaiheight});}}},
 
@@ -53117,7 +53278,8 @@ beiyilaiheight:tpbeiyilaiheight});}}},
 
 render:function(){
 return (
-React.createElement(View,null,
+React.createElement(View,{style:{flex:1,backgroundColor:"#EBEBEB"}},
+React.createElement(View,{style:{borderBottomWidth:pt,borderBottomColor:"#ddd"}},
 React.createElement(View,{style:[styles.row]},
 React.createElement(View,{style:styles.item},
 React.createElement(Text,{style:[styles.fontBold,{textAlign:'center'}]},'App ID')),
@@ -53137,21 +53299,21 @@ React.createElement(View,{style:styles.item},
 React.createElement(Text,{style:[styles.fontitemBold,{color:'#F78900',textAlign:'center'}]},this.state.ErrCount)),
 
 React.createElement(View,{style:styles.item},
-React.createElement(Text,{style:[styles.fontitemBold,{width:120,color:'red',textAlign:'center'}]},this.state.RoundRate))),
-
-
-React.createElement(View,{style:styles.bottomrow}),
+React.createElement(Text,{style:[styles.fontitemBold,{width:120,color:'red',textAlign:'center'}]},this.state.RoundRate)))),
 
 
 
+React.createElement(View,{style:{height:scrollviewheight}},
+React.createElement(ScrollView,{style:{}},
+React.createElement(View,{style:{flex:1}},
 this.state.xqcontent,
 
-React.createElement(Animated.View,{style:{opacity:this.state.fadeAnim,height:this.state.yilaiheight,borderWidth:pt,borderColor:'#ddd',transform:this.state.pan.getTranslateTransform()}},
-this.state.yilaicontent),
+this.state.yilaicontent,
 
 
-React.createElement(View,{style:{height:this.state.beiyilaiheight,borderWidth:pt,borderColor:'#ddd'}},
-this.state.beiyilaicontent)));}});
+this.state.beiyilaicontent)))));}});
+
+
 
 
 
@@ -53159,6 +53321,14 @@ this.state.beiyilaicontent)));}});
 
 
 var styles=StyleSheet.create({
+moretext:{fontSize:15,fontWeight:"400"},
+morestyle:{
+flex:1,height:35,justifyContent:'center',
+alignItems:'center',borderTopColor:"#ddd",borderTopWidth:pt},
+
+titleicon:{
+width:4,backgroundColor:"#43BEFA",height:24,marginRight:4},
+
 border:{
 borderBottomWidth:pt,
 borderColor:'#ddd'},
@@ -53171,8 +53341,7 @@ height:lineheight},
 
 row:{
 flexDirection:'row',
-borderTopWidth:pt,
-borderColor:'#ddd',
+backgroundColor:"#FFF",
 height:rowheight,
 alignItems:'center'},
 
@@ -53192,10 +53361,10 @@ fontitemBold:{
 fontWeight:'400'},
 
 title:{
-color:'#616161',
+color:'#000',
 marginLeft:8,
 marginTop:5,
-fontSize:15,
+fontSize:18,
 fontWeight:'600'},
 
 gxtitle:{
@@ -53207,13 +53376,17 @@ fontSize:18,
 fontWeight:'600'},
 
 gxdesc:{
+color:"#616161",
 marginLeft:15,
-fontSize:12},
+fontSize:15,
+lineHeight:18},
 
 desc:{
+color:"#616161",
 marginLeft:15,
 marginRight:5,
-fontSize:12}});
+fontSize:15,
+lineHeight:18}});
 
 
 
@@ -53222,39 +53395,81 @@ module.exports = Dependence;
 __d('catapp/views/errors/actualdata.js',[],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
 
 
-actualdata=[{
-"minute":"09:47",
-"domains":[{
-"total":1.0,
-"appName":null,
-"errors":[{
-"num":1.0,
-"name":"org.apache.hadoop.net.ConnectTimeoutException"}],
-
-
-"appId":"cat",
-"alert":0}]},
-
-
+actualdata=
 {
-"minute":"09:36",
-"domains":[{
-"total":1.0,
-"appName":null,
-"errors":[{
-"num":1.0,
-"name":"org.apache.hadoop.net.ConnectTimeoutException"}],
+"des":{
+"errors":{
+"title":"",
+"errors":[]},
+
+"details":{
+"title":" 150123 商旅火车票预订服务 ",
+"details":[
+"URL 访问量 1 响应时间 200.0 (ms) ",
+"SOA2Client 访问量 1 响应时间 100.0 (ms) "]}},
 
 
-"appId":"cat",
-"alert":0}]}];
 
 
+"edges":[
+{
+"dashed":false,
+"des":{
+"errors":{
+"title":"",
+"errors":[]},
 
+"details":{
+"title":"SOA2Call 访问量 1 ",
+"details":["SOA2Call 响应时间 100.0 (ms) "]}},
+
+
+"weight":1,
+"status":1,
+"opposite":false,
+"link":"",
+"target":"150122",
+"self":"150123",
+"type":"SOA2Call",
+"key":"SOA2Call:150123:150122"}],
+
+
+"status":1,
+"nodes":[
+{
+"domian":"150122",
+"des":{
+"errors":{
+"title":"",
+"errors":[]},
+
+"details":{
+"title":" 150122 商旅Online火车票预订 ",
+"details":["URL 访问量 1 响应时间 699.0 (ms) "]}},
+
+
+"weight":"?op=dependencyGraph&minute=54&domain=150122&date=2015091811",
+"status":1,
+"link":"?op=dependencyGraph&minute=54&domain=150122&date=2015091811",
+"type":"project"}],
+
+
+"domain":"150123",
+"type":"project"};
 
 
 
 module.exports = actualdata;
+});
+__d('catapp/views/service.js',[],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
+
+ServiceURL={
+errorsGrai:'http://cat.fws.qa.nt.ctripcorp.com/cat/m?count=4&tops=10'};
+
+
+
+
+module.exports = ServiceURL;
 });
 __d('catapp/views/app.js',["react-native/Libraries/react-native/react-native.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');var 
 
