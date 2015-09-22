@@ -1422,6 +1422,7 @@ StyleSheet=
 
 React.StyleSheet;var View=React.View;var TabBarIOS=React.TabBarIOS;var Text=React.Text;var NavigatorIOS=React.NavigatorIOS;var AppRegistry=React.AppRegistry;var Image=React.Image;var TextInput=React.TextInput;var StatusBarIOS=React.StatusBarIOS;var ScrollView=React.ScrollView;var TouchableHighlight=React.TouchableHighlight;var ActivityIndicatorIOS=React.ActivityIndicatorIOS;var AlertIOS=React.AlertIOS;var AsyncStorage=React.AsyncStorage;
 
+alert('Hello');
 
 StatusBarIOS.setStyle('light-content');
 var Address=React.createClass({
