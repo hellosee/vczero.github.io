@@ -1395,7 +1395,7 @@ throw new TypeError(
 
 var index=findIndex.call(this,predicate,context);
 return index === -1?undefined:this[index];}});}})();
-__d('catapp/index.ios.js',["image!phone_s","image!gonggao","image!manager","image!about","image!logo","AdSupportIOS","react-native/Libraries/react-native/react-native.js","catapp/views/home.js","catapp/views/about.js","catapp/views/manager.js","catapp/views/message.js","catapp/views/util.js","catapp/views/service.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+__d('catapp/index.ios.js',["AdSupportIOS","react-native/Libraries/react-native/react-native.js","catapp/views/home.js","catapp/views/about.js","catapp/views/manager.js","catapp/views/message.js","catapp/views/util.js","catapp/views/service.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 var React=require('react-native/Libraries/react-native/react-native.js');
 var AdSupportIOS=require('AdSupportIOS');
 var Home=require('catapp/views/home.js');
@@ -1420,266 +1420,20 @@ StyleSheet=
 
 
 
-React.StyleSheet;var View=React.View;var TabBarIOS=React.TabBarIOS;var Text=React.Text;var NavigatorIOS=React.NavigatorIOS;var AppRegistry=React.AppRegistry;var Image=React.Image;var TextInput=React.TextInput;var StatusBarIOS=React.StatusBarIOS;var ScrollView=React.ScrollView;var TouchableHighlight=React.TouchableHighlight;var ActivityIndicatorIOS=React.ActivityIndicatorIOS;var AlertIOS=React.AlertIOS;var AsyncStorage=React.AsyncStorage;
+
+React.StyleSheet;var View=React.View;var TabBarIOS=React.TabBarIOS;var Text=React.Text;var NavigatorIOS=React.NavigatorIOS;var AppRegistry=React.AppRegistry;var Image=React.Image;var TextInput=React.TextInput;var StatusBarIOS=React.StatusBarIOS;var ScrollView=React.ScrollView;var TouchableHighlight=React.TouchableHighlight;var ActivityIndicatorIOS=React.ActivityIndicatorIOS;var AlertIOS=React.AlertIOS;var AsyncStorage=React.AsyncStorage;var LinkingIOS=React.LinkingIOS;
 
 alert('Hello');
 
-StatusBarIOS.setStyle('light-content');
+
 var Address=React.createClass({
-statics:{
-title:'主页',
-description:'选项卡'},
-
-
-getInitialState:function(){
-return {
-selectedTab:'home',
-showIndex:{
-height:0,
-opacity:0},
-
-showLogin:{
-flex:1,
-opacity:1},
-
-isLoadingShow:false};},
-
-
-
-componentDidMount:function(){
-var that=this;
-AsyncStorage.getItem('token',function(err,token){
-if(!err && token){
-var path=Service.host + Service.loginByToken;
-Util.post(path,{
-token:token},
-function(data){
-if(data.status){
-that.setState({
-showLogin:{
-height:0,
-width:0,
-flex:0},
-
-showIndex:{
-flex:1,
-opacity:1},
-
-isLoadingShow:false});}});}else 
-
-
-
-{
-that.setState({
-showIndex:{
-height:0,
-opacity:0},
-
-showLogin:{
-flex:1,
-opacity:1},
-
-isLoadingShow:false});}});
-
-
-
-
-var path=Service.host + Service.getMessage;
-var that=this;
-Util.post(path,{
-key:Util.key},
-function(data){
-that.setState({
-data:data});});},
-
-
-
-
-_selectTab:function(tabName){
-this.setState({
-selectedTab:tabName});},
-
-
-
-_addNavigator:function(component,title){
-var data=null;
-if(title === '公告'){
-data = this.state.data;}
-
-return React.createElement(NavigatorIOS,{
-style:{flex:1},
-barTintColor:'#007AFF',
-titleTextColor:'#fff',
-tintColor:'#fff',
-translucent:false,
-initialRoute:{
-component:component,
-title:title,
-passProps:{
-data:data}}});},
-
-
-
-
-
-_getEmail:function(val){
-var email=val;
-this.setState({
-email:email});},
-
-
-
-_getPassword:function(val){
-var password=val;
-this.setState({
-password:password});},
-
-
-
-_login:function(){
-var email=this.state.email;
-var password=this.state.password;
-var path=Service.host + Service.login;
-var that=this;
-
-
-that.setState({
-showLogin:{
-height:0,
-width:0,
-flex:0},
-
-isLoadingShow:true});
-
-AdSupportIOS.getAdvertisingTrackingEnabled(function(){
-AdSupportIOS.getAdvertisingId(function(deviceId){
-Util.post(path,{
-email:email,
-password:password,
-deviceId:deviceId},
-function(data){
-if(data.status){
-var user=data.data;
-
-AsyncStorage.multiSet([
-['username',user.username],
-['token',user.token],
-['userid',user.userid],
-['email',user.email],
-['tel',user.tel],
-['partment',user.partment],
-['tag',user.tag]],
-function(err){
-if(!err){
-that.setState({
-showLogin:{
-height:0,
-width:0,
-flex:0},
-
-showIndex:{
-flex:1,
-opacity:1},
-
-isLoadingShow:false});}});}else 
-
-
-
-
-{
-AlertIOS.alert('登录','用户名或者密码错误');
-that.setState({
-showLogin:{
-flex:1,
-opacity:1},
-
-showIndex:{
-height:0,
-width:0,
-flex:0},
-
-isLoadingShow:false});}});},
-
-
-
-function(){
-AlertIOS.alert('设置','无法获取设备唯一标识');});},
-
-function(){
-AlertIOS.alert('设置','无法获取设备唯一标识，请关闭设置->隐私->广告->限制广告跟踪');});},
-
-
 
 render:function(){
 return (
 React.createElement(View,{style:{flex:1}},
-this.state.isLoadingShow?
-React.createElement(View,{style:{flex:1,justifyContent:'center',alignItems:'center'}},
-React.createElement(ActivityIndicatorIOS,{size:'small',color:'#268DFF'})):
-null,
-
-!this.state.isLoadingShow?
-React.createElement(View,{style:this.state.showIndex},
-React.createElement(TabBarIOS,{barTintColor:'#FFF'},
-React.createElement(TabBarIOS.Item,{
-icon:require('image!phone_s'),
-title:'首页',
-selected:this.state.selectedTab === 'home',
-onPress:this._selectTab.bind(this,'home')},
-
-this._addNavigator(Home,'主页')),
-
-
-React.createElement(TabBarIOS.Item,{
-title:'公告',
-icon:require('image!gonggao'),
-selected:this.state.selectedTab === 'message',
-onPress:this._selectTab.bind(this,'message')},
-
-this._addNavigator(Message,'公告')),
-
-
-React.createElement(TabBarIOS.Item,{
-title:'管理',
-icon:require('image!manager'),
-selected:this.state.selectedTab === 'manager',
-onPress:this._selectTab.bind(this,'manager')},
-
-this._addNavigator(Manager,'管理')),
-
-
-React.createElement(TabBarIOS.Item,{
-title:'关于',
-icon:require('image!about'),
-selected:this.state.selectedTab === 'about',
-onPress:this._selectTab.bind(this,'about')},
-
-this._addNavigator(About,'关于')))):
-
-
-null,
-
-React.createElement(ScrollView,{style:[this.state.showLogin]},
-React.createElement(View,{style:styles.container},
-React.createElement(View,null,
-React.createElement(Image,{style:styles.logo,source:require('image!logo')})),
-
-
-React.createElement(View,{style:styles.inputRow},
-React.createElement(Text,null,'邮箱'),React.createElement(TextInput,{style:styles.input,placeholder:'请输入邮箱',onChangeText:this._getEmail})),
-
-React.createElement(View,{style:styles.inputRow},
-React.createElement(Text,null,'密码'),React.createElement(TextInput,{style:styles.input,placeholder:'请输入密码',password:true,onChangeText:this._getPassword})),
-
-
-React.createElement(View,null,
-React.createElement(TouchableHighlight,{underlayColor:'#fff',style:styles.btn,onPress:this._login},
-React.createElement(Text,{style:{color:'#fff'}},'登录')))))));}});
-
-
-
-
-
+React.createElement(Text,{onPress:function(){LinkingIOS.openURL('tel://' + 13127644567);}},'电话'),
+React.createElement(Text,{onPress:function(){LinkingIOS.openURL('sms://' + 13127644567);}},'短信'),
+React.createElement(Text,{onPress:function(){LinkingIOS.openURL('mailto://' + 'wlhmyit@126.com');}},'邮件')));}});
 
 
 
@@ -48028,16 +47782,6 @@ width:90}});
 
 
 module.exports = Detail;
-});
-__d('image!phone_s',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/lihua/work/react-native-app/App/catapp/iOS/catapp/Images.xcassets/phone_s.imageset/phone_s.png","uri":"phone_s","width":32,"height":32,"deprecated":true};
-});
-__d('image!gonggao',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/lihua/work/react-native-app/App/catapp/iOS/catapp/Images.xcassets/gonggao.imageset/gonggao.png","uri":"gonggao","width":32,"height":32,"deprecated":true};
-});
-__d('image!manager',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/lihua/work/react-native-app/App/catapp/iOS/catapp/Images.xcassets/manager.imageset/manager.png","uri":"manager","width":32,"height":32,"deprecated":true};
-});
-__d('image!about',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/lihua/work/react-native-app/App/catapp/iOS/catapp/Images.xcassets/about.imageset/about.png","uri":"about","width":32,"height":32,"deprecated":true};
-});
-__d('image!logo',[],function(global, require, requireDynamic, requireLazy, module, exports) {  module.exports = {"__packager_asset":true,"isStatic":true,"path":"/Users/lihua/work/react-native-app/App/catapp/iOS/catapp/Images.xcassets/logo.imageset/logo.png","uri":"logo","width":968,"height":531,"deprecated":true};
 });
 ;require("catapp/index.ios.js");
 //@ sourceMappingURL=/index.ios.map
