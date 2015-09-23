@@ -51706,7 +51706,7 @@ then(function(responseText){
 console.log(responseText);}).
 
 catch(function(error){
-console.warn(error);});},
+console.log(error);});},
 
 
 complete:function(){
@@ -51853,7 +51853,7 @@ data.push({
 '15:41':[
 {
 appID:'111301',
-errorNum:'534',
+errorNum:'555',
 rate:'+ 35.9%',
 desc:["(1) Exception",
 "(16)System.Net.WebException",
