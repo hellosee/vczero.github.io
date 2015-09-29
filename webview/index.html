@@ -36,28 +36,40 @@
 	</div>
 	<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=6a1180467b5f36714645d22044535ab7"></script>
 	<script type="text/javascript">
+		var url = window.location.href;
 		var map = new AMap.Map('map',{
 			resizeEnable: true
 		});
 		map.setZoom(16);
-		
-		var handle = setInterval(function(){
-			if(window.data && window.pos){
-				clearInterval(handle);
-				var pos = JSON.parse(window.pos);
-				//地图居中
-				alert(pos);
-				map.setCenter(new AMap.LngLat(pos.x, pos.y));
-				//添加点
-				var obj = JSON.parse(window.data);
-				for(var i in obj){
-					var marker = new AMap.Marker({
-						map: map,
-						position: new AMap.LngLat(obj[i].x, obj[i].y)
-					});
-				}
+		var urlParams = url.split('?');
+		if(urlParams.length > 1){
+			var arr = urlParams[1].split('&');
+			var obj = {};
+			for(var i in arr){
+				var kv = arr[i].split('=');
+				obj[kv[0]] = kv[1];
 			}
-		}, 100)
+			
+			//地图居中
+			//http://127.0.0.1:8020/twst/index.html?pos=121.390686,31.213976
+			if(obj["pos"]){
+				var pos = obj["pos"].split(',');
+				map.setCenter(new AMap.LngLat(pos[0], pos[1]));
+			}
+			//添加marker
+			//http://127.0.0.1:8020/twst/index.html?pos=121.390686,31.213976&markers=121.390686,31.213976,121.390586,31.213976,121.350686,31.213976
+			if(obj["markers"]){
+				var marks = obj["markers"].split(',');
+				for(var i = 0; i < marks.length; i++){
+					if(i % 2 === 0){
+						var marker = new AMap.Marker({
+							map: map,
+							position: new AMap.LngLat(marks[i], marks[i + 1])
+						});
+					}
+				}
+			}	
+		}
 		
 	</script>
 </body>
