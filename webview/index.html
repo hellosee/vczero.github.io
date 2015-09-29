@@ -60,14 +60,18 @@
 			//http://127.0.0.1:8020/twst/index.html?pos=121.390686,31.213976&markers=121.390686,31.213976,121.390586,31.213976,121.350686,31.213976
 			if(obj["markers"]){
 				var marks = obj["markers"].split(',');
+				var mks = [];
 				for(var i = 0; i < marks.length; i++){
 					if(i % 2 === 0){
 						var marker = new AMap.Marker({
 							map: map,
 							position: new AMap.LngLat(marks[i], marks[i + 1])
 						});
+						mks.push(marker);
 					}
 				}
+				
+				map.setFitView(mks);
 			}	
 		}
 		
