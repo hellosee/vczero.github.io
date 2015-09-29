@@ -46,6 +46,7 @@
 				clearInterval(handle);
 				var pos = JSON.parse(window.pos);
 				//地图居中
+				alert(pos);
 				map.setCenter(new AMap.LngLat(pos.x, pos.y));
 				//添加点
 				var obj = JSON.parse(window.data);
