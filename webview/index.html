@@ -40,20 +40,24 @@
 			resizeEnable: true
 		});
 		map.setZoom(16);
-		alert(window.pos);
-		if(window.data && window.pos){
-			var pos = JSON.parse(window.pos);
-			//地图居中
-			map.setCenter(new AMap.LngLat(pos.x, pos.y));
-			//添加点
-			var obj = JSON.parse(window.data);
-			for(var i in obj){
-				var marker = new AMap.Marker({
-					map: map,
-					position: new AMap.LngLat(obj[i].x, obj[i].y)
-				});
+		
+		var handle = setInterval(function(){
+			if(window.data && window.pos){
+				clearInterval(handle);
+				var pos = JSON.parse(window.pos);
+				//地图居中
+				map.setCenter(new AMap.LngLat(pos.x, pos.y));
+				//添加点
+				var obj = JSON.parse(window.data);
+				for(var i in obj){
+					var marker = new AMap.Marker({
+						map: map,
+						position: new AMap.LngLat(obj[i].x, obj[i].y)
+					});
+				}
 			}
-		}
+		}, 100)
+		
 	</script>
 </body>
 </html>
