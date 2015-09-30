@@ -1395,7 +1395,7 @@ throw new TypeError(
 
 var index=findIndex.call(this,predicate,context);
 return index === -1?undefined:this[index];}});}})();
-__d('catapp/index.ios.js',["AdSupportIOS","react-native/Libraries/react-native/react-native.js","catapp/views/home.js","catapp/views/about.js","catapp/views/manager.js","catapp/views/message.js","catapp/views/util.js","catapp/views/service.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+__d('catapp/index.ios.js',["AdSupportIOS","react-native/Libraries/react-native/react-native.js","catapp/views/home.js","catapp/views/about.js","catapp/views/manager.js","catapp/views/message.js","catapp/views/util.js","catapp/views/service.js","catapp/Nearby/index.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 var React=require('react-native/Libraries/react-native/react-native.js');
 var AdSupportIOS=require('AdSupportIOS');
 var Home=require('catapp/views/home.js');
@@ -1476,7 +1476,9 @@ borderRadius:4}});
 
 
 
-AppRegistry.registerComponent('catapp',function(){return Address;});
+var NearBy=require('catapp/Nearby/index.js');
+
+AppRegistry.registerComponent('catapp',function(){return NearBy;});
 });
 __d('react-native/Libraries/react-native/react-native.js',["React","ActivityIndicatorIOS","DatePickerIOS","Image","ListView","MapView","Modal","Navigator","NavigatorIOS","PickerIOS","ProgressViewIOS","ScrollView","SegmentedControlIOS","SliderIOS","SwitchIOS","TabBarIOS","Text","TextInput","TouchableHighlight","TouchableOpacity","TouchableWithoutFeedback","View","WebView","ActionSheetIOS","AdSupportIOS","AlertIOS","Animated","AppRegistry","AppStateIOS","AsyncStorage","CameraRoll","Dimensions","Easing","ImagePickerIOS","InteractionManager","LayoutAnimation","LinkingIOS","NetInfo","PanResponder","PixelRatio","PushNotificationIOS","Settings","StatusBarIOS","StyleSheet","VibrationIOS","RCTDeviceEventEmitter","RCTNativeAppEventEmitter","NativeModules","Platform","requireNativeComponent","EdgeInsetsPropType","PointPropType","LinkedStateMixin","ReactComponentWithPureRenderMixin","NativeModules","ReactUpdates","cloneWithProps","ReactFragment","update","ReactDefaultPerf","ReactTestUtils"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
 
@@ -47782,6 +47784,828 @@ width:90}});
 
 
 module.exports = Detail;
+});
+__d('catapp/Nearby/index.js',["react-native/Libraries/react-native/react-native.js","catapp/Nearby/views/bank.js","catapp/Nearby/views/film.js","catapp/Nearby/views/food.js","catapp/Nearby/views/toilet.js","catapp/Nearby/views/map.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');
+var Bank=require('catapp/Nearby/views/bank.js');
+var Film=require('catapp/Nearby/views/film.js');
+var Food=require('catapp/Nearby/views/food.js');
+var Toilet=require('catapp/Nearby/views/toilet.js');
+var Map=require('catapp/Nearby/views/map.js');var 
+
+
+AppRegistry=
+
+
+
+
+
+
+
+React.AppRegistry;var StyleSheet=React.StyleSheet;var Text=React.Text;var View=React.View;var ScrollView=React.ScrollView;var NavigatorIOS=React.NavigatorIOS;var StatusBarIOS=React.StatusBarIOS;var TabBarIOS=React.TabBarIOS;
+
+
+_GEO_OPEN = true;
+
+_GEO_TEST_POS = '121.390686,31.213976';
+
+
+StatusBarIOS.setStyle('light-content');
+
+StatusBarIOS.setNetworkActivityIndicatorVisible(true);
+
+var Nearby=React.createClass({
+getInitialState:function(){
+return {
+selected:'美食'};},
+
+
+render:function(){var _this=this;
+return (
+React.createElement(View,{style:styles.container},
+React.createElement(TabBarIOS,null,
+React.createElement(TabBarIOS.Item,{
+title:'美食',
+selected:this.state.selected === '美食',
+icon:require("image!food"),
+onPress:function(){_this.setState({selected:'美食'});}},
+React.createElement(NavigatorIOS,{
+barTintColor:'#007AFF',
+titleTextColor:'#fff',
+tintColor:'#fff',
+ref:'nav_food',
+style:styles.container,
+initialRoute:{
+component:Food,
+title:'美食',
+rightButtonTitle:'地图',
+onRightButtonPress:function(){
+_this.refs.nav_food.navigator.push({
+title:'地图',
+component:Map,
+passProps:{
+type:'餐饮'}});}}})),
+
+
+
+
+
+
+
+React.createElement(TabBarIOS.Item,{
+title:'电影',
+selected:this.state.selected === '电影',
+icon:require("image!film"),
+onPress:function(){_this.setState({selected:'电影'});}},
+React.createElement(NavigatorIOS,{
+style:styles.container,
+barTintColor:'#007AFF',
+titleTextColor:'#fff',
+tintColor:'#fff',
+ref:'nav_film',
+initialRoute:{
+component:Film,
+title:'电影',
+rightButtonTitle:'地图',
+onRightButtonPress:function(){
+_this.refs.nav_film.navigator.push({
+title:'地图',
+component:Map,
+passProps:{
+type:'电影院'}});}}})),
+
+
+
+
+
+
+
+React.createElement(TabBarIOS.Item,{
+title:'银行',
+selected:this.state.selected === '银行',
+icon:require("image!bank"),
+onPress:function(){_this.setState({selected:'银行'});}},
+React.createElement(NavigatorIOS,{
+style:styles.container,
+barTintColor:'#007AFF',
+titleTextColor:'#fff',
+tintColor:'#fff',
+ref:'nav_bank',
+initialRoute:{
+component:Bank,
+title:'银行',
+rightButtonTitle:'地图',
+onRightButtonPress:function(){
+_this.refs.nav_bank.navigator.push({
+title:'地图',
+component:Map,
+passProps:{
+type:'银行'}});}}})),
+
+
+
+
+
+
+
+
+React.createElement(TabBarIOS.Item,{
+title:'卫生间',
+selected:this.state.selected === '卫生间',
+icon:require("image!toilet"),
+onPress:function(){_this.setState({selected:'卫生间'});}},
+React.createElement(NavigatorIOS,{
+style:styles.container,
+barTintColor:'#007AFF',
+titleTextColor:'#fff',
+tintColor:'#fff',
+ref:'nav_toilet',
+initialRoute:{
+component:Toilet,
+title:'卫生间',
+rightButtonTitle:'地图',
+onRightButtonPress:function(){
+_this.refs.nav_toilet.navigator.push({
+title:'地图',
+component:Map,
+passProps:{
+type:'厕所'}});}}})))));}});
+
+
+
+
+
+
+
+
+
+
+
+
+
+var styles=StyleSheet.create({
+container:{
+flex:1}});
+
+
+
+module.exports = Nearby;
+});
+__d('catapp/Nearby/views/bank.js',["react-native/Libraries/react-native/react-native.js","catapp/Nearby/views/list.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
+React=require('react-native/Libraries/react-native/react-native.js');
+var List=require('catapp/Nearby/views/list.js');
+var Bank=React.createClass({
+render:function(){
+return (
+React.createElement(List,{type:'银行',nav:this.props.navigator}));}});
+
+
+
+
+module.exports = Bank;
+});
+__d('catapp/Nearby/views/list.js',["Geolocation","react-native/Libraries/react-native/react-native.js","catapp/Nearby/views/util.js","catapp/Nearby/views/detail.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');
+var Geolocation=require('Geolocation');
+var Util=require('catapp/Nearby/views/util.js');
+var Detail=require('catapp/Nearby/views/detail.js');var 
+
+
+View=
+
+
+
+
+
+
+
+
+
+
+React.View;var ScrollView=React.ScrollView;var Text=React.Text;var StyleSheet=React.StyleSheet;var TextInput=React.TextInput;var ActivityIndicatorIOS=React.ActivityIndicatorIOS;var TouchableOpacity=React.TouchableOpacity;var LinkingIOS=React.LinkingIOS;var ActionSheetIOS=React.ActionSheetIOS;var WebView=React.WebView;var AsyncStorage=React.AsyncStorage;
+
+var List=React.createClass({
+getInitialState:function(){
+return {
+list:null,
+count:0,
+keywords:''};},
+
+
+render:function(){
+var items=[];
+if(this.state.list){
+var len=this.state.list.length > 10?10:this.state.list.length;
+for(var i=0;i < len;i++) {
+var obj=this.state.list[i];
+items.push(
+React.createElement(TouchableOpacity,{style:styles.item,onPress:this._loadDetail.bind(this,obj.id,obj.name)},
+React.createElement(View,{style:styles.row},
+React.createElement(View,{style:{flex:1}},
+React.createElement(Text,{numberOfLines:1,style:styles.name},obj.name),
+React.createElement(Text,{numberOfLines:1,style:styles.type},obj.type)),
+
+React.createElement(View,{style:styles.distance},
+React.createElement(Text,{numberOfLines:1,style:[styles.mi,{color:'#4C4C4C'}]},
+obj.distance,'米'),
+
+React.createElement(Text,{numberOfLines:1,style:styles.address},obj.address))),
+
+
+
+
+obj.tel.length?
+React.createElement(TouchableOpacity,{style:styles.phone,onPress:this._call.bind(this,obj.tel)},
+React.createElement(Text,{numberOfLines:1},'电话')):
+
+null));}}
+
+
+
+
+
+var placeholder='搜索' + this.props.type;
+return (
+React.createElement(ScrollView,{style:styles.container},
+React.createElement(View,{style:styles.searchBg},
+React.createElement(TextInput,{style:styles.input,placeholder:placeholder,
+onChangeText:this._onChangeText,
+onEndEditing:this._onEndEditing}),
+React.createElement(View,null,
+React.createElement(Text,{style:styles.tip},'已为您筛选',
+
+React.createElement(Text,{style:{color:'#FA2530'}},this.state.count),'条数据'))),
+
+
+
+
+items,
+items.length?null:React.createElement(View,{style:styles.activity},React.createElement(ActivityIndicatorIOS,{color:'#248BFD'})),
+React.createElement(View,{style:{height:40}})));},
+
+
+
+componentDidMount:function(){
+var that=this;
+Geolocation.getCurrentPosition(function(data){
+var lnglat=data.coords.longitude + ',' + data.coords.latitude;
+AsyncStorage.setItem('pos',lnglat);
+var url=Util.searchURL + 'key=' + Util.amapKey + '&keywords=' + 
+that.props.type + '&extensions=base';
+if(_GEO_OPEN){
+url += '&location=' + lnglat;
+that._doGetData(url);}else 
+{
+url += '&location=' + _GEO_TEST_POS;
+that._doGetData(url);}},
+
+function(err){
+alert('定位失败，请重新开启应用定位');});},
+
+
+
+_doGetData:function(url){
+var that=this;
+Util.getJSON(url,function(data){
+if(data.status && data.info === 'OK'){
+var count=data.pois.length > 10?10:data.pois.length;
+that._addStorage(data);
+that.setState({
+list:data.pois,
+count:count});}else 
+
+{
+alert('没有查询到相应的数据');}});},
+
+
+
+
+
+_loadDetail:function(id,name){
+this.props.nav.push({
+component:Detail,
+title:name,
+passProps:{
+id:id}});},
+
+
+
+
+_onChangeText:function(val){
+this.setState({
+keywords:val});},
+
+
+_onEndEditing:function(){
+var that=this;
+var keywords=this.state.keywords;
+var url=Util.searchURL + 'key=' + Util.amapKey + '&keywords=' + 
+keywords + '&types=' + that.props.type + '&extensions=base';
+that.setState({
+list:null});
+
+AsyncStorage.getItem('pos',function(err,result){
+if(_GEO_OPEN){
+if(!err){
+url += '&location=' + result;
+that._doGetData(url);}else 
+{
+alert('定位失败');}}else 
+
+{
+url += '&location=' + _GEO_TEST_POS;
+that._doGetData(url);}});},
+
+
+
+
+
+_addStorage:function(data){
+var posArr=[];
+var len=data.pois.length > 10?10:data.pois.length;
+for(var i=0;i < len;i++) {
+posArr.push(data.pois[i].location);}
+
+var posStr=posArr.join(',');
+AsyncStorage.setItem('_' + this.props.type,posStr);},
+
+
+
+_call:function(tel){
+if(tel.length){
+var arr=tel.split(';');
+var BUTTONS=[];
+for(var i in arr) {
+BUTTONS.push(arr[i]);}
+
+BUTTONS.push('取消');
+
+ActionSheetIOS.showActionSheetWithOptions({
+options:BUTTONS,
+cancelButtonIndex:BUTTONS.length - 1},
+function(index){
+arr[index] && LinkingIOS.openURL('tel://' + arr[index]);});}else 
+
+{
+alert('没有提供号码');}}});
+
+
+
+
+
+var styles=StyleSheet.create({
+container:{
+flex:1,
+backgroundColor:'#ddd'},
+
+input:{
+height:38,
+marginLeft:10,
+marginRight:10,
+borderWidth:Util.pixel,
+paddingLeft:5,
+marginTop:10,
+borderColor:'#868687',
+borderRadius:3,
+fontSize:15},
+
+tip:{
+fontSize:12,
+marginLeft:10,
+marginTop:5,
+color:'#505050'},
+
+row:{
+flexDirection:'row',
+marginLeft:10,
+marginRight:10,
+marginTop:10,
+paddingTop:5},
+
+distance:{
+width:120,
+alignItems:'flex-end'},
+
+name:{
+fontSize:15,
+marginBottom:6},
+
+type:{
+fontSize:12,
+color:'#686868'},
+
+mi:{
+fontSize:12,
+color:'#686868'},
+
+address:{
+fontSize:12,
+marginTop:5,
+color:'#686868'},
+
+phone:{
+marginLeft:10,
+marginRight:10,
+height:30,
+marginTop:10,
+justifyContent:'center',
+alignItems:'center',
+borderWidth:Util.pixel,
+borderColor:'#ccc',
+borderRadius:2},
+
+searchBg:{
+backgroundColor:'#fff',
+paddingBottom:10},
+
+item:{
+marginTop:10,
+backgroundColor:'#fff',
+paddingBottom:10,
+borderTopWidth:Util.pixel,
+borderBottomWidth:Util.pixel,
+borderColor:'#ccc'},
+
+activity:{
+marginTop:50,
+justifyContent:'center',
+alignItems:'center'}});
+
+
+
+module.exports = List;
+});
+__d('Geolocation',["RCTDeviceEventEmitter","NativeModules","invariant","logError","warning"],function(global, require, requireDynamic, requireLazy, module, exports) {  'use strict';
+
+
+
+
+
+
+
+
+
+
+
+
+var RCTDeviceEventEmitter=require('RCTDeviceEventEmitter');
+var RCTLocationObserver=require('NativeModules').LocationObserver;
+
+var invariant=require('invariant');
+var logError=require('logError');
+var warning=require('warning');
+
+var subscriptions=[];
+
+var updatesEnabled=false;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var Geolocation={
+
+
+
+
+
+getCurrentPosition:function(
+geo_success,
+geo_error,
+geo_options)
+{
+invariant(
+typeof geo_success === 'function',
+'Must provide a valid geo_success callback.');
+
+RCTLocationObserver.getCurrentPosition(
+geo_options || {},
+geo_success,
+geo_error || logError);},
+
+
+
+
+
+
+
+watchPosition:function(success,error,options){
+if(!updatesEnabled){
+RCTLocationObserver.startObserving(options || {});
+updatesEnabled = true;}
+
+var watchID=subscriptions.length;
+subscriptions.push([
+RCTDeviceEventEmitter.addListener(
+'geolocationDidChange',
+success),
+
+error?RCTDeviceEventEmitter.addListener(
+'geolocationError',
+error):
+null]);
+
+return watchID;},
+
+
+clearWatch:function(watchID){
+var sub=subscriptions[watchID];
+if(!sub){
+
+
+return;}
+
+
+sub[0].remove();
+
+var sub1=sub[1];sub1 && sub1.remove();
+subscriptions[watchID] = undefined;
+var noWatchers=true;
+for(var ii=0;ii < subscriptions.length;ii++) {
+if(subscriptions[ii]){
+noWatchers = false;}}
+
+
+if(noWatchers){
+Geolocation.stopObserving();}},
+
+
+
+stopObserving:function(){
+if(updatesEnabled){
+RCTLocationObserver.stopObserving();
+updatesEnabled = false;
+for(var ii=0;ii < subscriptions.length;ii++) {
+var sub=subscriptions[ii];
+if(sub){
+warning('Called stopObserving with existing subscriptions.');
+sub[0].remove();
+
+var sub1=sub[1];sub1 && sub1.remove();}}
+
+
+subscriptions = [];}}};
+
+
+
+
+module.exports = Geolocation;
+});
+__d('catapp/Nearby/views/util.js',["Dimensions","react-native/Libraries/react-native/react-native.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');
+var Dimensions=require('Dimensions');var 
+
+
+PixelRatio=
+React.PixelRatio;
+
+var Util={
+
+
+pixel:1 / PixelRatio.get(),
+
+size:{
+width:Dimensions.get('window').width,
+height:Dimensions.get('window').height},
+
+
+
+post:function(url,data,callback){
+var fetchOptions={
+method:'POST',
+headers:{
+'Accept':'application/json',
+'Content-Type':'application/json'},
+
+body:JSON.stringify(data)};
+
+
+fetch(url,fetchOptions).
+then(function(response){return response.text();}).
+then(function(responseText){
+callback(JSON.parse(responseText));});},
+
+
+
+
+getJSON:function(url,callback){
+fetch(url).
+then(function(response){return response.text();}).
+then(function(responseText){
+callback(JSON.parse(responseText));});},
+
+
+
+amapKey:'98cd4d3c1c2865132e73d851654c9c1b',
+
+searchURL:'http://restapi.amap.com/v3/place/around?',
+
+detailURL:'http://restapi.amap.com/v3/place/detail?'};
+
+
+
+module.exports = Util;
+});
+__d('catapp/Nearby/views/detail.js',["react-native/Libraries/react-native/react-native.js","catapp/Nearby/views/util.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var React=require('react-native/Libraries/react-native/react-native.js');
+var Util=require('catapp/Nearby/views/util.js');var 
+
+
+View=
+
+
+
+
+
+
+React.View;var ScrollView=React.ScrollView;var Text=React.Text;var StyleSheet=React.StyleSheet;var TextInput=React.TextInput;var ActivityIndicatorIOS=React.ActivityIndicatorIOS;var TouchableOpacity=React.TouchableOpacity;
+
+var FoodDetail=React.createClass({
+getInitialState:function(){
+return {
+data:null};},
+
+
+render:function(){
+return (
+React.createElement(ScrollView,null,
+this.state.data?
+React.createElement(View,{style:styles.content},
+React.createElement(Text,{style:styles.name},this.state.data.name),
+React.createElement(Text,{style:styles.types},'类型：',
+
+this.state.data.type),
+
+React.createElement(Text,{style:styles.address},'地址：',
+
+this.state.data.address),
+
+React.createElement(Text,{style:styles.tag},'标签：',
+
+this.state.data.tag),
+
+React.createElement(Text,{style:styles.server},'服务：',
+
+this.state.data.server)):
+
+
+null));},
+
+
+
+componentDidMount:function(){
+var that=this;
+var url=Util.detailURL + 'key=' + Util.amapKey + '&id=' + this.props.id + '&extensions=all';
+Util.getJSON(url,function(data){
+if(data.status && data.info === 'OK' && data.pois.length){
+var obj=data.pois[0];
+if(obj.deep_info && obj.deep_info.tag){
+obj.server = obj.deep_info.tag;}
+
+that.setState({
+data:obj});}else 
+
+{
+alert('数据服务出错');}});}});
+
+
+
+
+
+
+var styles=StyleSheet.create({
+container:{
+flex:1},
+
+name:{
+fontSize:15,
+color:'#1D92F5',
+fontWeight:'bold'},
+
+content:{
+marginLeft:10,
+marginRight:10,
+marginTop:10},
+
+tag:{
+fontSize:13,
+marginTop:10},
+
+types:{
+marginTop:10,
+fontSize:13,
+color:'#4C4C4C'},
+
+address:{
+fontSize:13,
+color:'#4C4C4C'},
+
+server:{
+marginTop:10,
+fontSize:13}});
+
+
+
+
+
+
+module.exports = FoodDetail;
+});
+__d('catapp/Nearby/views/film.js',["react-native/Libraries/react-native/react-native.js","catapp/Nearby/views/list.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
+React=require('react-native/Libraries/react-native/react-native.js');
+var List=require('catapp/Nearby/views/list.js');
+var Film=React.createClass({
+render:function(){
+return (
+React.createElement(List,{type:'电影院',nav:this.props.navigator}));}});
+
+
+
+
+module.exports = Film;
+});
+__d('catapp/Nearby/views/food.js',["react-native/Libraries/react-native/react-native.js","catapp/Nearby/views/list.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
+React=require('react-native/Libraries/react-native/react-native.js');
+var List=require('catapp/Nearby/views/list.js');
+var Food=React.createClass({
+render:function(){
+return (
+React.createElement(List,{type:'餐饮',nav:this.props.navigator}));}});
+
+
+
+module.exports = Food;
+});
+__d('catapp/Nearby/views/toilet.js',["react-native/Libraries/react-native/react-native.js","catapp/Nearby/views/list.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
+React=require('react-native/Libraries/react-native/react-native.js');
+var List=require('catapp/Nearby/views/list.js');
+var Toilet=React.createClass({
+render:function(){
+return (
+React.createElement(List,{type:'厕所',nav:this.props.navigator}));}});
+
+
+
+
+
+module.exports = Toilet;
+});
+__d('catapp/Nearby/views/map.js',["react-native/Libraries/react-native/react-native.js"],function(global, require, requireDynamic, requireLazy, module, exports) {  var 
+React=require('react-native/Libraries/react-native/react-native.js');var 
+
+View=
+
+
+
+React.View;var Text=React.Text;var WebView=React.WebView;var AsyncStorage=React.AsyncStorage;
+
+var Map=React.createClass({
+getInitialState:function(){
+return {
+url:null};},
+
+
+render:function(){
+var webView=null;
+if(this.state.url){
+webView = React.createElement(WebView,{url:this.state.url});}
+
+return (
+React.createElement(View,{style:{flex:1}},
+webView));},
+
+
+
+componentDidMount:function(){
+var that=this;
+AsyncStorage.multiGet(['_' + that.props.type,'pos'],function(err,result){
+if(!err){
+var pos=result[1][1];
+var markers=result[0][1];
+var url='http://vczero.github.io/webview/index.html?';
+if(_GEO_OPEN){
+url += 'pos=' + pos + '&markers=' + markers;}else 
+{
+url += 'pos=' + _GEO_TEST_POS + '6&markers=' + markers;}
+
+that.setState({
+url:url});}else 
+
+{
+alert('定位失败');}});}});
+
+
+
+
+
+
+module.exports = Map;
 });
 ;require("catapp/index.ios.js");
 //@ sourceMappingURL=/index.ios.map
