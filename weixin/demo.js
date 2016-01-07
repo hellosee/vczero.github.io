@@ -11,7 +11,7 @@
    */
   wx.config({
       debug: false,
-      appId: 'wxf8b4f85f3a794e77',
+      appId: 'wx683e0101b5487dac',
       timestamp: 1421142450,
       nonceStr: '9hKgyCLgGZOgQmEI',
       signature: 'bf7a5555f9ad0e7e491535f232349a40510a6f8f',
