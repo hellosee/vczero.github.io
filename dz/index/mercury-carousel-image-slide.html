@@ -1,0 +1,36 @@
+<link rel="import" href="/polymer/polymer.html">
+<link rel="import" href="/components/iron-image/iron-image.html">
+<dom-module id="mercury-carousel-image-slide">
+    <template>
+        <style>
+            :host {
+                display: inline-block;
+                width: var(--mercury-carousel-slide-width, auto);
+                height: var(--mercury-carousel-slide-height, auto);
+            @apply(--mercury-carousel-slide);
+            }
+            #slideImage {
+                width: 100%;
+                height: auto;
+                --iron-image-width: 100%;
+                --iron-image-height: auto;
+            }
+        </style>
+        <neon-animatable>
+            <iron-image id="slideImage" src="{{src}}"></iron-image>
+        </neon-animatable>
+    </template>
+    <script>
+        Polymer({
+            is: 'mercury-carousel-image-slide',
+            properties: {
+                src: {
+                    type: String
+                },
+                href: {
+                    type: String
+                }
+            }
+        });
+    </script>
+</dom-module>

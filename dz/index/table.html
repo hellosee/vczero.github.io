@@ -1,0 +1,90 @@
+<link rel="import" href="../polymer/polymer.html">
+<polymer-element name="index-table">
+  <template>
+    <style type="text/css" rel="stylesheet">
+      .item_hr{
+        width: 100%;
+        border-top:2px solid #E4E4E4;
+        margin-top:10px;
+        margin-bottom:10px;
+        height:2px;
+      }
+      .container{
+        width:100%;
+      }
+      .item{
+        width: 100%;
+        display: table;
+      }
+      .fl{float: left}
+      .fr{float: right}
+      .item_cell{
+        display: table-cell;
+        width: 50%;
+      }
+      .item_cell a{
+        display: block;
+        border: 1px solid #e5e5e5;
+        margin-left: 4px;
+        margin-bottom:5px;
+      }
+      a {
+        color: #000;
+        text-decoration: none;
+      }
+      img{
+        width: 100%;
+        height: auto!important;
+        overflow: hidden;
+      }
+    </style>
+    <div class="item_hr"></div>
+    <div class="container">
+      <!--这里面做循环-->
+      <div class="item">
+        <div class="fl item_cell">
+          <a>
+            <img src="http://m.idx.com.cn/images/c_1.jpg"/>
+          </a>
+        </div>
+        <div class="fr item_cell">
+          <a>
+            <img src="http://m.idx.com.cn/images/c_2.jpg"/>
+          </a>
+        </div>
+      </div>
+      <!--这里面做循环-->
+      <div class="item">
+        <div class="fl item_cell">
+          <a>
+            <img src="http://m.idx.com.cn/images/c_3.jpg"/>
+          </a>
+        </div>
+        <div class="fr item_cell">
+          <a>
+            <img src="http://m.idx.com.cn/images/c_4.jpg"/>
+          </a>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="fl item_cell">
+          <a>
+            <img src="http://m.idx.com.cn/images/c_5.jpg"/>
+          </a>
+        </div>
+        <div class="fr item_cell">
+          <a>
+            <img src="http://m.idx.com.cn/images/c_6.jpg"/>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'index-table'
+    });
+  </script>
+</polymer-element>

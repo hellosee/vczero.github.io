@@ -1,0 +1,88 @@
+<link rel="import" href="../polymer/polymer.html">
+<polymer-element name="index-footer">
+  <template>
+    <style type="text/css" rel="stylesheet">
+      .fl{float: left}
+      .fr{float: right}
+      .container{
+        width: 100%;
+        margin-top: 20px;
+        font-size: 1em;
+        color: #666;
+        height:2em;
+        border-bottom: 1px solid #E5E5E5;
+      }
+      .sp_15{
+        margin-left:5px;
+        margin-right:15px;
+      }
+      .pp100{
+        width: 100%;
+        padding: .61em 0 5px;
+      }
+      .text_cn{
+        padding: 0 1.16em;
+        color: #6e6e6e;
+        text-align: center;
+      }
+      .text_cn a {
+        font-size: 0.9em;
+        color: #666;
+      }
+      .text_div{
+        width:12em;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        height:20px;
+      }
+      .copyright{
+        font-size: 12px;
+        color: #666;
+        margin-top:-5px;
+      }
+      .copy_div{
+        width:100%;
+        text-align: center;
+      }
+      a{
+        text-decoration: none;
+        color: #666666;
+      }
+    </style>
+
+    <div class="container">
+      <div class="fl">
+         <div class="fl sp_15">登录</div>
+         <div class="fl">注册</div>
+      </div>
+      <div class="fr">
+        <div class="fl">反馈</div>
+        <div class="fl">｜</div>
+        <div class="fl">
+          <a href="#top">回到顶部</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pp100">
+      <div class="pp100 text_div">
+        <div class="text_cn fl">
+          <a>关于印好</a>
+        </div>
+        <div class="text_cn fr">
+          <a>联系我们</a>
+        </div>
+      </div>
+      <div class="pp100 copy_div">
+        <div class="copyright">©m.printhall.com.cn</div>
+      </div>
+    </div>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'index-footer'
+    });
+  </script>
+</polymer-element>

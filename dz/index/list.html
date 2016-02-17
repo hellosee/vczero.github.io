@@ -1,0 +1,126 @@
+<link rel="import" href="../polymer/polymer.html">
+<polymer-element name="index-list">
+  <template>
+    <style type="text/css" rel="stylesheet">
+      .list{
+        width: 100%;
+        margin-top: 4px;
+        height: auto;
+        overflow: hidden;
+      }
+      .item{
+        width: 50%;
+        display: block;
+        float: left;
+        text-align: center;
+      }
+      img {
+        width: 100%;
+        height: auto!important;
+        overflow: hidden;
+      }
+      a{
+        margin: 4px 2px 0 0;
+        display: block;
+        padding: 4px;
+        border: 1px solid #e5e5e5;
+      }
+      .item-name {
+        color: #333;
+        display: block;
+        font-size: 0.45em;
+        padding-top: 5px;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -o-text-overflow:ellipsis;
+        display: -webkit-box;
+      }
+
+      .item-name a {
+        border: none;
+        text-align: left;
+        font-size: 2.3em;
+      }
+      .item-name a {
+        display: block;
+      }
+      a {
+        color: #000;
+        text-decoration: none;
+      }
+      .type{
+        color: #9e9e9e;
+        display: block;
+        font-size:12px;
+        padding-top: 5px;
+        text-align: left;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: 400;
+        letter-spacing: 0.011em;
+        line-height: 20px;
+      }
+      .title-big {
+        padding-top: 10px;
+        font-size: 1.5em;
+        text-align: center;
+        border-bottom:1px solid #E5E5E5;
+      }
+      .title-big>div{
+        padding: 0.8em;
+        font-size: 1em;
+      }
+    </style>
+    <div class="title-big">
+      <div>玫瑰主题婚喜</div>
+    </div>
+    <div class="list">
+      <!--第1排-->
+      <div class="list">
+        <div class="item">
+          <div>
+            <a><img src="imgs/a.jpg"/></a>
+            <span class="item-name"><a href="#">厂家直销定制酒店宾馆典雅花卉白毛巾</a></span>
+            <span class="type">商店</span>
+          </div>
+        </div>
+        <div class="item">
+          <div>
+            <a><img src="imgs/c.jpg"/></a>
+            <span class="item-name"><a href="#">厂家直销定制酒店宾馆典雅花卉白毛巾</a></span>
+            <span class="type">商店</span>
+          </div>
+        </div>
+      </div>
+
+      <!--第2排-->
+      <div class="list">
+        <div class="item">
+          <div>
+            <a><img src="imgs/6cm.jpg"/></a>
+            <span class="item-name"><a href="#">厂家直销定制酒店宾馆典雅花卉白毛巾</a></span>
+            <span class="type">商店</span>
+          </div>
+        </div>
+        <div class="item">
+          <div>
+            <a><img src="imgs/b.jpg"/></a>
+            <span class="item-name"><a href="#">厂家直销定制酒店宾馆典雅花卉白毛巾</a></span>
+            <span class="type">商店</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'index-list'
+    });
+  </script>
+</polymer-element>
