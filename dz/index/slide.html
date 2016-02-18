@@ -1,19 +1,22 @@
 <script type="text/javascript" src="swiper-3.3.0.min.js"></script>
 <link rel="import" href="../polymer/polymer.html">
 
-<polymer-element name="index-slide">
-  <template>
-    <style type="text/css" rel="stylesheet">
-      .swiper-container {
-        width: 100%;
-        height: auto;
-      }
+<dom-module id="index-slide">
+  <style type="text/css" rel="stylesheet">
+    :host {
+      display:block;
+    }
+    .swiper-container {
+      width: 100%;
+      height: auto;
+    }
 
-      img {
-        width: 100%;
-      }
-    </style>
-    <link type="text/css" rel="stylesheet" href="swiper-3.3.0.min.css"/>
+    img {
+      width: 100%;
+    }
+  </style>
+  <link type="text/css" rel="stylesheet" href='swiper-3.3.0.min.css'>
+  <template>
     <div class="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide">
@@ -30,20 +33,19 @@
     </div>
 
   </template>
-  <script type="text/javascript">
-    Polymer({
-      is: 'index-slide',
-      ready: function () {
-      },
-      domReady: function () {
-        var jq = this.shadowRoot.querySelector;
-        var slide = new Swiper(this.shadowRoot.querySelector('div.swiper-container'), {
-          pagination: this.shadowRoot.querySelector('.swiper-pagination'),
-          autoplay: 2000,
-          speed: 500,
-          autoplayDisableOnInteraction: false
-        });
-      }
-    });
-  </script>
-</polymer-element>
+</dom-module>
+
+<script type="text/javascript">
+  Polymer({
+    is: 'index-slide',
+    ready: function () {
+      var slide = new Swiper(this.$$('div.swiper-container'), {
+        pagination: this.$$('.swiper-pagination'),
+        autoplay: 2000,
+        speed: 500,
+        autoplayDisableOnInteraction: false
+      });
+    }
+  });
+</script>
+
