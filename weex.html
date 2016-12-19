@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>weex</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+  <style type="text/css">
+    html,body{
+      width:100%;
+      margin:0;
+      padding:0;
+      font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #666;
+      background-color: #fff;
+    }
+    .fl{float:left;}
+    .main{
+      max-width:900px;
+      margin-left:auto;
+      margin-right:auto;
+      padding-left:10px;
+    }
+    .banner{
+      width:100%;
+      text-align: center;
+    }
+
+    .banner img{
+      width:100%;
+    }
+    .jiabin-item{
+      width:150px;
+      height:200px;
+      border:1px solid #ddd;
+      margin-right:20px;
+      margin-bottom:20px;
+    }
+    .jiabin-item img{
+      width:150px;
+    }
+    .jiabin-info{
+      text-align: center;
+    }
+    .item{
+      font-size:13px;
+      line-height:23px;
+      border-bottom:1px solid #ddd;
+    }
+    .item-time{
+      display: inline-block;
+      width:110px;
+    }
+    .zhu-m{
+      display: none;
+      padding-right: 5px;
+    }
+    .topic-item{
+      height:40px;
+      line-height:40px;
+      border-bottom:1px solid #ddd;
+      font-size:15px;
+
+    }
+    .topic-item span{
+      display: inline-block;
+    }
+
+    .topic-time{
+      width:20%;
+    }
+
+    .topic-main{
+      width:50%;
+    }
+
+    .topic-person{
+      width:25%;
+    }
+
+    .btn{
+      width:120px;
+      height:30px;
+      line-height:30px;
+      display: block;
+      text-align: center;
+      border-radius:3px;
+      font-size:14px;
+      margin-left:auto;
+      margin-right:auto;
+      background-color: #FFB500;
+    }
+
+    .intro{font-size:14px;margin-top:10px;line-height:20px;}
+
+    a{
+      text-decoration: none;
+    }
+    .jiabin-name{
+      font-size:13px;
+    }
+
+    .h-left{
+      border-left:4px solid #37ACE4;
+      padding-left:6px;
+    }
+
+    a:link {color: #333}
+    a:visited {color: #333}
+    a:hover {color: #333}
+    a:active {color: #333}
+
+    .big-title{
+      height:30px;
+      background-color: #37ACE4;
+      line-height:30px;
+      text-align: center;
+      color:#fff;
+      font-size:15px;
+      border-radius:3px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top:20px;
+      width:80px;
+    }
+    .item-p{
+      font-size:12px;
+      margin-left:113px;
+      color: #808080;
+    }
+
+    #map{
+      width:98%;
+      height:300px;
+      border:1px solid #ddd;
+    }
+
+    @media (max-width:610px) {
+      .zhu-m{
+        display: block;
+      }
+      .zhu-pc{
+        display: none;
+      }
+      .intro{
+        font-size:12px;
+      }
+    }
+    /* 当浏览器的可视区域小于374px iphone4~5*/
+    @media (max-width:374px) {
+      /*嘉宾*/
+      .jiabin-item{
+        width:138px;
+        height:190px;
+        margin-left:7px;
+        margin-right:0;
+      }
+      .jiabin-item img{
+        width:138px;
+      }
+      .zhu-m{
+        display: block;
+      }
+      .zhu-pc{
+        display: none;
+      }
+      .intro{
+        font-size:12px;
+      }
+    }
+
+    /*iphone6*/
+    @media(min-width:375px) and (max-width:413px){
+      .jiabin-item{
+        width:160px;
+        height:210px;
+        margin-left:10px;
+        margin-right:0;
+      }
+      .jiabin-item img{
+        width:160px;
+      }
+      .zhu-m{
+        display: block;
+      }
+      .zhu-pc{
+        display: none;
+      }
+      .intro{
+        font-size:12px;
+      }
+    }
+
+    /*iphone6+*/
+    @media(min-width:414px) and (max-width:520px){
+      .jiabin-item{
+        width:180px;
+        height:225px;
+        margin-left:10px;
+        margin-right:0;
+      }
+      .jiabin-item img{
+        width:180px;
+      }
+      .zhu-pc{
+        display: none;
+      }
+
+      .zhu-m{
+        display: block;
+      }
+      .zhu-pc{
+        display: none;
+      }
+      .intro{
+        font-size:12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="banner">
+    <a href="http://form.mikecrm.com/1En3x5" target="_blank">
+      <img src="./weex-img/banner.png"/>
+    </a>
+  </div>
+  <div class="main">
+    <div class="intro">
+      <div style="margin-bottom:6px;">Weex作为阿里自研的高性能跨平台移动开发框架，开源至今倍受业界关注，诚挚地邀请关注Weex的朋友们齐聚一堂。</div>
+      <div>这次WeexConf我们将和业界分享以下亮点：</div>
+      <div>
+        Weex最新的技术特性、技术工具、技术能力、技术趋势发布；
+        Weex两次历经双11大考的实战经验及阿里生态系的业务经验；
+        Weex团队更将首次集体亮相，畅谈从开源到加入Apache的心路历程。
+      </div>
+    </div>
+    <div class="h-left">
+      <h2>演讲嘉宾</h2>
+    </div>
+    <div class="jiabin">
+      <div class="fl jiabin-item">
+        <div>
+          <img src="./weex-img/南天.jpg"/>
+        </div>
+        <div class="jiabin-info">
+          <div class="jiabin-name">庄卓然（南天）</div>
+          <!--<div>阿里巴巴集团</div>-->
+          <div>阿里资深总监</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="fl jiabin-item">
+        <div>
+          <img src="./weex-img/天施.jpg"/>
+        </div>
+        <div class="jiabin-info">
+          <div class="jiabin-name">吴志华(天施)</div>
+          <!--<div>阿里巴巴集团</div>-->
+          <div>阿里资深无线技术专家</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="fl jiabin-item">
+        <div>
+          <img src="./weex-img/郑叶飞(圆心).jpg"/>
+        </div>
+        <div class="jiabin-info">
+          <div class="jiabin-name">郑叶飞(圆心)</div>
+          <!--<div>阿里巴巴集团</div>-->
+          <div>淘宝总监</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="fl jiabin-item">
+        <div>
+          <img src="./weex-img/鬼道.png"/>
+        </div>
+        <div class="jiabin-info">
+          <div class="jiabin-name">徐凯(鬼道)</div>
+          <!--<div>阿里巴巴集团</div>-->
+          <div>阿里高级前端开发专家</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="fl jiabin-item">
+        <div>
+          <img src="./weex-img/赵锦江(勾股).jpg"/>
+        </div>
+        <div class="jiabin-info">
+          <div class="jiabin-name">赵锦江(勾股)</div>
+          <!--<div>阿里巴巴集团</div>-->
+          <div>阿里高级前端开发专家</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="fl jiabin-item">
+        <div>
+          <img src="./weex-img/嗷啸.jpg"/>
+        </div>
+        <div class="jiabin-info">
+          <div class="jiabin-name">田径杯(嗷啸)</div>
+          <!--<div>阿里巴巴集团</div>-->
+          <div>阿里高级无线技术专家</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="fl jiabin-item">
+        <div>
+          <img src="./weex-img/梧叶.png"/>
+        </div>
+        <div class="jiabin-info">
+          <div class="jiabin-name">吴文洪(梧叶)</div>
+          <!--<div>阿里巴巴集团</div>-->
+          <div>阿里高级无线技术专家</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="fl jiabin-item">
+        <div>
+          <img src="./weex-img/斯肯.jpg"/>
+        </div>
+        <div class="jiabin-info">
+          <div class="jiabin-name">黄泰成(斯肯)</div>
+          <!--<div>阿里巴巴集团</div>-->
+          <div>天猫无线开发专家</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="fl jiabin-item">
+        <div>
+          <img src="./weex-img/宁栗(凝砺).jpg"/>
+        </div>
+        <div class="jiabin-info">
+          <div class="jiabin-name">宁栗(凝砺)</div>
+          <!--<div>阿里巴巴集团</div>-->
+          <div>阿里无线技术专家</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="fl jiabin-item">
+        <div>
+          <img src="./weex-img/赖志强(伯禹).jpg"/>
+        </div>
+        <div class="jiabin-info">
+          <div class="jiabin-name">赖志强(伯禹)</div>
+          <!--<div>阿里巴巴集团</div>-->
+          <div>天猫前端开发专家</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="fl jiabin-item">
+        <div>
+          <img src="./weex-img/孙兆(亚城).png"/>
+        </div>
+        <div class="jiabin-info">
+          <div class="jiabin-name">孙兆(亚城)</div>
+          <!--<div>阿里巴巴集团</div>-->
+          <div>淘宝资深前端开发工程师</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="fl jiabin-item">
+        <div>
+          <img src="./weex-img/吴雅恬(无灵).jpg"/>
+        </div>
+        <div class="jiabin-info">
+          <div class="jiabin-name">吴雅恬(无灵)</div>
+          <!--<div>阿里巴巴集团</div>-->
+          <div>千牛无线技术专家</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="fl jiabin-item">
+        <div>
+          <img src="./weex-img/饮源.png"/>
+        </div>
+        <div class="jiabin-info">
+          <div class="jiabin-name">郑士汉(饮源)</div>
+          <!--<div>阿里巴巴集团</div>-->
+          <div>阿里无线技术专家</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="fl jiabin-item">
+        <div>
+          <img src="./weex-img/高嵩(归影).jpg"/>
+        </div>
+        <div class="jiabin-info">
+          <div class="jiabin-name">高嵩(归影)</div>
+          <!--<div>阿里巴巴集团</div>-->
+          <div>阿里资深前端开发工程师</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="fl jiabin-item">
+        <div>
+          <img src="./weex-img/卜道.png"/>
+        </div>
+        <div class="jiabin-info">
+          <div class="jiabin-name">郭帅(卜道)</div>
+          <!--<div>阿里巴巴集团</div>-->
+          <div>阿里资深开发工程师</div>
+        </div>
+        <div></div>
+      </div>
+      <div style="clear: both;"></div>
+    </div>
+    <div class="richeng">
+      <div class="h-left">
+        <h2>会议日程</h2>
+      </div>
+      <div>时间：2017-01-12；大会分为1个主会场，2个分论坛。</div>
+      <div class="zhu-m">
+        <div class="big-title">主会场</div>
+        <div class="item" style="border-top:1px solid #ddd;margin-top:20px;">
+          <div>
+            <span class="item-time">10：00-10：15</span>
+            <span>Open speech</span>
+          </div>
+          <div class="item-p">天施</div>
+        </div>
+        <div class="item">
+          <div>
+            <span class="item-time">10：15-10：35</span>
+            <span>Weex开源之路</span>
+          </div>
+          <div class="item-p">南天</div>
+        </div>
+        <div class="item">
+          <div>
+            <div>
+              <span class="item-time">10：35-10：50</span>
+              <span>Weex技术成果</span>
+            </div>
+            <div class="item-p">鬼道</div>
+          </div>
+        </div>
+        <div class="item">
+          <div>
+            <span class="item-time">10：50-11：10</span>
+            <span>Weex技术业务</span>
+          </div>
+          <div class="item-p">圆心</div>
+        </div>
+        <div class="item">
+          <div>
+            <span class="item-time">11：10-11：30</span>
+            <span>Weex生态及新特性发布</span>
+          </div>
+          <div class="item-p">
+            尤雨溪 勾股 傲啸 梧叶
+          </div>
+        </div>
+      </div>
+
+      <div class="zhu-m">
+        <div class="big-title" style="width:120px;">业务实践分论坛</div>
+        <div class="item" style="border-top:1px solid #ddd;margin-top:20px;">
+          <div>
+            <span class="item-time">14：00 - 14：45</span>
+            <span>Weex的性能优化与双十一实践</span>
+          </div>
+          <div class="item-p">凝砺</div>
+        </div>
+        <div class="item">
+          <div>
+            <span class="item-time">14：45 - 15：30</span>
+            <span>基于Weex的双11会场搭建之路</span>
+          </div>
+          <div class="item-p">伯禹</div>
+        </div>
+        <div class="item">
+          <div>
+            <div>
+              <span class="item-time">15：50 - 16：35</span>
+              <span>双促中的 Rx</span>
+            </div>
+            <div class="item-p">亚城</div>
+          </div>
+        </div>
+        <div class="item">
+          <div>
+            <span class="item-time">16：35 - 17：20</span>
+            <span>Weex在千牛开放中的应用实践</span>
+          </div>
+          <div class="item-p">无灵</div>
+        </div>
+      </div>
+
+      <div class="zhu-m">
+        <div class="big-title" style="width:120px;">技术实战分论坛</div>
+        <div class="item" style="border-top:1px solid #ddd;margin-top:20px;">
+          <div>
+            <span class="item-time">14：00 - 14：45</span>
+            <span>Native 性能稳定性极致优化</span>
+          </div>
+          <div class="item-p">饮源</div>
+        </div>
+        <div class="item">
+          <div>
+            <span class="item-time">14：45 - 15：30</span>
+            <span>Weex 和 Web 开发体验的异同</span>
+          </div>
+          <div class="item-p">勾股</div>
+        </div>
+        <div class="item">
+          <div>
+            <div>
+              <span class="item-time">15：50 - 16：35</span>
+              <span>Weex开发者工具探究</span>
+            </div>
+            <div class="item-p">归影</div>
+          </div>
+        </div>
+        <div class="item">
+          <div>
+            <span class="item-time">16：35 - 17：20</span>
+            <span>Weex的可扩展性及插件机制</span>
+          </div>
+          <div class="item-p">卜道</div>
+        </div>
+      </div>
+
+      <div class="zhu-pc">
+        <div>
+          <div class="big-title">主会场</div>
+        </div>
+        <div>
+          <div class="topic-item" style="font-weight: bold;">
+            <span class="topic-time">时间</span>
+            <span class="topic-main">主题</span>
+            <span class="topic-person">演讲嘉宾</span>
+          </div>
+          <div class="topic-item">
+            <span class="topic-time">10：00 - 10：15</span>
+            <span class="topic-main">Open speech</span>
+            <span class="topic-person">天施</span>
+          </div>
+          <div class="topic-item">
+            <span class="topic-time">10：15 - 10：35</span>
+            <span class="topic-main">Weex开源之路</span>
+            <span class="topic-person">南天</span>
+          </div>
+          <div class="topic-item">
+            <span class="topic-time">10：35 - 10：50</span>
+            <span class="topic-main">Weex技术成果</span>
+            <span class="topic-person">鬼道</span>
+          </div>
+          <div class="topic-item">
+            <span class="topic-time">10：50 - 11：10</span>
+            <span class="topic-main">Weex技术业务</span>
+            <span class="topic-person">圆心</span>
+          </div>
+          <div class="topic-item">
+            <span class="topic-time">11：10 - 11：30</span>
+            <span class="topic-main">Weex生态及新特性发布</span>
+            <span class="topic-person">尤雨溪 勾股 傲啸 梧叶</span>
+          </div>
+        </div>
+      </div>
+      <div class="zhu-pc">
+        <div>
+          <div class="big-title" style="width:120px;">业务实践分论坛</div>
+        </div>
+        <div>
+          <div class="topic-item" style="font-weight: bold;">
+            <span class="topic-time">时间</span>
+            <span class="topic-main">主题</span>
+            <span class="topic-person">演讲嘉宾</span>
+          </div>
+          <div class="topic-item">
+            <span class="topic-time">14：00 - 14：45</span>
+            <span class="topic-main">Weex的性能优化与双十一实践</span>
+            <span class="topic-person">凝砺</span>
+          </div>
+          <div class="topic-item">
+            <span class="topic-time">14：45 - 15：30</span>
+            <span class="topic-main">基于weex的双11会场搭建之路</span>
+            <span class="topic-person">伯禹</span>
+          </div>
+          <div class="topic-item">
+            <span class="topic-time">15：50 - 16：35</span>
+            <span class="topic-main">双促中的 Rx</span>
+            <span class="topic-person">亚城</span>
+          </div>
+          <div class="topic-item">
+            <span class="topic-time">16：35 - 17：20</span>
+            <span class="topic-main">Weex在千牛开放中的应用实践</span>
+            <span class="topic-person">无灵</span>
+          </div>
+        </div>
+      </div>
+      <div class="zhu-pc">
+        <div>
+          <div class="big-title" style="width:120px;">技术实战分论坛</div>
+        </div>
+        <div>
+          <div class="topic-item" style="font-weight: bold;">
+            <span class="topic-time">时间</span>
+            <span class="topic-main">主题</span>
+            <span class="topic-person">演讲嘉宾</span>
+          </div>
+          <div class="topic-item">
+            <span class="topic-time">14：00 - 14：45</span>
+            <span class="topic-main">Native性能稳定性极致优化</span>
+            <span class="topic-person">饮源</span>
+          </div>
+          <div class="topic-item">
+            <span class="topic-time">14：45 - 15：30</span>
+            <span class="topic-main">Weex 和 Web 开发体验的异同</span>
+            <span class="topic-person">勾股</span>
+          </div>
+          <div class="topic-item">
+            <span class="topic-time">15：50 - 16：35</span>
+            <span class="topic-main">Weex开发者工具探究</span>
+            <span class="topic-person">归影</span>
+          </div>
+          <div class="topic-item">
+            <span class="topic-time">16：35 - 17：20</span>
+            <span class="topic-main">Weex的可扩展性及插件机制</span>
+            <span class="topic-person">卜道</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:25px;margin-bottom:10px;">
+        <div class="h-left">
+          <h2>参会指南</h2>
+        </div>
+        <div style="font-size:13px;">时间：2017年1月12号</div>
+        <div style="font-size:13px;">详细地点：西溪天堂艺术中心</div>
+      </div>
+      <div id="map"></div>
+
+      <div style="margin-top:25px;margin-bottom:30px;">
+        <a class="btn" href="http://form.mikecrm.com/1En3x5" target="_blank"><div>立即报名</div></a>
+      </div>
+      <!--<div style="width:150px;margin-left: auto;margin-right: auto;text-align: center;">-->
+        <!--<img src="./weex-img/erweima.jpg" style="width:150px;"/>-->
+        <!--<span>手淘技术团队微信</span>-->
+      <!--</div>-->
+    </div>
+  </div>
+  <div style="width:100%;height:60px;background-color: #CBCBCB;margin-top:20px;text-align: center;line-height:60px;font-size:13px;">
+    联系我们：微博@weex-team
+  </div>
+  <script type="text/javascript">
+    var changeBanner = function(){
+      var width = document.body.clientWidth;
+      var img = document.querySelector('.banner img');
+      if(width < 800){
+        img.src = './weex-img/banner-m.png';
+      }else{
+        img.src = './weex-img/banner.png';
+      }
+    };
+    changeBanner();
+    window.onresize = function(){
+      changeBanner();
+    };
+  </script>
+  <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=131ee3d7c27226b53f6f25314a816ff5"></script>
+  <script type="text/javascript">
+    var map = new AMap.Map('map', {
+      resizeEnable: true,
+      zoom:16,
+      center: [120.087422,30.264667]
+    });
+
+    var marker = new AMap.Marker({
+      position : [120.087422,30.264667],
+      offset : new AMap.Pixel(-12,-12),
+      map : map
+    });
+  </script>
+</body>
+</html>
