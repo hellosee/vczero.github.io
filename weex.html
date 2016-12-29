@@ -82,13 +82,13 @@
     }
 
     .btn{
-      width:120px;
+      width:85px;
       height:30px;
       line-height:30px;
-      display: block;
+      display: inline-block;
       text-align: center;
-      border-radius:3px;
-      font-size:14px;
+      border-radius:1px;
+      font-size:12px;
       margin-left:auto;
       margin-right:auto;
       background-color: #FFB500;
@@ -223,6 +223,12 @@
         font-size:12px;
       }
     }
+
+    .hzhb img{
+      height:35px;
+      margin-right:10px;
+      margin-top:10px;
+    }
   </style>
 </head>
 <body>
@@ -328,6 +334,17 @@
           <div class="jiabin-name">吴文洪(梧叶)</div>
           <!--<div>阿里巴巴集团</div>-->
           <div>阿里高级无线技术专家</div>
+        </div>
+        <div></div>
+      </div>
+
+      <div class="fl jiabin-item">
+        <div>
+          <img src="//img.alicdn.com/tps/TB17PfYOVXXXXXKXpXXXXXXXXXX-200-200.png"/>
+        </div>
+        <div class="jiabin-info">
+          <div class="jiabin-name">尤雨溪</div>
+          <div>Vue.js 作者</div>
         </div>
         <div></div>
       </div>
@@ -604,13 +621,41 @@
         <div style="font-size:13px;">详细地点：杭州市西溪天堂艺术中心</div>
       </div>
       <div id="map"></div>
-      <div style="margin-top:25px;margin-bottom:30px;">
-        <a class="btn" href="http://form.mikecrm.com/1En3x5" target="_blank"><div>立即报名</div></a>
+      <div style="margin-top:25px;margin-bottom:30px;text-align: center;">
+        <a class="btn" href="http://form.mikecrm.com/1En3x5" target="_blank">立即报名</a>
+        <a style="display: inline-block;text-align:center;background-color:#1B90F7;width:85px;height:30px;line-height:30px;color:#fff;border-radius:1px;" href="https://yq.aliyun.com/webinar/join/116">我要看直播</a>
       </div>
+
+      <div>
+        <div style="width:180px;height:180px;border:1px solid #CFE3F5;text-align: center;margin-left:auto;margin-right:auto;">
+          <img style="width:160px;margin-top:10px;" src="//img.alicdn.com/tps/TB1OrzGOVXXXXbSXVXXXXXXXXXX-344-344.jpg"/>
+        </div>
+      </div>
+     <div style="color: #767676;text-align: center;">
+       <div>获取大会技术资料和最新资讯</div>
+       <div>请关注手机淘宝技术团队微信公众号</div>
+     </div>
+     <div>
+      <div class="h-left">
+        <h2>合作伙伴</h2>
+      </div>
+      <div class="hzhb">
+        <img src="//img.alicdn.com/tps/TB1sBvmOVXXXXbbaFXXXXXXXXXX-328-79.png"/>
+        <img src="//img.alicdn.com/tps/TB1nfPFOVXXXXbLXVXXXXXXXXXX-388-189.png"/>
+
+        <img style="height:28px;" src="//img.alicdn.com/tps/TB1CXY5OVXXXXbRXXXXXXXXXXXX-1495-208.png"/>
+        <img src="//img.alicdn.com/tps/TB1klftOVXXXXXyapXXXXXXXXXX-3950-991.jpg"/>
+
+        <img src="//img.alicdn.com/tps/TB10Jz6OVXXXXa7XXXXXXXXXXXX-376-98.png"/>
+        <img style="height:35px;" src="//img.alicdn.com/tps/TB18g2iOVXXXXbOaFXXXXXXXXXX-648-204.png"/>
+
+        <img style="height:30px;" src="//img.alicdn.com/tps/TB16v66OVXXXXa3XXXXXXXXXXXX-564-228.png"/>
+      </div>
+    </div>
     </div>
   </div>
   <div style="width:100%;height:60px;background-color: #CBCBCB;margin-top:20px;text-align: center;line-height:60px;font-size:13px;">
-    联系我们：微博@weex-team
+    <a href="http://weibo.com/u/5897827106?is_hot=1">联系我们：微博@weex-team</a>
   </div>
   <script type="text/javascript">
     var changeBanner = function(){
@@ -641,5 +686,8 @@
       map : map
     });
   </script>
+  <div style="display: none">
+    <script src="https://s4.cnzz.com/z_stat.php?id=1260869648&amp;web_id=1260869648" language="JavaScript"></script>
+  </div>
 </body>
 </html>
